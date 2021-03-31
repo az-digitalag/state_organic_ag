@@ -68,7 +68,7 @@ m <- lmer(cbind(farm_number, farm_ha, sales) ~ year * state + (1 + year | state)
 
 # https://m-clark.github.io/mixed-models-with-R/bayesian.html
 library(brms)
-## full multivariate (need to drop states w/o all three years)
+## full multivariate
 m <- brm(mvbind(farm_number, farm_ha, sales) ~ year * state + (1 + year | state),
          data = x3)
 
@@ -81,4 +81,11 @@ mod_stanlmer1 <- stan_lmer(farm_ha ~ year * state + (1 + year | state),
                data = x3)
 
 
+plot(broom.mixed::tidyMCMC(mod_stanlmer1))
+newdata <- data.frame(state = unique(x3$state), year = rep(2018:2030, each= length(unique(x3$state))))
+pp <- cbind(newdata, t(posterior_predict(mod_stanlmer1, newdata = newdata))) %>% 
+  tidyr::pivot_longer(names_to = 'sample', cols = 3:4002)
 
+ggplot(data = pp, aes(year, value)) + 
+  geom_smooth() + 
+  facet_wrap(~state)
