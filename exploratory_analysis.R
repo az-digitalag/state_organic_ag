@@ -29,6 +29,10 @@ x3 <- x %>% filter(!state %in% x2$state) %>%
 x4 <- x3 %>% 
   tidyr::pivot_longer(cols = farm_knumber:farm_msales, names_to = 'metric', values_to = 'value')
 
+ggplot(data = x3) +
+  geom_histogram(breaks = 20) +
+  facet_wrap(~metric, scales = 'free_x', ncol = 1) 
+
 ggplot(data = x4, aes(year, value, color = state)) + 
   geom_point() +
   geom_line()+
@@ -72,7 +76,8 @@ library(brms)
 mod_mvbrm <- brm(mvbind(farm_knumber, farm_kha, farm_msales) ~ 
            year * state + (1 + year | state),
          data = x3,
-         chains = 4
+         chains = 4,
+         family = lognormal(link = "identity")
          )
 
 
@@ -86,6 +91,7 @@ mod_stanmvmer<- stan_mvmer(
                  farm_kha ~ year * state + (1 + year | state),
                  farm_msales ~ year * state + (1 + year | state)),
   data = x3,
+  family = gaussian(link = "log"),
   # short test:
   # chains = 1, cores = 1, seed = 12345, iter = 1000)
   chains = 4, cores = 4, seed = 12345, iter = 2000)
@@ -97,16 +103,19 @@ summary(mod_stanmvmer)
 ####)
 
 ## univariate
-mod_stanlmer <- stan_lmer(farm_ha ~ year * state + (1 + year | state),
+mod_stanlmer <- stan_lmer(farm_kha ~ year * state + (1 + year | state),
                data = x3)
 
 #broom.mixed::tidyMCMC(mod_stanmvmer)
 plot(broom.mixed::tidyMCMC(mod_stanlmer))
 
 newdata <- data.frame(state = unique(x3$state), year = rep(2000:2030, each= length(unique(x3$state))))
-pp <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 2, newdata = newdata))) %>% 
-  tidyr::pivot_longer(names_to = 'sample', cols = 3:4002) %>% 
-  mutate(date = lubridate::ymd(paste0(year, '-01-01')))
+pp <- cbind(newdata, 
+            t(posterior_predict(mod_stanmvmer, m = 2, newdata = newdata))
+              #t(posterior_predict(mod_stanlmer, newdata = newdata))
+            ) %>% 
+              tidyr::pivot_longer(names_to = 'sample', cols = 3:4002) %>% 
+              mutate(date = lubridate::ymd(paste0(year, '-01-01')))
 
 x4 <- x3 %>% mutate(date = lubridate::ymd(paste0(year, '-01-01')))
 
