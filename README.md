@@ -3,13 +3,14 @@
 - Trends of USA Organic Agriculture trends on farm numbers, hectares, and sales over the years.
 - panel data analysis with fixed and random effects?
 
-Dr. Isaac Mpanga
-Area Associate Agent
-Commercial Horticulture and Small Acreage
-2830 N Commonwealth Dr, Camp Verde, AZ 86322
-email: mpangai@arizona.edu
-Cell: 9282744826 (Please call this number or email me directly)
-Website: https://extension.arizona.edu/yavapai-commercial-horticulture-small-acreage
+
+
+### TODO
+
+- Check model structure
+- handle missing data 
+  - option 1 (easier, likely sufficient?): estimate using percentage increase since last census? (2017)
+  - option 2: missing data model?
 
 ### Abstract
 
@@ -35,3 +36,16 @@ has enormous future potentials in farm numbers, land area, market, and their inc
 contribution to the environmentally friendly regenerative practices. However, this sector
 requires efforts to address the primary challenges facing the organic farmers, and this will
 necessitate farm-level research and policy reviews with farmers involvement.
+
+### Contact Info
+
+Project Lead: Dr. Isaac Mpanga
+Area Associate Agent
+Commercial Horticulture and Small Acreage
+2830 N Commonwealth Dr, Camp Verde, AZ 86322
+email: mpangai@arizona.edu
+
+
+Analysis: 
+David LeBauer 
+email: dlebauer@arizona.edu
