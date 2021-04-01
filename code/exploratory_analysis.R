@@ -20,7 +20,7 @@ x2 <- x %>% group_by(state) %>%
   summarise(n = n()) %>% 
   filter(n < 3) 
 
-x3 <- x %>% filter(!state %in% x2$state) %>% 
+x3 <- x %>% #filter(!state %in% x2$state) %>% 
   mutate(farm_knumber = farm_number/1000,
          farm_kha = farm_ha/1000,
          farm_msales = sales/1000000) %>% 
@@ -74,13 +74,14 @@ ggplot(data = totals, aes(year, us_50)) +
 
 ## BRMS
 ## full multivariate using brms
-# library(brms)
-# mod_mvbrm <- brm(mvbind(farm_knumber, farm_kha, farm_msales) ~ 
-#            year * state + (1 + year | state),
-#          data = x3,
-#          chains = 4,
-#          family = lognormal(link = "identity")
-#          )
+library(brms)
+# handle missing data using `|mi()` ?
+mod_mvbrm <- brm(mvbind(farm_knumber, farm_kha, farm_msales)|mi() ~ 
+           year * state + (1 + year | state),
+         data = x3,
+         chains = 4,
+         family = lognormal(link = "identity")
+         )
 
 
 library(rstanarm)
