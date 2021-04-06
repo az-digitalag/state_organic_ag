@@ -76,10 +76,15 @@ ggplot(data = totals, aes(year, us_50)) +
 ## full multivariate using brms
 library(brms)
 # handle missing data using `|mi()` ?
-mod_mvbrm <- brm(mvbind(farm_knumber, farm_kha, farm_msales)|mi() ~ 
-           year * state + (1 + year | state),
+# https://m-clark.github.io/easy-bayes/brms-mo-models.html
+brms_formula <-  bf(farm_knumber|mi()  ~ year * state + (1 + year | state)) + 
+  bf(farm_kha|mi()  ~ year * state + (1 + year | state)) +
+  bf(farm_msales|mi()  ~ year * state + (1 + year | state))
+
+mod_mvbrm <- brm(brms_formula,
          data = x3,
          chains = 4,
+         cores = 4,
          family = lognormal(link = "identity")
          )
 
