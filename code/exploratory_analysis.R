@@ -90,6 +90,9 @@ mod_mvbrm <- brm(brms_formula,
          file = 'derived_data/mod_mvbrm'
          )
 
+# explore with shinystan:
+# launch_shinystan(mod_mvbrm)
+
 
 #library(rstanarm)
 ## is this the appropriate way to model the y 
@@ -163,8 +166,24 @@ x4_us <- x4 %>%
   group_by(year, date, name) %>% 
   summarise(value = sum(value, na.rm = TRUE))
 
+# https://stackoverflow.com/a/57825639/199217
+# otherwise y axis is range of posterior, which is much larger than quantiles
+calc_stat <- function(x) {
+  coef <- 1.5
+  n <- sum(!is.na(x))
+  # calculate quantiles
+  stats <- quantile(x, probs = c(0.1, 0.25, 0.5, 0.75, 0.9))
+  names(stats) <- c("ymin", "lower", "middle", "upper", "ymax")
+  return(stats)
+}
+
+
 ggplot() + 
-  geom_boxplot(data = pp_us %>% filter(year > 2020), aes(date, value, group = year), color = 'blue', outlier.shape = NA, width = 200) + 
+  stat_summary(data = pp_us %>% filter(year > 2020), 
+               aes(date, value, group = year), 
+               color = 'blue',  
+               fun.data = calc_stat, geom = 'boxplot', 
+               width = 200) + 
   geom_quantile(data = pp_us, aes(date, value), method = "rqss") + 
   geom_point(data = x4_us, aes(date, value)) +
   geom_line(data = x4_us, aes(date, value)) +
