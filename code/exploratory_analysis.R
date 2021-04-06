@@ -10,15 +10,14 @@ x <- readr::read_csv('raw_data/USA organic agriculture state data in farms_landa
                        farm_number = col_number(),
                        farm_ha = col_number(),
                        sales = col_number()
-                     )) %>% 
-  drop_na()
+                     ))
 
 
 # drop states w/ < 2 years
 
-x2 <- x %>% group_by(state) %>% 
-  summarise(n = n()) %>% 
-  filter(n < 3) 
+#x2 <- x %>% group_by(state) %>% 
+#  summarise(n = n()) %>% 
+#  filter(n < 3) 
 
 x3 <- x %>% #filter(!state %in% x2$state) %>% 
   mutate(farm_knumber = farm_number/1000,
@@ -76,8 +75,9 @@ ggplot(data = totals, aes(year, us_50)) +
 ## full multivariate using brms
 library(brms)
 # handle missing data using `|mi()` ?
+# farm_kha: 2 NA's; farm_msales: 9 NA's
 # https://m-clark.github.io/easy-bayes/brms-mo-models.html
-brms_formula <-  bf(farm_knumber|mi()  ~ year * state + (1 + year | state)) + 
+brms_formula <-  bf(farm_knumber  ~ year * state + (1 + year | state)) + 
   bf(farm_kha|mi()  ~ year * state + (1 + year | state)) +
   bf(farm_msales|mi()  ~ year * state + (1 + year | state))
 
