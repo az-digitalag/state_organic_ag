@@ -83,27 +83,28 @@ brms_formula <-  bf(farm_knumber  ~ year * state + (1 + year | state)) +
 
 mod_mvbrm <- brm(brms_formula,
          data = x3,
+         iter = 5000,
          chains = 4,
          cores = 4,
-         family = lognormal(link = "identity")
+         family = lognormal(link = "identity"),
+         file = 'derived_data/mod_mvbrm'
          )
 
 
-library(rstanarm)
+#library(rstanarm)
 ## is this the appropriate way to model the y 
 ## values that all seem log-normally distributed?
-system.time(
-mod_stanmvmer<- stan_mvmer(
-  formula = list(farm_knumber ~ year * state + (1 + year | state),
-                 farm_kha ~ year * state + (1 + year | state),
-                 farm_msales ~ year * state + (1 + year | state)),
-  data = x3,
-  family = gaussian(link = "log"),
-  # short test:
-  # chains = 1, cores = 1, seed = 12345, iter = 1000)
-  chains = 4, cores = 4, seed = 12345, iter = 2000)
-)
-summary(mod_stanmvmer)
+#mod_stanmvmer<- stan_mvmer(
+#  formula = list(farm_knumber ~ year * state + (1 + year | state),
+#                 farm_kha ~ year * state + (1 + year | state),
+#                 farm_msales ~ year * state + (1 + year | state)),
+#  data = x3 %>% drop_na(),
+#  family = gaussian(link = "log"),
+#  # short test:
+#  # chains = 1, cores = 1, seed = 12345, iter = 1000)
+#  chains = 4, cores = 4, seed = 12345, iter = 2000)
+#)
+#summary(mod_stanmvmer)
 
 
 
@@ -113,19 +114,33 @@ summary(mod_stanmvmer)
 #mod_stanlmer <- stan_lmer(farm_kha ~ year * state + (1 + year | state),
 #               data = x3)
 
-broom.mixed::tidyMCMC(mod_stanmvmer)
+#broom.mixed::tidyMCMC(mod_mvbrm)
 #plot(broom.mixed::tidyMCMC(mod_stanlmer))
 
 newdata <- data.frame(state = unique(x3$state), 
   year = rep(c(2007, 2012, 2017, 2022, 2027, 2032),
              each= length(unique(x3$state))))
 
-pp_farm_knumber <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 1, newdata = newdata))) %>% 
+## for rstanarm
+# pp_farm_knumber <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 1, newdata = newdata))) %>% 
+#   tidyr::pivot_longer(names_to = 'sample', values_to = 'farm_knumber', cols = 3:4002)
+# pp_farm_kha <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 2, newdata = newdata))) %>% 
+#   tidyr::pivot_longer(names_to = 'sample', values_to = 'farm_kha', cols = 3:4002)
+# pp_farm_msales <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 3, newdata = newdata))) %>% 
+#   tidyr::pivot_longer(names_to = 'sample', values_to = 'farm_msales', cols = 3:4002)
+
+system.time(pp_array <- posterior_predict(mod_mvbrm, newdata = newdata, cores = 4))
+
+pp_farm_knumber <- cbind(newdata, t(pp_array[1:4000,,1])) %>% 
   tidyr::pivot_longer(names_to = 'sample', values_to = 'farm_knumber', cols = 3:4002)
-pp_farm_kha <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 2, newdata = newdata))) %>% 
+
+pp_farm_kha <- cbind(newdata, t(pp_array[1:4000,,2])) %>% 
   tidyr::pivot_longer(names_to = 'sample', values_to = 'farm_kha', cols = 3:4002)
-pp_farm_msales <- cbind(newdata, t(posterior_predict(mod_stanmvmer, m = 3, newdata = newdata))) %>% 
+
+pp_farm_msales <- cbind(newdata, t(pp_array[1:4000,,3])) %>% 
   tidyr::pivot_longer(names_to = 'sample', values_to = 'farm_msales', cols = 3:4002)
+
+
 
 pp <- pp_farm_knumber %>% left_join(pp_farm_kha) %>% 
   left_join(pp_farm_msales) %>% 
@@ -146,14 +161,14 @@ x4 <- x3 %>% mutate(date = lubridate::ymd(paste0(year, '-01-01'))) %>%
 
 x4_us <- x4 %>%
   group_by(year, date, name) %>% 
-  summarise(value = sum(value))
+  summarise(value = sum(value, na.rm = TRUE))
 
 ggplot() + 
   geom_boxplot(data = pp_us %>% filter(year > 2020), aes(date, value, group = year), color = 'blue', outlier.shape = NA, width = 200) + 
-  geom_quantile(data = pp_us, aes(date, value)) + 
-  facet_wrap(~name, scales = 'free_y', ncol = 1) +
+  geom_quantile(data = pp_us, aes(date, value), method = "rqss") + 
   geom_point(data = x4_us, aes(date, value)) +
   geom_line(data = x4_us, aes(date, value)) +
+  facet_wrap(~name, scales = 'free_y', ncol = 1) +
   #scale_y_log10() + 
   theme_bw() + xlab('year') + ylab('')
 
