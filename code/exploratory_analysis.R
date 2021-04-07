@@ -77,13 +77,13 @@ library(brms)
 # handle missing data using `|mi()` ?
 # farm_kha: 2 NA's; farm_msales: 9 NA's
 # https://m-clark.github.io/easy-bayes/brms-mo-models.html
-brms_formula <-  bf(farm_knumber  ~ year * state + (1 + year | state)) + 
-  bf(farm_kha|mi()  ~ year * state + (1 + year | state)) +
-  bf(farm_msales|mi()  ~ year * state + (1 + year | state))
+brms_formula <-  bf(farm_knumber  ~ year + state + (1 + year | state)) + 
+  bf(farm_kha|mi()  ~ year + state + (1 + year | state)) +
+  bf(farm_msales|mi()  ~ year + state + (1 + year | state))
 
 mod_mvbrm <- brm(brms_formula,
          data = x3,
-         iter = 5000,
+         iter = 10000,
          chains = 4,
          cores = 4,
          family = lognormal(link = "identity"),
@@ -91,7 +91,7 @@ mod_mvbrm <- brm(brms_formula,
          )
 
 # explore with shinystan:
-# launch_shinystan(mod_mvbrm)
+# launch_shinystan(mod_mvbrm, rstudio = TRUE)
 
 
 #library(rstanarm)
