@@ -77,21 +77,54 @@ library(brms)
 # handle missing data using `|mi()` ?
 # farm_kha: 2 NA's; farm_msales: 9 NA's
 # https://m-clark.github.io/easy-bayes/brms-mo-models.html
-brms_formula <-  bf(farm_knumber  ~ year + state + (1 + year | state)) + 
-  bf(farm_kha|mi()  ~ year + state + (1 + year | state)) +
-  bf(farm_msales|mi()  ~ year + state + (1 + year | state))
 
-mod_mvbrm <- brm(brms_formula,
-         data = x3,
-         iter = 10000,
-         chains = 4,
-         cores = 4,
-         family = lognormal(link = "identity"),
-         file = 'derived_data/mod_mvbrm'
-         )
+brms_formula <-  
+  bf(farm_knumber  ~ 1 + year) + 
+  bf(farm_kha|mi()  ~ 1 + year) +
+  bf(farm_msales|mi()  ~ 1 + year) +
+  set_rescor(TRUE)
 
+brms_formula_re_state <-  
+  bf(farm_knumber  ~ 1 + year + (1 | state)) + 
+  bf(farm_kha|mi()  ~ 1 + year + (1 | state)) +
+  bf(farm_msales|mi()  ~ 1 + year + (1 | state)) +
+  set_rescor(TRUE)
+
+brms_formula_re_yr_state <-  
+  bf(farm_knumber  ~ 1 + year + (1 + year | state)) + 
+  bf(farm_kha|mi()  ~ 1 + year + (1 + year | state)) +
+  bf(farm_msales|mi()  ~ 1 + year + (1 + year | state)) +
+  set_rescor(TRUE)
+
+
+
+mod_mvbrm <- brm(brms_formula_re_state,
+                    data = x3,
+                    iter = 5000,
+                    chains = 4,
+                    cores = 4,
+                    family = gaussian(link = "log"),
+                    file = 'derived_data/mod_mvbrm')
+
+mod_mvbrm_rs <- brm(brms_formula_re_state,
+                    data = x3,
+                    iter = 5000,
+                    chains = 4,
+                    cores = 4,
+                    family = gaussian(link = "log"),
+                    file = 'derived_data/mod_mvbrm_re_state')
+
+mod_mvbrm_rys <- brm(brms_formula_re_yr_state,
+                     data = x3,
+                     iter = 5000,
+                     chains = 4,
+                     cores = 4,
+                     family = gaussian(link = "log"),
+                     file = 'derived_data/mod_mvbrm_re_yr_state')
+
+loo(mod_mvbrm, mod_mvbrm_rs, mod_mvbrm_rys)
 # explore with shinystan:
-# launch_shinystan(mod_mvbrm, rstudio = TRUE)
+launch_shinystan(mod_mvbrm_rs, rstudio = TRUE)
 
 
 #library(rstanarm)
