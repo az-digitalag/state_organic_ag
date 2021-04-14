@@ -3,7 +3,7 @@ library(tidyr)
 library(readr)
 library(ggplot2)
 
-x <- readr::read_csv('raw_data/USA organic agriculture state data in farms_landarea_sales value.csv', 
+x <- readr::read_csv('../raw_data/USA organic agriculture state data in farms_landarea_sales value.csv', 
                      col_types = cols(
                        year = col_integer(),
                        state = col_character(),
@@ -25,11 +25,12 @@ x3 <- x %>% #filter(!state %in% x2$state) %>%
          farm_msales = sales/1000000) %>% 
   select(!farm_number:sales) 
 
+
 x4 <- x3 %>% 
   tidyr::pivot_longer(cols = farm_knumber:farm_msales, names_to = 'metric', values_to = 'value')
 
-ggplot(data = x3) +
-  geom_histogram(breaks = 20) +
+ggplot(data = x4, aes(x = value)) +
+  geom_histogram(bins = 50) +
   facet_wrap(~metric, scales = 'free_x', ncol = 1) 
 
 ggplot(data = x4, aes(year, value, color = state)) + 
@@ -98,13 +99,13 @@ brms_formula_re_yr_state <-
 
 
 
-mod_mvbrm <- brm(brms_formula_re_state,
+mod_mvbrm <- brm(brms_formula,
                     data = x3,
                     iter = 5000,
                     chains = 4,
                     cores = 4,
                     family = gaussian(link = "log"),
-                    file = 'derived_data/mod_mvbrm')
+                    file = '../derived_data/mod_mvbrm')
 
 mod_mvbrm_rs <- brm(brms_formula_re_state,
                     data = x3,
@@ -112,7 +113,7 @@ mod_mvbrm_rs <- brm(brms_formula_re_state,
                     chains = 4,
                     cores = 4,
                     family = gaussian(link = "log"),
-                    file = 'derived_data/mod_mvbrm_re_state')
+                    file = '../derived_data/mod_mvbrm_re_state')
 
 mod_mvbrm_rys <- brm(brms_formula_re_yr_state,
                      data = x3,
@@ -120,7 +121,7 @@ mod_mvbrm_rys <- brm(brms_formula_re_yr_state,
                      chains = 4,
                      cores = 4,
                      family = gaussian(link = "log"),
-                     file = 'derived_data/mod_mvbrm_re_yr_state')
+                     file = '../derived_data/mod_mvbrm_re_yr_state')
 
 loo(mod_mvbrm, mod_mvbrm_rs, mod_mvbrm_rys)
 # explore with shinystan:
