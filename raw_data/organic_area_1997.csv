@@ -1,4 +1,4 @@
-Number,certifiers,cropland,pasture and rangeland,total
+state,number,cropland,pasture_rangeland,total
 Alabama,1,1,NA,1
 Alaska,1,NA,"174,190","174,190"
 Arizona,3,"9,681",NA,"9,681"
@@ -16,13 +16,13 @@ Indiana,3,"1,994",NA,"1,994"
 Iowa,4,"34,276","1,493","35,769"
 Kansas,3,"24,314",NA,"24,314"
 Kentucky,1,"5,416",250,"5,666"
-Louisana,1,371,NA,371
+Louisiana,1,371,NA,371
 Maine,3,"5,272","1,489","6,761"
 Maryland,2,"1,645",NA,"1,645"
 Massachusetts,3,841,293,"1,134"
 Michigan,2,"14,529","2,234","16,762"
 Minnesota,5,"56,275","7,410","63,685"
-Mississippi,NANA,NA,NA,NA
+Mississippi,NA,NA,NA,NA
 Missouri,3,"6,339","1,961","8,300"
 Montana,4,"59,362","20,750","80,112"
 Nebraska,3,"28,104","1,104","29,208"
@@ -49,4 +49,3 @@ Washington,3,"10,368","1,091","11,459"
 West Virginia,3,473,260,733
 Wisconsin,3,"41,245","6,377","47,622"
 Wyoming,1,75,NA,75
-,,,,
