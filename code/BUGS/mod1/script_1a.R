@@ -1,6 +1,6 @@
 # Controls script for OpenBUGS model
 # of state-level organic farm survey
-# multivariate likelihood of farm number, acerage, and sales
+# multivariate normal likelihood of farm number, acerage, and sales
 # predictor of year
 # random effect of state
 
@@ -28,6 +28,22 @@ dat <- x %>%
          year = year - 2000,
          stateID = as.numeric(as.factor(state))) %>% # "center" by using years since 2000
   select(!farm_number:sales)
+
+# Add 2002 as year when organic standars were officially implemented
+dat <- rbind.data.frame(data.frame(year = rep(2, 50),
+                                   state = unique(dat$state),
+                                   farm_knumber = rep(0, 50),
+                                   farm_5ha = rep(0, 50),
+                                   farm_msales = rep(0, 50),
+                                   stateID = 1:50),
+                        dat)
+
+#plot
+ggplot(pivot_longer(dat, 3:5, names_to = "type", values_to = "value"),
+       aes(x = year, y = value, group = state)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(~type, scales = "free_y")
 
 datlist <- list(farm = as.matrix(dat[,3:5]),
                 year = dat$year,
@@ -66,7 +82,7 @@ start <- proc.time()
 model <- bugs(data = datlist, 
             inits = saved.state[[2]],
             parameters.to.save = params, 
-            n.iter = 5000, n.chains = 3, n.burnin = 1000, n.thin = 10,
+            n.iter = 10000, n.chains = 3, n.burnin = 1000, n.thin = 10,
             model.file="mod_1a.R", 
             codaPkg = TRUE, debug = FALSE)
 end <- proc.time()

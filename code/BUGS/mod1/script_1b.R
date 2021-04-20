@@ -26,6 +26,21 @@ dat <- x %>%
   mutate(year = year - 2000,
          stateID = as.numeric(as.factor(state))) # "center" by using years since 2000
 
+# Add 2002 as year when organic standards were officially implemented
+dat <- rbind.data.frame(data.frame(year = rep(-10, 50),
+                                   state = unique(dat$state),
+                                   farm_number = rep(1, 50),
+                                   farm_ha = rep(1, 50),
+                                   farm_sales = rep(1, 50),
+                                   stateID = 1:50),
+                        dat)
+
+#plot
+ggplot(pivot_longer(dat, 3:5, names_to = "type", values_to = "value"),
+       aes(x = year, y = log(value), group = state)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(~type, scales = "free_y")
 
 datlist <- list(farm = as.matrix(log(dat[,3:5])),
                 year = dat$year,
