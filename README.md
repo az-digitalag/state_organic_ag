@@ -4,6 +4,29 @@
 - panel data analysis?
 - goal: predict farm number, area, and sales for next three census (2022, 2027, 2032)
 
+### Content
+
+#### Raw Data
+
+- `raw_data/USA organic agriculture state data in farms_landarea_sales value.csv`
+  - columns: year,state,farm_number,farm_ha,sales
+  - source: NASS
+- `raw_data/state_organic_area.csv`
+  - columns: state, 1997, 2012, 2014, 2015, 2017
+  - value: area (ha) under organic production
+  - source: 
+    - 1997 data: Greene 2001 
+    - Other data: NASS
+- `raw_data/us_organic_area.csv`  
+  - columns: state, year, area
+  - area in (ha)
+  - source: 
+    - 1992-1997 data: Greene 2001
+    - Other data: NASS
+
+
+Greene, Catherine R. US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+
 ### TODO
 
 - Check model structure

@@ -13,11 +13,7 @@ x <- readr::read_csv('raw_data/USA organic agriculture state data in farms_landa
                      ))
 
 
-# drop states w/ < 2 years
 
-#x2 <- x %>% group_by(state) %>% 
-#  summarise(n = n()) %>% 
-#  filter(n < 3) 
 
 x3 <- x %>% #filter(!state %in% x2$state) %>% 
   mutate(farm_knumber = farm_number/1000,
@@ -25,34 +21,61 @@ x3 <- x %>% #filter(!state %in% x2$state) %>%
          farm_msales = sales/1000000) %>% 
   select(!farm_number:sales) 
 
-x4 <- x3 %>% 
-  tidyr::pivot_longer(cols = farm_knumber:farm_msales, names_to = 'metric', values_to = 'value')
+start <- data.frame(year = 2002, 
+                    state = unique(x3$state), 
+                    farm_knumber = 0,
+                    farm_kha = 0,
+                    farm_msales = 0)
+x3_2002 <- rbind(start, x3)
 
-ggplot(data = x3) +
-  geom_histogram(breaks = 20) +
-  facet_wrap(~metric, scales = 'free_x', ncol = 1) 
+x4 <- x3_1990 %>% 
+  tidyr::pivot_longer(cols = farm_knumber:farm_msales, 
+                      names_to = 'metric', 
+                      values_to = 'value')
 
-ggplot(data = x4, aes(year, value, color = state)) + 
+# ggplot(data = x3) +
+#   geom_histogram(breaks = 20) +
+#   facet_wrap(~metric, scales = 'free_x', ncol = 1) 
+# 
+ggplot(data = x4 %>% filter(metric == 'farm_knumber'), 
+       aes(year, value)) +
   geom_point() +
   geom_line()+
-  facet_wrap(~metric, scales = 'free_y', ncol = 1) +
+  facet_wrap(~state) +
+  ylab('farm k number') +
   scale_y_log10()
 
+ggplot(data = x4 %>% filter(metric == 'farm_kha'), 
+       aes(year, value)) +
+  geom_point() +
+  geom_line()+
+  facet_wrap(~state) +
+  ylab('farm kha') +
+  scale_y_log10()
 
-totals <- x4 %>% group_by(year, metric) %>% 
+ggplot(data = x4 %>% filter(metric == 'farm_msales'), 
+       aes(year, value)) +
+  geom_point() +
+  geom_line()+
+  facet_wrap(~state) +
+  ylab('farm sales (m$)') +
+  scale_y_log10()
+# 
+# 
+totals <- x4 %>% group_by(year, metric) %>%
   summarize(us = sum(value, na.rm = TRUE),
             us_50 = median(value, na.rm = TRUE),
             us_75 = quantile(value, 0.75, na.rm = TRUE),
             us_25 = quantile(value, 0.25, na.rm = TRUE))
-
-ggplot(data = totals, aes(year, us)) + 
+# 
+ggplot(data = totals, aes(year, us)) +
   geom_point() +
   geom_line()+
   facet_wrap(~metric, scales = 'free_y', ncol = 1)
 
-ggplot(data = totals, aes(year, us_50)) + 
+ggplot(data = totals, aes(year, us_50)) +
   geom_point() +
-  geom_line() + 
+  geom_line() +
   geom_line(aes(y = us_25), alpha = 0.5)+
   geom_line(aes(y = us_75), alpha = 0.5)+
   facet_wrap(~metric, scales = 'free_y', ncol = 1)
@@ -62,12 +85,25 @@ ggplot(data = totals, aes(year, us_50)) +
 
 ## LM multivariate
 # 
-# mod_lm <- lm(cbind(farm_knumber, farm_kha, farm_msales) ~ state + year, data = x3)
+mod_lm <- lm(cbind(log(farm_knumber), log(farm_kha), log(farm_msales)) ~ state * year, data = x3)
+summary(mod_lm)
 
+# LM multivariate log transformed 
 ## LMER multivariate
+
+# drop states w/ < 2 years
+# 
+# complete_states <- x3 %>% 
+#   filter(!is.na(farm_msales) & !is.na(farm_kha) ) %>% 
+#   group_by(state) %>% 
+#   summarise(n = n()) %>% 
+#   filter(n == 3) %>% 
+#   select(state)
 # library(lme4)
-# mod_lmermv <- lmer(cbind(farm_knumber, farm_kha, farm_msales) ~ year * state + (1 + year | state),
-#          data = x3)
+# mod_lmermv <- lmer(
+#   cbind(log(farm_knumber+1), log(farm_kha+1), log(farm_msales+1)) ~ year * state + (1 + year | state),
+#   data = x3_1990 %>% filter(state %in% complete_states$state)
+# )
 
 # https://m-clark.github.io/mixed-models-with-R/bayesian.html
 
@@ -99,7 +135,7 @@ brms_formula_re_yr_state <-
 
 
 mod_mvbrm <- brm(brms_formula_re_state,
-                    data = x3,
+                    data = x3_2002,
                     iter = 5000,
                     chains = 4,
                     cores = 4,
@@ -107,7 +143,7 @@ mod_mvbrm <- brm(brms_formula_re_state,
                     file = 'derived_data/mod_mvbrm')
 
 mod_mvbrm_rs <- brm(brms_formula_re_state,
-                    data = x3,
+                    data = x3_2002,
                     iter = 5000,
                     chains = 4,
                     cores = 4,
@@ -115,16 +151,16 @@ mod_mvbrm_rs <- brm(brms_formula_re_state,
                     file = 'derived_data/mod_mvbrm_re_state')
 
 mod_mvbrm_rys <- brm(brms_formula_re_yr_state,
-                     data = x3,
+                     data = x3_2002,
                      iter = 5000,
                      chains = 4,
                      cores = 4,
                      family = gaussian(link = "log"),
                      file = 'derived_data/mod_mvbrm_re_yr_state')
 
-loo(mod_mvbrm, mod_mvbrm_rs, mod_mvbrm_rys)
+brms::loo(mod_mvbrm, mod_mvbrm_rs)
 # explore with shinystan:
-launch_shinystan(mod_mvbrm_rs, rstudio = TRUE)
+shinystan::launch_shinystan(mod_mvbrm_rys, rstudio = TRUE)
 
 
 #library(rstanarm)
@@ -210,19 +246,19 @@ calc_stat <- function(x) {
   return(stats)
 }
 
-
-ggplot() + 
-  stat_summary(data = pp_us %>% filter(year > 2020), 
-               aes(date, value, group = year), 
-               color = 'blue',  
-               fun.data = calc_stat, geom = 'boxplot', 
-               width = 200) + 
-  geom_quantile(data = pp_us, aes(date, value), method = "rqss") + 
-  geom_point(data = x4_us, aes(date, value)) +
-  geom_line(data = x4_us, aes(date, value)) +
-  facet_wrap(~name, scales = 'free_y', ncol = 1) +
-  #scale_y_log10() + 
-  theme_bw() + xlab('year') + ylab('')
+# 
+# ggplot() + 
+#   stat_summary(data = pp_us %>% filter(year > 2020), 
+#                aes(date, value, group = year), 
+#                color = 'blue',  
+#                fun.data = calc_stat, geom = 'boxplot', 
+#                width = 200) + 
+#   geom_quantile(data = pp_us, aes(date, value), method = "rqss") + 
+#   geom_point(data = x4_us, aes(date, value)) +
+#   geom_line(data = x4_us, aes(date, value)) +
+#   facet_wrap(~name, scales = 'free_y', ncol = 1) +
+#   #scale_y_log10() + 
+#   theme_bw() + xlab('year') + ylab('')
 
 pp_summary <- pp_us %>% filter(year > 2020) %>% 
   group_by(year, name) %>% 
