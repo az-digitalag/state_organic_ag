@@ -8,24 +8,58 @@
 
 #### Raw Data
 
-- `raw_data/USA organic agriculture state data in farms_landarea_sales value.csv`
+**Preprocessing:** Data were copied from TXT and PDF files provided by the USDA Organic 
+Production Surveys: https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/index.php. Units were converted from acres to hectares.
+
+
+
+**Variables:**
+* `state`
+* `year`
+* `farm_number`: number of farms
+* `farm_ha`: area of farms in hectares (ha)
+* `farm_sales`: total sales
+
+**Files**
+- `1997_area.csv`
+  - columns: state, year, farm_ha
+  - source: Greene 2001
+- `2007_2012_2017_number_area_sales.csv`
   - columns: year,state,farm_number,farm_ha,sales
   - source: NASS
-- `raw_data/state_organic_area.csv`
-  - columns: state, 1997, 2012, 2014, 2015, 2017
-  - value: area (ha) under organic production
-  - source: 
-    - 1997 data: Greene 2001 
-    - Other data: NASS
-- `raw_data/us_organic_area.csv`  
-  - columns: state, year, area
-  - area in (ha)
-  - source: 
-    - 1992-1997 data: Greene 2001
-    - Other data: NASS
+- `2014_2015_farm_number.csv`  
+  - columns: state, year, farm_number
+  - source: USDA 2016
+- `2016_number_area_sales.csv`  
+  - columns: state,year,farm_number,farm_number_cv,farm_ha,farm_ha_cv,sales,sales_cv
+  - source: USDA 2017
+- `2019_number_area_sales.csv`  
+  - columns: state,year,farm_number,farm_number_cv,farm_ha,farm_ha_cv,sales,sales_cv
+  - source: USDA 2017
+
+**Notes:**
+> "The 2014 and 2015 Organic Certifier Survey data is a tabulation of USDA-accredited organic certifiers’ acreage and livestock data received. 
+The data underwent editing, summarization, and disclosure programming prior to publishing. The 2008, 2011, 2014, and 2015 organic producer surveys as well as the 2007 and 2012 Census of Agriculture collected and published data on organic operations which had production in the reference year. 
+The data from these programs were adjusted for non-response, misclassification, and coverage. Therefore, the certifier survey data and producer survey/census data are not comparable and data users should account for these differences whenreviewing the data. 
+Data users should allow for differences when comparing the data between datasets including reference periods, organic definitions, and differing survey methodologies." - USDA 2016
+
+* `[variable]_cv`: defined as "statistical precision estimates for the number of farms and acres and the total value of sales for the United States and for each state." collected for 2016, 2019; also available for [2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt), [2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt)
+
+**Sources:**
+
+* Greene, Catherine R. US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+* USDA (2012) "2011 Certified Organic Production Survey" [TXT] (https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)
+* USDA (2016) "2014 and 2015 Organic Certifier Data" [pdf](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/Organic_Certifiers/2016/USDA_Accredited_Certifying_Agent_Certified_Organic_Data_2014_2015.pdf). Raw data from [2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt), [2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt)
+* USDA (2017) "2016 Certified Organic Survey" [TXT] https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt
+* USDA (2017) 2017 Census of Agriculture - State Data [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf) (includes 2017 and 2012 data)
+* USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-17-SS-4: [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)
 
 
-Greene, Catherine R. US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+#### Analysis Code
+
+Found in `code/` folder.
+
+* `merge_data.R`
 
 ### TODO
 
