@@ -3,7 +3,6 @@ library(tidyr)
 library(readr)
 library(ggplot2)
 
-
 all <- read_csv('derived_data/all_transformed.csv',
                 col_types = cols(
                   state = col_character(),
@@ -69,6 +68,5 @@ ggplot(data = totals, aes(year, us_50)) +
 ### Modeling
 
 ## LM multivariate
-# 
 mod_lm <- lm(cbind(log(farm_knumber), log(farm_kha), log(farm_msales)) ~ state * year, data = all)
 summary(mod_lm)

@@ -1,0 +1,3 @@
+#stan model outputs
+*.rds
+*.Rdata
