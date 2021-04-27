@@ -115,7 +115,7 @@ mod_mvbrm_rys <- brm(brms_formula_re_yr_state,inits = "0",
 
 #brms::loo(mod_mvbrm, mod_mvbrm_rs)
 # explore with shinystan:
-shinystan::launch_shinystan(mod_mvbrm_rs, rstudio = TRUE)
+shinystan::launch_shinystan(mod_mvbrm_rys, rstudio = TRUE)
 
 
 #library(rstanarm)
