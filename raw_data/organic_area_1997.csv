@@ -1,0 +1,51 @@
+state,number,cropland,pasture_rangeland,total
+Alabama,1,1,NA,1
+Alaska,1,NA,"174,190","174,190"
+Arizona,3,"9,681",NA,"9,681"
+Arkansas,3,997,NA,997
+California,6,"96,851","5,968","102,819"
+Colorado,3,"35,127","223,746","258,873"
+Connecticut,2,747,319,"1,066"
+Delaware,1,165,NA,165
+Florida,4,"32,745",NA,"32,745"
+Georgia,1,572,NA,572
+Hawaii,4,595,NA,595
+Idaho,3,"107,955","3,475","111,430"
+Illinois,2,"10,660",39,"10,699"
+Indiana,3,"1,994",NA,"1,994"
+Iowa,4,"34,276","1,493","35,769"
+Kansas,3,"24,314",NA,"24,314"
+Kentucky,1,"5,416",250,"5,666"
+Louisiana,1,371,NA,371
+Maine,3,"5,272","1,489","6,761"
+Maryland,2,"1,645",NA,"1,645"
+Massachusetts,3,841,293,"1,134"
+Michigan,2,"14,529","2,234","16,762"
+Minnesota,5,"56,275","7,410","63,685"
+Mississippi,NA,NA,NA,NA
+Missouri,3,"6,339","1,961","8,300"
+Montana,4,"59,362","20,750","80,112"
+Nebraska,3,"28,104","1,104","29,208"
+Nevada,1,255,NA,255
+New Hampshire,1,265,NA,265
+New Jersey,1,"1,218",116,"1,334"
+New Mexico,4,"6,058","20,397","26,455"
+New York,4,"21,571","4,147","25,718"
+North Carolina,4,980,NA,980
+North Dakota,2,"88,581","2,209","90,790"
+Ohio,3,"11,766",249,"12,015"
+Oklahoma,3,"3,372",620,"3,992"
+Oregon,1,"14,399","2,585","16,984"
+Pennsylvania,5,"6,288",223,"6,511"
+Rhode Island,1,98,34,132
+South Carolina,2,41,NA,41
+South Dakota,3,"26,617","5,701","32,319"
+Tennessee,1,"1,351",NA,"1,351"
+Texas,2,"27,121","3,759","30,880"
+Utah,3,"20,215",NA,"20,215"
+Vermont,2,"17,321","3,826","21,146"
+Virginia,4,"4,346",71,"4,416"
+Washington,3,"10,368","1,091","11,459"
+West Virginia,3,473,260,733
+Wisconsin,3,"41,245","6,377","47,622"
+Wyoming,1,75,NA,75
