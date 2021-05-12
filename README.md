@@ -1,3 +1,7 @@
+---
+output: word_document
+---
+
 # US State Organic Ag
 
 -   Trends of USA Organic Agriculture trends on farm numbers, hectares, and sales over the years.
@@ -19,10 +23,27 @@ The need to reduce negative impacts of agriculture on the environment and the co
 **Variables:**
 
 -   `state`
+
 -   `year`
+
 -   `farm_number`: number of farms
--   `farm_ha`: area of farms in hectares (ha)
--   `farm_sales`: total sales (USD)
+
+-   `farm_ha`: area of farms in hectares (ha) converted from reported areas using a conversion factor of 2.47 ha/a
+
+-   `farm_sales`: total sales (USD); adjusted to 2020 dollars by dividing sales for each year by the adjustment factor provided by the [U.S. Bureau of Labor Statistics CPI Inflation Calculator](https://www.bls.gov/data/inflation_calculator.htm) comparing from July in year Y to July in 2020.
+
+    +-------+-------------------------+
+    | Year  | $\textbf{CPI}_{Y/2020}$ |
+    +=======+=========================+
+    | 2008  | 1.18                    |
+    +-------+-------------------------+
+    | 2014  | 1.09                    |
+    +-------+-------------------------+
+    | 2016  | 1.08                    |
+    +-------+-------------------------+
+    | 2019  | 1.01                    |
+    +-------+-------------------------+
+
 -   `[variable]_cv`^\*^: coefficient of variance for `[variable]`
 
 ^\*^defined as "statistical precision estimates for the number of farms and acres and the total value of sales for the United States and for each state." collected for 2016, 2019; also available for [2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt), [2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt)
@@ -43,8 +64,8 @@ The need to reduce negative impacts of agriculture on the environment and the co
 | NA                   | **2016**             | 2017             | X     | X    | X     | USDA 2017a  | Table 1$^\dagger$ [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)                     | 2016\_number\_area\_sales.csv             | Yes, used in fig below$^\ddagger$      | Yes     |
 | 2017                 | **2019**             | 2020             | X     | X    | X     | USDA 2020   | Table 1$^\dagger$ [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)                                                               | 2008\_2014\_2017\_number\_area\_sales.csv | Yes                                    | Yes     |
 
--    $^\star$ "census year" is the year of the USDA Census; "survey year" is the year data was collected (different because the organic census is a follow on to the overall census
--    $^\ddagger$ "Data users should allow for differences when comparing data between the 2011 COPS and the 2008 Organic Production" USDA 2010 Greene, Catherine R. (2001) US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+-   $^\star$ "census year" is the year of the USDA Census; "survey year" is the year data was collected (different because the organic census is a follow on to the overall census
+-   $^\ddagger$ "Data users should allow for differences when comparing data between the 2011 COPS and the 2008 Organic Production" USDA 2010 Greene, Catherine R. (2001) US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
 -   $^\dagger$number of farms from first line of table - previously the second line was used for 2008 and 2012 and first in 2016 and 2019
 -   $^\S$ csv files cross referenced w/ original data source at state level and for US totals
 
@@ -87,4 +108,4 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 
 Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial Horticulture and Small Acreage 2830 N Commonwealth Dr, Camp Verde, AZ 86322 email: [mpangai\@arizona.edu](mailto:mpangai@arizona.edu){.email}
 
-Analysis: David LeBauer email: [dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu){.email}
+Analysis in this repository: David LeBauer ([dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu){.email}) and Jessica Guo ([jessicaguo\@arizona.edu](mailto:jessicaguo@arizona.edu))
