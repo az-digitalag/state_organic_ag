@@ -1,18 +1,16 @@
----
-output: word_document
----
-
 # US State Organic Ag
 
 -   Trends of USA Organic Agriculture trends on farm numbers, hectares, and sales over the years.
 -   panel data analysis?
 -   goal: predict farm number, area, and sales for next three census (2022, 2027, 2032)
 
+### Abstract
+
+Organic Agriculture in the United States: Increase Trends in Regenerative Land Management strategies and challenges.
+
+The need to reduce negative impacts of agriculture on the environment and the consumer demands for food produced without synthetic chemical inputs have led to organic agriculture production systems. The United States (US) commands about half of the market share of organic produce worldwide and is also home to about half of the world's organic farmers, but limited information is available on trends in land-use, on-farm practices, and challenges in organic crop production systems. This study used 2007, 2012, and 2019 agriculture census data from the United States Department of Agriculture (USDA) to investigate trends in the US organic agriculture market, on-farm regenerative practices, and challenges. From 2007 to 2017, the number of certified organic farms, land area, and sales value increased by 15, 35, and 214%, respectively. The most common regenerative agriculture practice in certified organic crop production systems is the use of green and animal manures. All regenerative practices evaluated trended positive (1-25%) except organic mulches and composts use, which reduced by 9%. The most significant primary challenges faced by certified organic farmers were related to organic practices regulations and production costs with remarkably increasing trends (115 to 428%) for all investigated challenges from 2007 to 2017. The US certified organic production has enormous future potentials in farm numbers, land area, market, and their increasing contribution to the environmentally friendly regenerative practices. However, this sector requires efforts to address the primary challenges facing the organic farmers, and this will necessitate farm-level research and policy reviews with farmers involvement.
+
 ## Content
-
-This figure from the "[Organic Farming: Results from 2019 Organic Survey](https://www.nass.usda.gov/Publications/Highlights/2020/census-organics.pdf)" implies that USDA has reliable, consistent data for 2008, 2014, 2016, 2019
-
-![](C:/Users/David/AppData/Local/RStudio/tmp/paste-7B1C35EC.png)
 
 ### Raw Data
 
@@ -35,33 +33,24 @@ This figure from the "[Organic Farming: Results from 2019 Organic Survey](https:
 
 **Sources of data:**
 
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| year | farms | area | sales | source      | raw data                                                                                                                                     | file                                      |
-+======+=======+======+=======+=============+==============================================================================================================================================+===========================================+
-| 1997 | X     |      |       | Greene 2001 |                                                                                                                                              | 1997\_area.csv                            |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2007 | X     | X    | X     | ?           |                                                                                                                                              | 2007\_2012\_2017\_number\_area\_sales.csv |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2008 |       |      |       | USDA 2010   | [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)                                          |                                           |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2011 | X     | X    | X     | USDA 2012   | [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)            | 2011\_number\_area\_sales.csv             |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2012 | X     | X    | X     | USDA 2017b  | [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf)              | 2007\_2012\_2017\_number\_area\_sales.csv |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2014 | X     | X    |       | USDA 2016   | [2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt)                                          |                                           |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2015 | X     | X    |       | USDA 2016   | [2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt)           |                                           |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2016 | X     | X    | X     | USDA 2017a  | [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt) |                                           |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2017 | X     | X    | X     | USDA 2017b  | [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf)              | 2007\_2012\_2017\_number\_area\_sales.csv |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
-| 2019 | X     | X    | X     | USDA 2020   | [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)                                           | 2019\_number\_area\_sales.csv             |
-+------+-------+------+-------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------+
+| census year $^\star$ | survey year $^\star$ | publication year | farms | area | sales | source      | raw data                                                                                                                                                                           | file                                      | used                                   |
+|----------------------|----------------------|------------------|-------|------|-------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------|
+| 1997                 |                      | 2001             | X     |      |       | Greene 2001 | [PDF](raw_data/Greene_2001.pdf)                                                                                                                                                    | 1997\_area.csv                            | No; not comparable (pre certification) |
+| 2007                 | **2008**             | 2010             | X     | X    | X     | USDA 2010   | Table 1$^\dagger$ [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)                                                              | 2008\_2014\_2017\_number\_area\_sales.csv | Yes                                    |
+| NA                   | 2011                 | 2012             | X     | X    | X     | USDA 2012   | Table 1 [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)                                          | 2011\_number\_area\_sales.csv             | No$^\ddagger$                          |
+| 2011                 | 2012                 | 2012             | X     | X    | X     | USDA 2017b  | [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf)                                                    |                                           | ???                                    |
+| 2012                 | **2014**             | 2016             | X     | X    |       | USDA 2016   | Table 1$^\dagger$ [TXT](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt)                                                               | 2008\_2014\_2017\_number\_area\_sales.csv | Yes                                    |
+| NA                   | 2015                 | 2016             | X     | X    |       | USDA 2016   | [PDF](raw_data/OrganicProduction-09-15-2016.pdf) [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt) |                                           | No$^\ddagger$                          |
+| NA                   | **2016**             | 2017             | X     | X    | X     | USDA 2017a  | Table 1$^{\dagger\dagger}$ [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)            | 2016\_number\_area\_sales.csv             | Yes, used in fig below$^\ddagger$      |
+| 2017                 | 2019                 |                  | X     | X    | X     | USDA 2017b  | [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf)                                                    | 2008\_2014\_2017\_number\_area\_sales.csv |                                        |
+| 2017                 | **2019**             | 2020             | X     | X    | X     | USDA 2020   | Table 1$^{\dagger\dagger}$ [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)                                                      | 2019\_number\_area\_sales.csv             |                                        |
 
-Greene, Catherine R. (2001) US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+-    $^\star$ "census year" is the year of the USDA Census; "survey year" is the year data was collected (different because the organic census is a follow on to the overall census
+-    $^\ddagger$ "Data users should allow for differences when comparing data between the 2011 COPS and the 2008 Organic Production" USDA 2010 Greene, Catherine R. (2001) US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+-   $^{\dagger\dagger}$ total on (first line of table (rarely differs from second line of table$^{\dagger}$)
+-   $^\dagger$ number of farms reporting cropland or rangeland (second line of table)
 
-USDA (2010) "2008 Organic Production Survey" [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)
+USDA (2010) "2008 Organic Production Survey" [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)X
 
 USDA (2012) "2011 Certified Organic Production Survey" [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)
 
@@ -69,7 +58,7 @@ USDA (2016) "2014 and 2015 Organic Certifier Data" [pdf](https://www.nass.usda.g
 
 USDA (2017a) "2016 Certified Organic Survey" [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)
 
-USDA (2017b) 2017 Census of Agriculture - State Data [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf) (includes 2017 and 2012 data)
+USDA (2017b) 2017 Census of Agriculture - State Data [PDF](https://www.nass.usda.gov/Publications/AgCensus/2017/Full_Report/Volume_1,_Chapter_2_US_State_Level/st99_2_0042_0042.pdf) (includes 2017 and 2012 data) seems suspect
 
 USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-17-SS-4: [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)
 
@@ -83,18 +72,12 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 
 ### TODO
 
--   Check model structure
+-   review data
 
--   handle missing data
+    -   2017 vs 2019: the same numbers for number and sales, very slightly different for area
+    -   This figure from the "[Organic Farming: Results from 2019 Organic Survey](https://www.nass.usda.gov/Publications/Highlights/2020/census-organics.pdf)" implies that USDA has reliable, consistent data for 2008, 2014, 2016, 2019
 
-    -   option 1 (easier, likely sufficient?): estimate using percentage increase since last census? (2017)
-    -   option 2: missing data model?
-
-### Abstract
-
-Organic Agriculture in the United States: Increase Trends in Regenerative Land Management strategies and challenges.
-
-The need to reduce negative impacts of agriculture on the environment and the consumer demands for food produced without synthetic chemical inputs have led to organic agriculture production systems. The United States (US) commands about half of the market share of organic produce worldwide and is also home to about half of the world's organic farmers, but limited information is available on trends in land-use, on-farm practices, and challenges in organic crop production systems. This study used 2007, 2012, and 2019 agriculture census data from the United States Department of Agriculture (USDA) to investigate trends in the US organic agriculture market, on-farm regenerative practices, and challenges. From 2007 to 2017, the number of certified organic farms, land area, and sales value increased by 15, 35, and 214%, respectively. The most common regenerative agriculture practice in certified organic crop production systems is the use of green and animal manures. All regenerative practices evaluated trended positive (1-25%) except organic mulches and composts use, which reduced by 9%. The most significant primary challenges faced by certified organic farmers were related to organic practices regulations and production costs with remarkably increasing trends (115 to 428%) for all investigated challenges from 2007 to 2017. The US certified organic production has enormous future potentials in farm numbers, land area, market, and their increasing contribution to the environmentally friendly regenerative practices. However, this sector requires efforts to address the primary challenges facing the organic farmers, and this will necessitate farm-level research and policy reviews with farmers involvement.
+    ![](figures/usda_census_highlights_fig1.png)
 
 ### Contact Info
 
