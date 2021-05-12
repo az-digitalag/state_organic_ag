@@ -1,7 +1,8 @@
 library(readr)
 library(dplyr)
+library(tidyr)
 
-census_2007_2012_2017 <- readr::read_csv('raw_data/2007_2012_2017_number_area_sales.csv', 
+census_2008_2014_2019 <- readr::read_csv('raw_data/2008_2014_2019_number_area_sales.csv', 
                                          col_types = cols(
                                            state = col_character(),
                                            year = col_integer(),
@@ -10,14 +11,14 @@ census_2007_2012_2017 <- readr::read_csv('raw_data/2007_2012_2017_number_area_sa
                                            sales = col_number()
                                          ))
 
-x_2011 <- readr::read_csv('raw_data/2011_number_area_sales.csv', 
-                          col_types = cols(
-                            state = col_character(),
-                            year = col_integer(),
-                            farm_number = col_number(),
-                            farm_ha = col_number(),
-                            sales = col_number()
-                          ))
+# x_2011 <- readr::read_csv('raw_data/2011_number_area_sales.csv', 
+#                           col_types = cols(
+#                             state = col_character(),
+#                             year = col_integer(),
+#                             farm_number = col_number(),
+#                             farm_ha = col_number(),
+#                             sales = col_number()
+#                           ))
 x_2016 <- readr::read_csv('raw_data/2016_number_area_sales.csv', 
                           col_types = cols(
                             state = col_character(),
@@ -30,30 +31,28 @@ x_2016 <- readr::read_csv('raw_data/2016_number_area_sales.csv',
                             sales_cv = col_number()
                           )) %>% select(!ends_with('cv'))
 
-x_2019 <- readr::read_csv('raw_data/2019_number_area_sales.csv', 
-                          col_types = cols(
-                            state = col_character(),
-                            year = col_integer(),
-                            farm_number = col_number(),
-                            farm_ha = col_number(),
-                            sales = col_number(),
-                            farm_number_cv = col_number(),
-                            farm_ha_cv = col_number(),
-                            sales_cv = col_number()
-                          )) %>% select(!ends_with('cv')) 
+# x_2019 <- readr::read_csv('raw_data/2019_number_area_sales.csv', 
+#                           col_types = cols(
+#                             state = col_character(),
+#                             year = col_integer(),
+#                             farm_number = col_number(),
+#                             farm_ha = col_number(),
+#                             sales = col_number(),
+#                             farm_number_cv = col_number(),
+#                             farm_ha_cv = col_number(),
+#                             sales_cv = col_number()
+#                           )) %>% select(!ends_with('cv')) 
+# 
+# area_1997 <- readr::read_csv('raw_data/1997_area.csv',
+#                              col_types = cols(
+#                                state = col_character(),
+#                                year = col_double(),
+#                                farm_ha = col_double()
+#                              )) %>% 
+#   mutate(farm_number = NA, sales = NA)
 
-area_1997 <- readr::read_csv('raw_data/1997_area.csv',
-                             col_types = cols(
-                               state = col_character(),
-                               year = col_double(),
-                               farm_ha = col_double()
-                             )) %>% 
-  mutate(farm_number = NA, sales = NA)
 
-
-all <- dplyr::bind_rows(census_2007_2012_2017, 
-                        x_2011, x_2016, x_2019,
-                        area_1997)
+all <- dplyr::bind_rows(census_2008_2014_2019, x_2016)
 
 all_transformed <- all %>%  
   mutate(farm_knumber = farm_number/1000,
