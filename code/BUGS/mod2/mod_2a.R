@@ -35,7 +35,7 @@ model{
     for(s in 1:Nst){ # 50 states
       # non-identifiable random effects
       eps[s, k] ~ dnorm(0, tau.eps[k])
-      # identifable random effectds
+      # identifable random effects
       Estar[s, k] <- eps[s, k] - mean.eps[k]
     }
   }
