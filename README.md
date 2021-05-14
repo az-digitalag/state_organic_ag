@@ -94,6 +94,7 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 -   `03_plot_parameters.R` plots the slope and intercept, random effects, and variance and covariance terms
 -   `04_assess_fit.R` runs model for replicated data and assesses model fit 
 -   `fig_2a/` contains generated plots
+-   `predicted_2a.csv` contains input data in long format (contains missing values) and predicted values with the central 95% credible interval (complete)
 
 ### Derived Data
 
