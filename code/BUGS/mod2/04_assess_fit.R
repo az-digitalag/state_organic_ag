@@ -98,3 +98,12 @@ jpeg(filename = "figs_2a/fig_fit.jpg", height = 3, width = 10, units = "in",
      res = 600)
 print(fig_fit)
 dev.off()
+
+options(scipen = 999)
+pred_out <- pred_df %>%
+  mutate(Year = year + 2000,
+         pred.mean = round(mean, 3),
+         pred.lower = round(pc2.5, 3),
+         pred.upper = round(pc97.5, 3)) %>%
+  select(Year, state, stateID, type, obs, pred.mean, pred.lower, pred.upper)
+write.csv(pred_out, file = "predicted_2a.csv", row.names = FALSE)
