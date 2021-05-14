@@ -61,12 +61,12 @@ inits <- function(){
   )
 }
 initslist <- list(inits(), inits(), inits())
-# load("inits/inits_1c.Rdata")
+# load("../mod1/inits/inits_1c.Rdata")
 
 # Compile and adapt BUGS model
 start <- proc.time()
 model <- bugs(data = datlist, 
-            inits = initslist,
+            inits = saved.state[[2]],
             parameters.to.save = params, 
             n.iter = 5000, n.chains = 3, n.burnin = 1000, n.thin = 20,
             model.file="mod_2a.R", 
@@ -77,7 +77,7 @@ print((end - start)/60)
 #change to coda object if codaPkg=T
 coda_out <- read.bugs(model)
 
-save(coda_out, file = "coda/coda_out_1c.Rdata")
+save(coda_out, file = "coda/coda_out_2a.Rdata")
 
 #view chains
 mcmcplot(coda_out, parms = c("deviance", "Dsum", "B"))
@@ -86,10 +86,10 @@ mcmcplot(coda_out, parms = c("Estar"))
 #extract final iteration, save initials for reuse
 newinits <- initfind(coda_out, OpenBUGS = TRUE)
 saved.state <- removevars(initsin = newinits, 
-                          variables=c(2:6))
+                          variables=c(2:5))
 
 #dir.create("inits")
-save(saved.state, file = "inits/inits_1c.Rdata")
+save(saved.state, file = "inits/inits_2a.Rdata")
 
 round(apply(coda_out[[1]][,7:9],2,mean), 3)
 round(apply(coda_out[[2]][,7:9],2,mean), 3)
@@ -135,11 +135,6 @@ gel$psrf[match("Rho[3,1]", row.names(gel$psrf)):match("Rho[3,2]", row.names(gel$
 gel$psrf[match("Rho[2,1]", row.names(gel$psrf)),]
 #Omega (precision matrix)
 gel$psrf[match("omega[1,1]", row.names(gel$psrf)):match("omega[3,3]", row.names(gel$psrf)),]
-
-#plotting random effects
-caterplot(coda_out, regex=c("Estar\\[\\d{1,2},1\\]", perl=T), reorder=F)
-caterplot(coda_out, regex=c("Estar\\[\\d{1,2},2\\]", perl=T), reorder=F)
-caterplot(coda_out, regex=c("Estar\\[\\d{1,2},3\\]", perl=T), reorder=F)
 
 #summarizing chains
 sum_out<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_out)
@@ -187,7 +182,7 @@ fig_slope<-ggplot() +
   coord_flip()
 print(fig_slope)
 
-jpeg(filename = "figs_1c/fig_B.jpg", height = 3, width = 8, units = "in", 
+jpeg(filename = "figs_2a/fig_B.jpg", height = 3, width = 8, units = "in", 
      res = 600)
 plot_grid(fig_intercept, fig_slope, ncol = 2)
 dev.off()
@@ -244,7 +239,7 @@ fig_RE3<-ggplot() +
   coord_flip()
 print(fig_RE3)
 
-jpeg(filename = "figs_1c/fig_RE.jpg", height = 6, width = 8, units = "in", 
+jpeg(filename = "figs_2a/fig_RE.jpg", height = 6, width = 8, units = "in", 
      res = 600)
 plot_grid(fig_RE1, fig_RE2, fig_RE3, ncol = 3)
 dev.off()
@@ -278,7 +273,7 @@ fig_rho <- ggplot(dat_rho, aes(x = labs)) +
   coord_flip()
 print(fig_rho)
 
-jpeg(filename = "figs_1c/fig_sig_rho.jpg", height = 3, width = 8, units = "in", 
+jpeg(filename = "figs_2a/fig_sig_rho.jpg", height = 3, width = 8, units = "in", 
      res = 600)
 plot_grid(fig_sig, fig_rho, ncol = 2)
 dev.off()
@@ -290,14 +285,14 @@ model_rep <- bugs(data = datlist,
               inits = saved.state[[2]],
               parameters.to.save = c("farm.rep"),
               n.iter = 5000, n.chains = 3, n.burnin = 1000, n.thin = 20,
-              model.file="mod_1b.R", 
+              model.file="mod_2a.R", 
               codaPkg = TRUE, debug = FALSE)
 end <- proc.time()
 print((end - start)/60)
 
 #change to coda object if codaPkg=T
 coda_rep <- read.bugs(model_rep)
-save(coda_rep, file = "coda/coda_rep_1c.Rdata")
+save(coda_rep, file = "coda/coda_rep_2a.Rdata")
 
 #summarizing chains, reshape, append to data
 sum_rep <- coda.fast(chains = 3, burn.in = 0, thin = 1, coda = coda_rep)
@@ -308,9 +303,9 @@ pred_df <- data.frame(pivot_longer(dat,3:5, names_to = "type", values_to = "obs"
          median = exp(median),
          pc2.5 = exp(pc2.5),
          pc97.5 = exp(pc97.5),
-         Type = case_when(type == "farm_ha" ~ "Area (acres)",
-                          type == "farm_number" ~ "Number",
-                          type == "farm_sales" ~ "Sales ($)"),
+         Type = case_when(type == "farm_kha" ~ "Area (k ha)",
+                          type == "farm_knumber" ~ "Number (k)",
+                          type == "farm_msales" ~ "Sales (MM)"),
          Type = factor(Type, levels = labs),
          coverage = ifelse(obs <= pc97.5 & obs >= pc2.5, 1, 0))
 tapply(pred_df$coverage, pred_df$Type, mean,  na.rm = T)
@@ -351,7 +346,7 @@ fig_fit <- ggplot() +
         panel.background = element_blank(),
         strip.background = element_blank())
 
-jpeg(filename = "figs_1c/fig_fit.jpg", height = 3, width = 10, units = "in",
+jpeg(filename = "figs_2a/fig_fit.jpg", height = 3, width = 10, units = "in",
      res = 600)
 print(fig_fit)
 dev.off()
