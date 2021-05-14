@@ -13,6 +13,28 @@ sum_out<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_out)
 sum_out$var <- row.names(sum_out)
 sum_out$sig<-ifelse(sum_out$pc2.5*sum_out$pc97.5 > 0, TRUE, FALSE)
 
+## Table
+sum1 <- sum_out %>%
+  mutate(Parameter = NA,
+         Variable = NA,
+         mean = round(mean, 3),
+         pc2.5 = round(pc2.5, 3),
+         pc97.5 = round(pc97.5, 3),
+         significant = sig) %>%
+  select(var, Parameter, Variable, mean, pc2.5, pc97.5, significant)
+
+grep("B|R|S", row.names(sum_out))
+sum_df <- sum1[grep("B|R|S", row.names(sum_out)),]
+sum_df$Parameter <- c(rep("intercept", 3),
+                      rep("slope", 3),
+                      rep("correlation", 3),
+                      rep("standard deviation", 3))
+sum_df$Variable <- c(rep(c("farm_knumber", "farm_kha", "farm_msales"), 2),
+                      c("kha-knumber", "msales-knumber", "msales-kha"),
+                      c("farm_knumber", "farm_kha", "farm_msales"))
+sum_df$significant[grep("R|S", sum_df$var)] <- NA
+write.csv(sum_df, file = "params_2a.csv", row.names = FALSE)
+
 ## Plots
 labs <- c("Number (k)", "Area (k ha)", "Sales (MM)")
 
@@ -23,6 +45,8 @@ fig_intercept<-ggplot() +
   geom_pointrange(data = dat_B1, aes(x = var, y = exp(mean), 
                                      ymin = exp(pc2.5), ymax = exp(pc97.5)), 
                   size = 0.5) +
+  geom_point(data = sig_B1, aes(x = var, y = exp(max(pc97.5)) + 1), 
+             pch = 8, color = "blue") +
   geom_hline(yintercept=0, col = "red") +
   scale_y_continuous("Value in 2000")+ 
   scale_x_discrete(labels = labs) +
@@ -41,8 +65,8 @@ fig_slope<-ggplot() +
   geom_pointrange(data = dat_B2, aes(x = var, y = mean, 
                                      ymin = pc2.5, ymax = pc97.5), 
                   size = 0.5) +
-  # geom_point(data = sig_B2, aes(x = var, y = (sig*(max(sub1[,4])+1))), 
-  # col = "red", shape = 8, size = 2)+
+  geom_point(data = sig_B2, aes(x = var, y = max(pc97.5) + 0.01), 
+             pch = 8, color = "blue") +
   geom_hline(yintercept=0, col = "red") +
   scale_y_continuous(expression(paste("Log rate of change (", yr^-1, ")")))+ 
   scale_x_discrete(labels = labs) +
