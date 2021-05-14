@@ -86,7 +86,14 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 -   `01-merge_data.R` combines files from `raw_data` folder to generate `all_transformed.R`
 -   `02-exploratory_analysis.R` some plots and a simple linear regression
 -   `03-regression.R` initial modeling using `brms` for multivariate glm with missing data
--   
+
+### Found in `/code/BUGS/mod2` folder.
+-   `mod_2a.R` contains a multivariate normal Bayesian model regressing farm number, area, and sales on year
+-   `01_run_model.R` modifies `all_transformed.csv` (log response variables, year centered on 2000) in `mod_2a.R` 
+-   `02_check_convergence.R` visually and algorithmically inspect for convergence; save initials
+-   `03_plot_parameters.R` plots the slope and intercept, random effects, and variance and covariance terms
+-   `04_assess_fit.R` runs model for replicated data and assesses model fit 
+-   `fig_2a/` contains generated plots
 
 ### Derived Data
 
@@ -106,6 +113,6 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 
 ### Contact Info
 
-Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial Horticulture and Small Acreage 2830 N Commonwealth Dr, Camp Verde, AZ 86322 email: [mpangai\@arizona.edu](mailto:mpangai@arizona.edu){.email}
+Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial Horticulture and Small Acreage 2830 N Commonwealth Dr, Camp Verde, AZ 86322 email: [mpangai\@arizona.edu](mailto:mpangai@arizona.edu)
 
-Analysis in this repository: David LeBauer ([dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu){.email}) and Jessica Guo ([jessicaguo\@arizona.edu](mailto:jessicaguo@arizona.edu))
+Analysis in this repository: David LeBauer ([dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu) and Jessica Guo ([jessicaguo\@arizona.edu](mailto:jessicaguo@arizona.edu)
