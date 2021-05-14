@@ -89,12 +89,12 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 
 ### Found in `/code/BUGS/mod2` folder.
 -   `mod_2a.R` contains a multivariate normal Bayesian model regressing farm number, area, and sales on year
--   `01_run_model.R` modifies `all_transformed.csv` (log response variables, year centered on 2000) in `mod_2a.R` 
--   `02_check_convergence.R` visually and algorithmically inspect for convergence; save initials
+-   `01_run_model.R` modifies `all_transformed.csv` (log response variables, year centered on 2000) and models data with `mod_2a.R`; produces a coda object 
+-   `02_check_convergence.R` visually and algorithmically inspect for convergence; produces starting values
 -   `03_plot_parameters.R` plots the slope and intercept, random effects, and variance and covariance terms
 -   `04_assess_fit.R` runs model for replicated data and assesses model fit 
 -   `fig_2a/` contains generated plots
--   `predicted_2a.csv` contains input data in long format (contains missing values) and predicted values with the central 95% credible interval (complete)
+-   `predicted_2a.csv` contains input data in long format (with missing values) and predicted values with the central 95% credible interval (complete)
 
 ### Derived Data
 
