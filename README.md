@@ -81,7 +81,6 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 -   `01-merge_data.R` combines files from `raw_data` folder to generate `all_transformed.R`
 -   `02-exploratory_analysis.R` some plots and a simple linear regression
 -   `03-regression.R` initial modeling using `brms` for multivariate glm with missing data
--   
 
 ### Derived Data
 
@@ -99,8 +98,23 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 
     ![](figures/usda_census_highlights_fig1.png)
 
+### Bayesian Model
+The cleaned and derived data of farm number, area, and sales are modeled as a multivariate normal likelihood where the expected values are a linear regression on time (year). Slope and intercepts are estimated for each response variable, and the multivariate formulation allows for estimates of covariance among the response variables. The response variables were log transformed; on the log scale, slope differences were not substantially different for each state. Therefore, the random effect of state was added to the intercepts only. Random effects were modeled as a normal distribution centered at zero and a precision drawn from a folded-t distribution. Post-sweeping was employed to maintain identifiability between random effects and the intercepts and impose a sum-to-zero constraint on the random effects. The precision matrix was drawn from a Wishart distribution, from which standard deviations and correlation coefficients among the response variables were monitored. 
+
+The model was run in OpenBUGS using the `R2OpenBUGS` package. Three chains of 4000 samples were monitored at a thinning interval of 20 to reduce auto-correlation and storage requirements. Convergence was assessed with the Gelman-Rubin diagnostic. 
+
+#### Found in `/code/BUGS/mod2` folder.
+-   `mod_2a.R` contains a multivariate normal Bayesian model code
+-   `01_run_model.R` modifies `all_transformed.csv`, models data with `mod_2a.R`, and produces a coda object 
+-   `02_check_convergence.R` visually and algorithmically inspect for convergence; produces starting values
+-   `03_plot_parameters.R` plots the slope and intercept, random effects, and variance and covariance terms
+-   `04_assess_fit.R` runs model for replicated data and assesses model fit 
+-   `fig_2a/` contains generated plots
+-   `predicted_2a.csv` contains input data in long format (with missing values) and predicted values with the central 95% credible interval (complete)
+
+
 ### Contact Info
 
-Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial Horticulture and Small Acreage 2830 N Commonwealth Dr, Camp Verde, AZ 86322 email: [mpangai\@arizona.edu](mailto:mpangai@arizona.edu){.email}
+Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial Horticulture and Small Acreage 2830 N Commonwealth Dr, Camp Verde, AZ 86322 email: [mpangai\@arizona.edu](mailto:mpangai@arizona.edu)
 
-Analysis in this repository: David LeBauer ([dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu){.email}) and Jessica Guo ([jessicaguo\@arizona.edu](mailto:jessicaguo@arizona.edu))
+Analysis in this repository: David LeBauer ([dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu)) and Jessica Guo ([jessicaguo\@arizona.edu](mailto:jessicaguo@arizona.edu))
