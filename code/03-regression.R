@@ -1,7 +1,10 @@
 library(dplyr)
 library(tidyr)
 library(readr)
-#setwd('state_organic_ag/')
+
+
+if(grepl('state_organic_ag/code$', getwd())) setwd('../')
+   
 all <- readr::read_csv('derived_data/all_transformed.csv',
                 col_types = cols(
                   state = col_character(),
@@ -17,12 +20,13 @@ all <- readr::read_csv('derived_data/all_transformed.csv',
 # 1 standard deviation blow the mean, to 1 standard deviation above.”
 
 gh_rescale <- function(x){
-  x <- log10(x+1)
-  scale(x, center = mean(x, na.rm = TRUE), scale = 2*sd(x, na.rm = TRUE))
+  y <- scale(x, center = mean(x, na.rm = TRUE), scale = 2*sd(x, na.rm = TRUE))
+  return(as.vector(y))
 }
 
 all_rescaled <- all %>% 
-  mutate(across(starts_with('farm'),  gh_rescale,  .names = "{.col}"))
+  mutate(across(starts_with('farm'),  gh_rescale)) %>% 
+  mutate(year = year - 2000)
 
 ## LMER multivariate
 
@@ -32,15 +36,13 @@ complete_states <- all_rescaled %>%
   drop_na() %>% 
   group_by(state) %>%
   summarise(n = n()) %>%
-  filter(n == 6) %>%
+  filter(n == 4) %>%
   select(state) %>% 
   ungroup()
 
 all_complete <-  all_rescaled %>% 
   drop_na() %>%
   filter(state %in% complete_states$state)
-
-
 
 mod_lm <- lm(cbind(farm_knumber, farm_kha, farm_msales) ~ year * state, data = all_complete)
 # library(lme4)
@@ -75,19 +77,15 @@ brms_formula_re_yr_state <-
   bf(farm_msales|mi()  ~ 1 + year + (1 + year | state)) +
   set_rescor(TRUE)
 
-# priors <- 
-#   prior(normal(0, 1000), class = Intercept, resp = farmmsales) +
-#   prior(normal(0, 2), class = Intercept, resp = farmknumber) +
-#   prior(normal(0, 100), class = Intercept, resp = farmkha) +
-#   prior(normal(0.1, 0.01), class = b, coef = year, resp = farmmsales) +
-#   prior(normal(0, 0.05), class = b, coef = year, resp = farmknumber) +
-#   prior(normal(0, 0.05), class = b, coef = year, resp = farmkha) +
-#   prior(inv_gamma(2, 1), class = sigma, resp = farmmsales) +
-#   prior(inv_gamma(2, 1), class = sigma, resp = farmknumber) +
-#   prior(inv_gamma(2, 1), class = sigma, resp = farmkha) 
+priors <- 
+  prior(normal(0, 2),    class = Intercept) +
+  prior(normal(0, 4),    class = b) +
+  prior(inv_gamma(2, 1), class = sigma, resp = farmmsales) + 
+  prior(inv_gamma(2, 1), class = sigma, resp = farmknumber) + 
+  prior(inv_gamma(2, 1), class = sigma, resp = farmkha) 
   
 mod_mvbrm <- brm(brms_formula,
-                 #prior = priors,
+                 prior = priors,
                  data = all_rescaled,
                  iter = 5000,
                  chains = 4,
@@ -96,7 +94,7 @@ mod_mvbrm <- brm(brms_formula,
                  file = 'derived_data/mod_mvbrm')
 
 mod_mvbrm_rs <- brm(brms_formula_re_state,
-                    #prior = priors,
+                    prior = priors,
                     data = all_rescaled,
                     iter = 5000,
                     chains = 4,
@@ -105,7 +103,7 @@ mod_mvbrm_rs <- brm(brms_formula_re_state,
                     file = 'derived_data/mod_mvbrm_re_state')
 
 mod_mvbrm_rys <- brm(brms_formula_re_yr_state,inits = "0",
-                     #prior = priors,
+                     prior = priors,
                      data = all_rescaled,
                      iter = 5000,
                      chains = 4,
@@ -115,7 +113,7 @@ mod_mvbrm_rys <- brm(brms_formula_re_yr_state,inits = "0",
 
 #brms::loo(mod_mvbrm, mod_mvbrm_rs)
 # explore with shinystan:
-shinystan::launch_shinystan(mod_mvbrm_rys, rstudio = TRUE)
+#shinystan::launch_shinystan(mod_mvbrm_rys, rstudio = TRUE)
 
 
 #library(rstanarm)

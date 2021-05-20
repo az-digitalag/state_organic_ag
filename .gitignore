@@ -1,3 +1,4 @@
 #stan model outputs
 *.rds
 *.Rdata
+.Rproj.user
