@@ -100,18 +100,17 @@ opts_knit$set(root.dir = "code/BUGS/mod2/")
 source('01_run_model.R')
 ```
 
+
 ### Derived Data
 
 ### TODO
 
--   move mod2 model output to `derived_data/ folder`
-
+- move mod2 model output to `derived_data/ folder`
 -   document unused models code/03-regression.R, code/BUGS/mod1
-
--   This figure from the "[Organic Farming: Results from 2019 Organic Survey](https://www.nass.usda.gov/Publications/Highlights/2020/census-organics.pdf)" and tables in the ["2019 Organic Survey Data Release" presentation](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/pdf/2019_Organic_Executive_Briefing.pdf) implies that USDA has reliable, consistent data for 2008, 2014, 2016, 2019
-
+-   This figure from the "[Organic Farming: Results from 2019 Organic Survey](https://www.nass.usda.gov/Publications/Highlights/2020/census-organics.pdf)" and tables in the ["2019 Organic Survey
+Data Release" presentation](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/pdf/2019_Organic_Executive_Briefing.pdf) implies that USDA has reliable, consistent data for 2008, 2014, 2016, 2019
     -   However, the available data for, e.g., 2008 (first cell of Table 1 from [USDA 2010](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt))
-    -   total organic farms in US is 14,540; much higher than in the figure ...
+    - total organic farms in US is 14,540; much higher than in the figure ...
     -   Have reviewed, and will assume figure is in error. Email sent to NASS on 2021-05-12
 
 -   ![](figures/usda_census_highlights_fig1.png)
@@ -140,4 +139,3 @@ USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-
 devtools::session_info()
 ```
 
-\`\`\`
