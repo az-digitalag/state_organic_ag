@@ -1,5 +1,10 @@
 ---
-output: word_document
+title: "US State Organic Ag"
+author: David LeBauer, Jessica Guo
+date: May 22, 2021
+output:
+  md_document:
+    variant: markdown_github
 ---
 
 # US State Organic Ag
@@ -17,6 +22,18 @@ The need to reduce negative impacts of agriculture on the environment and the co
 ## Repository Content
 
 ### Raw Data
+
+David, I would be happy to help you find the data you need. While I am  not certain, I think the difference in numbers you are citing is whether the estimate is for all organic farms (including exempt from certification farms) or just certified organic farms.
+
+ 
+
+The best place to retrieve the organic data is from our Quickstats database.
+
+
+This query should get you there, but some of it is difficult to view over time because of the change in the scope of the survey. For example, the 2008 and 2014 surveys included all organic farms (certified and exempt), but the 2011 and 2019 survey was only for certified farms.
+
+https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF
+
 
 **Preprocessing:** Data were copied from TXT and PDF files provided by the USDA Organic Production Surveys: <https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/index.php>. Units were converted from acres to hectares.
 
@@ -91,12 +108,12 @@ The model was run in OpenBUGS using the `R2OpenBUGS` package. Three chains of 40
 
 #### Run the model
 
-```{r setup, include=FALSE, cache = TRUE}
+```{r setup, include=FALSE, cache = TRUE, eval = FALSE}
 require("knitr")
 opts_knit$set(root.dir = "code/BUGS/mod2/")
 ```
 
-```{r bugs-model}
+```{r bugs-model, eval = FALSE}
 source('01_run_model.R')
 ```
 
