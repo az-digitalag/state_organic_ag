@@ -2,3 +2,7 @@
 *.rds
 *.Rdata
 *.Rhistory
+
+#exception for initial values
+!/code/BUGS/mod1/inits/*.Rdata
+!/code/BUGS/mod2/inits/*.Rdata
