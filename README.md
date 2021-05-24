@@ -32,17 +32,12 @@ The need to reduce negative impacts of agriculture on the environment and the co
 
 -   `farm_sales`: total sales (USD); adjusted to 2020 dollars by dividing sales for each year by the adjustment factor provided by the [U.S. Bureau of Labor Statistics CPI Inflation Calculator](https://www.bls.gov/data/inflation_calculator.htm) comparing from July in year Y to July in 2020.
 
-    +-------+-------------------------+
-    | Year  | $\textbf{CPI}_{Y/2020}$ |
-    +=======+=========================+
-    | 2008  | 1.18                    |
-    +-------+-------------------------+
-    | 2014  | 1.09                    |
-    +-------+-------------------------+
-    | 2016  | 1.08                    |
-    +-------+-------------------------+
-    | 2019  | 1.01                    |
-    +-------+-------------------------+
+    | Year | $\textbf{CPI}_{Y/2020}$ |
+    |------|-------------------------|
+    | 2008 | 1.18                    |
+    | 2014 | 1.09                    |
+    | 2016 | 1.08                    |
+    | 2019 | 1.01                    |
 
 -   `[variable]_cv`^\*^: coefficient of variance for `[variable]`
 

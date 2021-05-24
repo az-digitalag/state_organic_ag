@@ -2,6 +2,7 @@
 *.rds
 *.Rdata
 *.Rhistory
+.Rproj.user
 
 #exception for initial values
 !/code/BUGS/mod1/inits/*.Rdata

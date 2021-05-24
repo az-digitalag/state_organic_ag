@@ -1,4 +1,4 @@
-# Controls script for OpenBUGS model
+# Control script for OpenBUGS model
 # of state-level organic farm survey
 # multivariate log likelihood of farm number, acerage, and sales
 # predictor of year
