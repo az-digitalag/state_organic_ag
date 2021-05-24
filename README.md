@@ -7,57 +7,10 @@ US State Organic Ag
 -   goal: predict farm number, area, and sales for next three census
     (2022, 2027, 2032)
 
-Abstract
---------
-
-Organic Agriculture in the United States: Increase Trends in
-Regenerative Land Management strategies and challenges.
-
-The need to reduce negative impacts of agriculture on the environment
-and the consumer demands for food produced without synthetic chemical
-inputs have led to organic agriculture production systems. The United
-States (US) commands about half of the market share of organic produce
-worldwide and is also home to about half of the world’s organic farmers,
-but limited information is available on trends in land-use, on-farm
-practices, and challenges in organic crop production systems. This study
-used 2007, 2012, and 2019 agriculture census data from the United States
-Department of Agriculture (USDA) to investigate trends in the US organic
-agriculture market, on-farm regenerative practices, and challenges. From
-2007 to 2017, the number of certified organic farms, land area, and
-sales value increased by 15, 35, and 214%, respectively. The most common
-regenerative agriculture practice in certified organic crop production
-systems is the use of green and animal manures. All regenerative
-practices evaluated trended positive (1-25%) except organic mulches and
-composts use, which reduced by 9%. The most significant primary
-challenges faced by certified organic farmers were related to organic
-practices regulations and production costs with remarkably increasing
-trends (115 to 428%) for all investigated challenges from 2007 to 2017.
-The US certified organic production has enormous future potentials in
-farm numbers, land area, market, and their increasing contribution to
-the environmentally friendly regenerative practices. However, this
-sector requires efforts to address the primary challenges facing the
-organic farmers, and this will necessitate farm-level research and
-policy reviews with farmers involvement.
-
 Repository Content
 ------------------
 
 ### Raw Data
-
-David, I would be happy to help you find the data you need. While I am
-not certain, I think the difference in numbers you are citing is whether
-the estimate is for all organic farms (including exempt from
-certification farms) or just certified organic farms.
-
-The best place to retrieve the organic data is from our Quickstats
-database.
-
-This query should get you there, but some of it is difficult to view
-over time because of the change in the scope of the survey. For example,
-the 2008 and 2014 surveys included all organic farms (certified and
-exempt), but the 2011 and 2019 survey was only for certified farms.
-
-<a href="https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF" class="uri">https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF</a>
 
 **Preprocessing:** Data were copied from TXT and PDF files provided by
 the USDA Organic Production Surveys:
@@ -217,6 +170,22 @@ source('01_run_model.R')
         NASS on 2021-05-12
 -   ![](figures/usda_census_highlights_fig1.png)
 
+**Update from USDA**
+
+I think the difference in numbers you are citing is whether the estimate
+is for all organic farms (including exempt from certification farms) or
+just certified organic farms.
+
+The best place to retrieve the organic data is from our Quickstats
+database.
+
+This query should get you there, but some of it is difficult to view
+over time because of the change in the scope of the survey. For example,
+the 2008 and 2014 surveys included all organic farms (certified and
+exempt), but the 2011 and 2019 survey was only for certified farms.
+
+<a href="https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF" class="uri">https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF</a>
+
 ### Contact Info
 
 Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial
@@ -283,7 +252,7 @@ devtools::session_info()
     ##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.3)
     ##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)
     ##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.0.3)
-    ##  knitr       * 1.31    2021-01-27 [1] CRAN (R 4.0.3)
+    ##  knitr         1.31    2021-01-27 [1] CRAN (R 4.0.3)
     ##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.0.4)
     ##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.0.3)
     ##  memoise       2.0.0   2021-01-26 [1] CRAN (R 4.0.3)
