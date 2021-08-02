@@ -61,6 +61,18 @@ output:
 -   $^\dagger$number of farms from first line of table - previously the second line was used for 2008 and 2012 and first in 2016 and 2019
 -   $^\S$ csv files cross referenced w/ original data source at state level and for US totals
 
+
+2008 - certified & exempt; 
+2011 - certified
+2014 - certified & exempt
+2015 - certified; more sparse b/c for RMA data for crop insurance policy purposes; lots on crops and livestock but not on organic farming practices
+2016 - certified
+2019 - certified
+
+
+for 2008 & 2014 adjust # of farms but not total sales or acerage b/c tiny % of total.  
+
+
 **Note:**
 
 > "The 2014 and 2015 Organic Certifier Survey data is a tabulation of USDA-accredited organic certifiers' acreage and livestock data received. The data underwent editing, summarization, and disclosure programming prior to publishing. The 2008, 2011, 2014, and 2015 organic producer surveys as well as the 2007 and 2012 Census of Agriculture collected and published data on organic operations which had production in the reference year. The data from these programs were adjusted for non-response, misclassification, and coverage. Therefore, the certifier survey data and producer survey/census data are not comparable and data users should account for these differences whenreviewing the data. Data users should allow for differences when comparing the data between datasets including reference periods, organic definitions, and differing survey methodologies." - USDA 2016
@@ -117,6 +129,28 @@ Data Release" presentation](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surv
 
 -   ![](figures/usda_census_highlights_fig1.png)
 
+quickstats
+- domain category 
+  - certified & exempt, certified, transitioning
+
+- 2019 only certified
+- 2008, 2011, 2014 some tables for all farms, some for 
+
+- 2008 
+
+**how to correct to certified number**
+- exempt farms are small in terms of sales 
+- can multiply $5k * # of exempt farms as an upper bound
+
+first org. survey 2008 follow on to census of agriculture
+item nonresponse / census nonresponse
+have supplemented responses with integrity database
+
+all operations in the integrity database https://organic.ams.usda.gov/integrity/
+
+ - https://organic.ams.usda.gov/Integrity/Reports/DataHistory.aspx
+
+
 
 **Update from USDA**
 
@@ -129,6 +163,9 @@ This query should get you there, but some of it is difficult to view over time b
 
 https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF
 
+
+- [ ] get farm number and area for 2008 from https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/appendix_a.pdf
+- [ ] use farm sales amount, assuming  https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/appendix_a.pdf
 
 ### Contact Info
 
