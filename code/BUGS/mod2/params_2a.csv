@@ -1,13 +1,13 @@
 "var","Parameter","Variable","mean","pc2.5","pc97.5","significant"
-"B[1,1]","intercept","farm_knumber",-1.857,-2.251,-1.456,TRUE
-"B[1,2]","intercept","farm_kha",1.698,1.113,2.284,TRUE
-"B[1,3]","intercept","farm_msales",2.019,1.489,2.562,TRUE
-"B[2,1]","slope","farm_knumber",-0.01,-0.021,0.002,FALSE
-"B[2,2]","slope","farm_kha",0.039,0.022,0.055,TRUE
-"B[2,3]","slope","farm_msales",0.105,0.089,0.122,TRUE
-"Rho[2,1]","correlation","kha-knumber",0.414,0.257,0.549,NA
-"Rho[3,1]","correlation","msales-knumber",0.269,0.096,0.43,NA
-"Rho[3,2]","correlation","msales-kha",0.468,0.32,0.596,NA
-"Sig[1]","standard deviation","farm_knumber",0.315,0.281,0.354,NA
-"Sig[2]","standard deviation","farm_kha",0.473,0.42,0.534,NA
-"Sig[3]","standard deviation","farm_msales",0.464,0.412,0.525,NA
+"B[1,1]","intercept","farm_knumber",1.256,0.634,1.906,TRUE
+"B[1,2]","intercept","farm_kha",-2.963,-3.381,-2.55,TRUE
+"B[1,3]","intercept","farm_msales",1.823,1.301,2.355,TRUE
+"B[2,1]","slope","farm_knumber",0.066,0.044,0.087,TRUE
+"B[2,2]","slope","farm_kha",0.05,0.041,0.06,TRUE
+"B[2,3]","slope","farm_msales",0.115,0.099,0.132,TRUE
+"Rho[2,1]","correlation","kha-knumber",0.359,0.242,0.469,NA
+"Rho[3,1]","correlation","msales-knumber",0.562,0.433,0.672,NA
+"Rho[3,2]","correlation","msales-kha",0.495,0.378,0.602,NA
+"Sig[1]","standard deviation","farm_knumber",0.642,0.586,0.704,NA
+"Sig[2]","standard deviation","farm_kha",0.3,0.276,0.328,NA
+"Sig[3]","standard deviation","farm_msales",0.489,0.442,0.541,NA

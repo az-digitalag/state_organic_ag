@@ -4,6 +4,16 @@
 library(coda)
 library(postjags)
 library(ggplot2)
+library(tidyverse)
+library(mcmcplots)
+library(cowplot)
+
+x <- readr::read_csv('../../../derived_data/all_transformed.csv')
+
+dat <- x %>% 
+  mutate(year = year - 2000,
+         stateID = as.numeric(as.factor(state))) # "center" by using years since 2000
+
 
 # Load coda
 load("coda/coda_out_2a.Rdata")

@@ -25,11 +25,14 @@ dat <- x %>%
          stateID = as.numeric(as.factor(state))) # "center" by using years since 2000
 
 #plot
-ggplot(pivot_longer(dat, 3:5, names_to = "type", values_to = "value"),
+d <- pivot_longer(dat, 3:5, names_to = "type", values_to = "value")
+ggplot(d[complete.cases(d),],
        aes(x = year, y = log(value), group = state)) +
   geom_line() +
+  geom_smooth(method= 'lm', se = FALSE) +
   geom_point() +
-  facet_wrap(~type, scales = "free_y")
+  facet_wrap(~type, scales = "free_y") +
+  theme_bw()
 
 datlist <- list(farm = as.matrix(log(dat[,3:5])),
                 year = dat$year,
