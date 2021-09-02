@@ -11,12 +11,12 @@ library(cowplot)
 x <- readr::read_csv('../../../derived_data/all_transformed.csv')
 
 dat <- x %>% 
-  mutate(year = year - 2000,
-         stateID = as.numeric(as.factor(state))) # "center" by using years since 2000
+  mutate(year = year - 2014,
+         stateID = as.numeric(as.factor(state))) # "center" by using years since 2014
 
 
 # Load coda
-load("coda/coda_out_2a.Rdata")
+load("coda/coda_out_3a.Rdata")
 
 # Summarize chains
 sum_out<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_out)
@@ -27,23 +27,31 @@ sum_out$sig<-ifelse(sum_out$pc2.5*sum_out$pc97.5 > 0, TRUE, FALSE)
 sum1 <- sum_out %>%
   mutate(Parameter = NA,
          Variable = NA,
+         State = NA,
          mean = round(mean, 3),
          pc2.5 = round(pc2.5, 3),
          pc97.5 = round(pc97.5, 3),
          significant = sig) %>%
   select(var, Parameter, Variable, mean, pc2.5, pc97.5, significant)
 
-grep("B|R|S", row.names(sum_out))
-sum_df <- sum1[grep("B|R|S", row.names(sum_out)),]
+inds <- grep("Astar|B|R|S|mu.natl|tau.natl", row.names(sum_out))
+sum_df <- sum1[inds,]
 sum_df$Parameter <- c(rep("intercept", 3),
-                      rep("slope", 3),
+                      rep("slope", 150),
                       rep("correlation", 3),
-                      rep("standard deviation", 3))
-sum_df$Variable <- c(rep(c("farm_knumber", "farm_kha", "farm_msales"), 2),
-                      c("kha-knumber", "msales-knumber", "msales-kha"),
-                      c("farm_knumber", "farm_kha", "farm_msales"))
-sum_df$significant[grep("R|S", sum_df$var)] <- NA
-write.csv(sum_df, file = "params_2a.csv", row.names = FALSE)
+                      rep("stdev", 3),
+                      rep("mu.slope", 3),
+                      rep("tau.slope", 3))
+sum_df$Variable <- c(c("farm_knumber", "farm_kha", "farm_msales"),
+                     rep(c("farm_knumber", "farm_kha", "farm_msales"), each = 50),
+                     c("kha-knumber", "msales-knumber", "msales-kha"),
+                     c("farm_knumber", "farm_kha", "farm_msales"),
+                     c("farm_knumber", "farm_kha", "farm_msales"),
+                     c("farm_knumber", "farm_kha", "farm_msales"))
+sum_df$State[sum_df$Parameter == "slope"] <- rep(unique(dat$state), 3)
+sum_df$significant[grep("R|S|tau.natl", sum_df$var)] <- NA
+
+write.csv(sum_df, file = "params_3a.csv", row.names = FALSE)
 
 ## Plots
 labs <- c("Number (k)", "Area (k ha)", "Sales (MM)")
