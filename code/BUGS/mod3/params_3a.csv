@@ -1,7 +1,7 @@
 "var","Parameter","Variable","mean","pc2.5","pc97.5","significant","State"
-"Astar[1]","intercept","farm_knumber",-0.645,-1.158,-0.133,TRUE,NA
-"Astar[2]","intercept","farm_kha",-4.605,-5.148,-4.082,TRUE,NA
-"Astar[3]","intercept","farm_msales",3.587,3.109,4.081,TRUE,NA
+"Astar[1]","intercept","farm_knumber",2.189,2.121,2.258,TRUE,NA
+"Astar[2]","intercept","farm_kha",-2.263,-2.293,-2.233,TRUE,NA
+"Astar[3]","intercept","farm_msales",3.445,3.394,3.496,TRUE,NA
 "B[1,1]","slope","farm_knumber",0.124,0.022,0.23,TRUE,"Alabama"
 "B[1,2]","slope","farm_knumber",0.305,0.147,0.484,TRUE,"Alaska"
 "B[1,3]","slope","farm_knumber",0.055,-0.041,0.15,FALSE,"Arizona"

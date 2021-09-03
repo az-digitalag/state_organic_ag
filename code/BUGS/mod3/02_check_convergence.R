@@ -10,7 +10,7 @@ library(postjags)
 load("coda/coda_out_3a.Rdata")
 
 # View chains to inspect for convergence visually
-mcmcplot(coda_out, parms = c("deviance", "Dsum", "Astar", "mu.natl", "tau.natl"))
+mcmcplot(coda_out, parms = c("deviance", "Dsum", "Astar", "mu.natl", "sig.natl", "sig.eps"))
 caterplot(coda_out, regex = c("Estar\\[1"), reorder = FALSE)
 caterplot(coda_out, regex = c("Estar\\[2"), reorder = FALSE)
 caterplot(coda_out, regex = c("Estar\\[3"), reorder = FALSE)

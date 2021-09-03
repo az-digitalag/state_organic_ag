@@ -54,7 +54,7 @@ sum_df$significant[grep("R|S|tau.natl", sum_df$var)] <- NA
 write.csv(sum_df, file = "params_3a.csv", row.names = FALSE)
 
 ## Plots
-labs <- c("Number (k)", "Area (k ha)", "Sales (MM)")
+labs <- c("Number (k)", "Area (kha)", "Sales (MM)")
 states <- unique(dat$state)
 
 ## rates
@@ -63,28 +63,33 @@ dat_B$state <- rep(unique(dat$state), 3)
 dat_B$state <- factor(dat_B$state, levels = unique(dat$state[rev(order(dat_B$mean[101:150]))]))
 dat_B$var <- rep(c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"), each = 50)
 dat_B$var <- factor(dat_B$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
+dat_B$Var <- rep(c("number~(k)", "area~(kha)", "sales~(MM)"), each = 50)
+dat_B$Var <- factor(dat_B$Var, c("number~(k)", "area~(kha)", "sales~(MM)"))
+
 
 dat_mu <- sum_out[grep("mu.natl", row.names(sum_out)),]
 dat_mu$var <- c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)")
 dat_mu$var <- factor(dat_mu$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
+dat_mu$Var <- c("number~(k)", "area~(kha)", "sales~(MM)")
+dat_mu$Var <- factor(dat_mu$Var, c("number~(k)", "area~(kha)", "sales~(MM)"))
 
 fig_rates <- ggplot() +
   geom_rect(data = dat_mu, aes(xmin = -Inf, xmax = Inf, 
-                               ymin = pc2.5, ymax = pc97.5),
+                               ymin = pc2.5*100, ymax = pc97.5*100),
             alpha = 0.1, col = "gray80") +
-  geom_hline(data = dat_mu, aes(yintercept = mean),
+  geom_hline(data = dat_mu, aes(yintercept = mean*100),
              size = 1, lty = 2, col = "red") +
-  geom_pointrange(data = dat_B, aes(x = fct_rev(state), y = mean, 
-                                     ymin = pc2.5, ymax = pc97.5),
+  geom_pointrange(data = dat_B, aes(x = fct_rev(state), y = mean*100, 
+                                     ymin = pc2.5*100, ymax = pc97.5*100),
                   size = 0.5) +
-  scale_y_continuous(expression(paste("Rate")))+ 
+  scale_y_continuous(expression(paste("Annual percent change")))+ 
   scale_x_discrete(labels = rev(unique(dat$state[rev(order(dat_B$mean[101:150]))]))) +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
         axis.line = element_line(colour = "black"),
         axis.title.y = element_blank()) +
-  facet_wrap(~var, scales = "free_x", labeller = label_parsed) +
+  facet_wrap(~Var, scales = "free_x", labeller = label_parsed) +
   coord_flip() +
   theme_bw(base_size = 16) +
   theme(panel.grid.major = element_blank(), 
@@ -115,9 +120,10 @@ print(fig_int)
 
 ## Random effects
 dat_RE1 <- sum_out[grep("Estar\\[1", row.names(sum_out)),]
+sum(dat_RE1$mean)
 dat_RE1$state <- unique(dat$state)[1:50]
 fig_RE1<-ggplot() +
-  geom_pointrange(data = dat_RE1, aes(x = state, y = mean, 
+  geom_pointrange(data = dat_RE1, aes(x = fct_rev(state), y = mean, 
                                       ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
@@ -132,13 +138,14 @@ fig_RE1<-ggplot() +
 print(fig_RE1)
 
 dat_RE2 <- sum_out[grep("Estar\\[2", row.names(sum_out)),]
+sum(dat_RE2$mean)
 dat_RE2$state <- unique(dat$state)[1:50]
 fig_RE2<-ggplot() +
-  geom_pointrange(data = dat_RE2, aes(x = state, y = mean, 
+  geom_pointrange(data = dat_RE2, aes(x = fct_rev(state), y = mean, 
                                       ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
-  scale_y_continuous("RE (area, acres)")+ 
+  scale_y_continuous("RE (area)")+ 
   scale_x_discrete() +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
@@ -149,13 +156,14 @@ fig_RE2<-ggplot() +
 print(fig_RE2)
 
 dat_RE3 <- sum_out[grep("Estar\\[3", row.names(sum_out)),]
+sum(dat_RE3$mean)
 dat_RE3$state <- unique(dat$state)[1:50]
 fig_RE3<-ggplot() +
-  geom_pointrange(data = dat_RE3, aes(x = state, y = mean, 
+  geom_pointrange(data = dat_RE3, aes(x = fct_rev(state), y = mean, 
                                       ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
-  scale_y_continuous("RE (sales, $)")+ 
+  scale_y_continuous("RE (sales)")+ 
   scale_x_discrete() +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
@@ -170,7 +178,43 @@ jpeg(filename = "figs_3a/fig_RE.jpg", height = 6, width = 8, units = "in",
 plot_grid(fig_RE1, fig_RE2, fig_RE3, ncol = 3)
 dev.off()
 
-### Standard deviation
+
+
+### Standard deviations
+# among random effects- slopes
+dat_signatl <- sum_out[grep("sig.natl\\[", row.names(sum_out)),]
+fig_signatl <- ggplot(dat_signatl, aes(x = var)) +
+  geom_pointrange(aes(y = mean, ymin = pc2.5, ymax = pc97.5), size = 0.5) +
+  scale_y_continuous(expression(paste(sigma[natl]))) + 
+  scale_x_discrete(labels = labs) +
+  theme_bw(base_size=12) +
+  theme(panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.title.y = element_blank()) +
+  coord_flip()
+print(fig_signatl)
+
+dat_sigeps <- sum_out[grep("sig.eps\\[", row.names(sum_out)),]
+fig_sigeps <- ggplot(dat_sigeps, aes(x = var)) +
+  geom_pointrange(aes(y = mean, ymin = pc2.5, ymax = pc97.5), size = 0.5) +
+  scale_y_continuous(expression(paste(sigma[RE]))) + 
+  scale_x_discrete(labels = labs) +
+  theme_bw(base_size=12) +
+  theme(panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.title.y = element_blank()) +
+  coord_flip()
+print(fig_sigeps)
+
+jpeg(filename = "figs_3a/fig_sigRE.jpg", height = 3, width = 8, units = "in", 
+     res = 600)
+plot_grid(fig_signatl, fig_sigeps, ncol = 2)
+dev.off()
+
+
+# population st dev
 dat_sigs <- sum_out[grep("Sig\\[", row.names(sum_out)),]
 fig_sig <- ggplot(dat_sigs, aes(x = var)) +
   geom_pointrange(aes(y = mean, ymin = pc2.5, ymax = pc97.5), size = 0.5) +
@@ -199,7 +243,7 @@ fig_rho <- ggplot(dat_rho, aes(x = labs)) +
   coord_flip()
 print(fig_rho)
 
-jpeg(filename = "figs_2a/fig_sig_rho.jpg", height = 3, width = 8, units = "in", 
+jpeg(filename = "figs_3a/fig_sig_rho.jpg", height = 3, width = 8, units = "in", 
      res = 600)
 plot_grid(fig_sig, fig_rho, ncol = 2)
 dev.off()
