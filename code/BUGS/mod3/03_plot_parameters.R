@@ -55,58 +55,70 @@ write.csv(sum_df, file = "params_3a.csv", row.names = FALSE)
 
 ## Plots
 labs <- c("Number (k)", "Area (k ha)", "Sales (MM)")
+states <- unique(dat$state)
 
-### Intercepts
-dat_B1 <- sum_out[grep("B\\[1", row.names(sum_out)),]
-sig_B1 <- subset(dat_B1, sig == TRUE)
-fig_intercept<-ggplot() +
-  geom_pointrange(data = dat_B1, aes(x = var, y = exp(mean), 
-                                     ymin = exp(pc2.5), ymax = exp(pc97.5)), 
+## rates
+dat_B <- sum_out[grep("B\\[", row.names(sum_out)),]
+dat_B$state <- rep(unique(dat$state), 3)
+dat_B$state <- factor(dat_B$state, levels = unique(dat$state[rev(order(dat_B$mean[101:150]))]))
+dat_B$var <- rep(c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"), each = 50)
+dat_B$var <- factor(dat_B$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
+
+dat_mu <- sum_out[grep("mu.natl", row.names(sum_out)),]
+dat_mu$var <- c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)")
+dat_mu$var <- factor(dat_mu$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
+
+fig_rates <- ggplot() +
+  geom_rect(data = dat_mu, aes(xmin = -Inf, xmax = Inf, 
+                               ymin = pc2.5, ymax = pc97.5),
+            alpha = 0.1, col = "gray80") +
+  geom_hline(data = dat_mu, aes(yintercept = mean),
+             size = 1, lty = 2, col = "red") +
+  geom_pointrange(data = dat_B, aes(x = fct_rev(state), y = mean, 
+                                     ymin = pc2.5, ymax = pc97.5),
                   size = 0.5) +
-  geom_point(data = sig_B1, aes(x = var, y = exp(max(pc97.5)) + 1), 
-             pch = 8, color = "blue") +
-  geom_hline(yintercept=0, col = "red") +
-  scale_y_continuous("Value in 2000")+ 
-  scale_x_discrete(labels = labs) +
+  scale_y_continuous(expression(paste("Rate")))+ 
+  scale_x_discrete(labels = rev(unique(dat$state[rev(order(dat_B$mean[101:150]))]))) +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
         axis.line = element_line(colour = "black"),
         axis.title.y = element_blank()) +
-  coord_flip()
-print(fig_intercept)
+  facet_wrap(~var, scales = "free_x", labeller = label_parsed) +
+  coord_flip() +
+  theme_bw(base_size = 16) +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        axis.title.y = element_blank())
 
-### Slopes
-dat_B2 <- sum_out[grep("B\\[2", row.names(sum_out)),]
-sig_B2 <- subset(dat_B2, sig == TRUE)
-fig_slope<-ggplot() +
-  geom_pointrange(data = dat_B2, aes(x = var, y = mean, 
-                                     ymin = pc2.5, ymax = pc97.5), 
-                  size = 0.5) +
-  geom_point(data = sig_B2, aes(x = var, y = max(pc97.5) + 0.01), 
-             pch = 8, color = "blue") +
-  geom_hline(yintercept=0, col = "red") +
-  scale_y_continuous(expression(paste("Log rate of change (", yr^-1, ")")))+ 
-  scale_x_discrete(labels = labs) +
-  theme_bw(base_size = 12)+
-  theme(panel.grid.minor = element_blank(),
-        panel.background = element_blank(), 
-        axis.line = element_line(colour = "black"),
-        axis.title.y = element_blank()) +
-  coord_flip()
-print(fig_slope)
-
-jpeg(filename = "figs_2a/fig_B.jpg", height = 3, width = 8, units = "in", 
+jpeg(filename = "figs_3a/fig_B.jpg", height = 10, width = 8, units = "in", 
      res = 600)
-plot_grid(fig_intercept, fig_slope, ncol = 2)
+print(fig_rates)
 dev.off()
 
+### intercepts
+dat_A <- sum_out[grep("Astar", row.names(sum_out)),]
+fig_int <- ggplot() +
+  geom_pointrange(data = dat_A, aes(x = var, y = mean, 
+                                     ymin = pc2.5, ymax = pc97.5), 
+                  size = 0.5) +
+  scale_y_continuous(expression(paste("2014 value")))+ 
+  scale_x_discrete(labels = labs) +
+  theme_bw(base_size = 12)+
+  theme(panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.title.y = element_blank()) +
+  coord_flip()
+print(fig_int)
+
+
 ## Random effects
-dat_RE1 <- sum_out[grep("Estar\\[[0-9]{1,2}\\,1", row.names(sum_out)),]
+dat_RE1 <- sum_out[grep("Estar\\[1", row.names(sum_out)),]
 dat_RE1$state <- unique(dat$state)[1:50]
 fig_RE1<-ggplot() +
-  geom_pointrange(data = dat_RE1, aes(x = state, y = exp(mean), 
-                                      ymin = exp(pc2.5), ymax = exp(pc97.5)), 
+  geom_pointrange(data = dat_RE1, aes(x = state, y = mean, 
+                                      ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
   scale_y_continuous("RE (number)")+ 
@@ -119,11 +131,11 @@ fig_RE1<-ggplot() +
   coord_flip()
 print(fig_RE1)
 
-dat_RE2 <- sum_out[grep("Estar\\[[0-9]{1,2}\\,2", row.names(sum_out)),]
+dat_RE2 <- sum_out[grep("Estar\\[2", row.names(sum_out)),]
 dat_RE2$state <- unique(dat$state)[1:50]
 fig_RE2<-ggplot() +
-  geom_pointrange(data = dat_RE2, aes(x = state, y = exp(mean), 
-                                      ymin = exp(pc2.5), ymax = exp(pc97.5)), 
+  geom_pointrange(data = dat_RE2, aes(x = state, y = mean, 
+                                      ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
   scale_y_continuous("RE (area, acres)")+ 
@@ -136,11 +148,11 @@ fig_RE2<-ggplot() +
   coord_flip()
 print(fig_RE2)
 
-dat_RE3 <- sum_out[grep("Estar\\[[0-9]{1,2}\\,3", row.names(sum_out)),]
+dat_RE3 <- sum_out[grep("Estar\\[3", row.names(sum_out)),]
 dat_RE3$state <- unique(dat$state)[1:50]
 fig_RE3<-ggplot() +
-  geom_pointrange(data = dat_RE3, aes(x = state, y = exp(mean), 
-                                      ymin = exp(pc2.5), ymax = exp(pc97.5)), 
+  geom_pointrange(data = dat_RE3, aes(x = state, y = mean, 
+                                      ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
   scale_y_continuous("RE (sales, $)")+ 
@@ -153,7 +165,7 @@ fig_RE3<-ggplot() +
   coord_flip()
 print(fig_RE3)
 
-jpeg(filename = "figs_2a/fig_RE.jpg", height = 6, width = 8, units = "in", 
+jpeg(filename = "figs_3a/fig_RE.jpg", height = 6, width = 8, units = "in", 
      res = 600)
 plot_grid(fig_RE1, fig_RE2, fig_RE3, ncol = 3)
 dev.off()
