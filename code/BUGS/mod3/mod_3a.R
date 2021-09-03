@@ -70,6 +70,7 @@ model{
   for(k in 1:3){
     mu.natl[k] ~ dnorm(0, 0.0001)
     tau.natl[k] ~ dgamma(0.01, 0.01)
+    sig.natl[k] <- pow(tau.natl[k], -0.5)
   }
   
   # Wishart prior for precision matrix

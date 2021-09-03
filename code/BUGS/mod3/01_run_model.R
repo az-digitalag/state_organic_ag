@@ -47,7 +47,8 @@ datlist <- list(farm = as.matrix(log(dat[,3:5])),
 params <- c("deviance", "Dsum", 
             "A", "Astar", "B", "Estar",
             "mu.natl", "tau.natl",
-            "tau.Eps", "Sig", "Rho", "omega")
+            "tau.Eps", "omega",
+            "Sig", "Rho", "sig.eps", "sig.natl") #variance terms to monitor
 
 # Function to initialize precision matrix, use in initials funcion
 # farm_mat <- as.matrix(log(dat[,3:5]))

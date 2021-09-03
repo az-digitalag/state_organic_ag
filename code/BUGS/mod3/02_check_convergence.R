@@ -11,7 +11,9 @@ load("coda/coda_out_3a.Rdata")
 
 # View chains to inspect for convergence visually
 mcmcplot(coda_out, parms = c("deviance", "Dsum", "Astar", "mu.natl", "tau.natl"))
-caterplot(coda_out, parms = c("Estar\\[1"))
+caterplot(coda_out, regex = c("Estar\\[1"), reorder = FALSE)
+caterplot(coda_out, regex = c("Estar\\[2"), reorder = FALSE)
+caterplot(coda_out, regex = c("Estar\\[3"), reorder = FALSE)
 
 # Extract final iteration, save initials for reuse
 newinits <- initfind(coda_out, OpenBUGS = TRUE)
