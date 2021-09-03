@@ -41,7 +41,7 @@ model{
   }
   for(k in 1:3){ # 3 farm response parameters
     # posterior mean of average Eps value for each response column
-    mean.eps[k] <- mean(eps[,k])
+    mean.eps[k] <- mean(eps[k,])
     
     # folded-t prior for random-effect precision
     tau.Eps[k] ~ dt(0, Bb, 2)
