@@ -103,10 +103,10 @@ dev.off()
 
 options(scipen = 999)
 pred_out <- pred_df %>%
-  mutate(Year = year + 2000,
+  mutate(Year = year + 2014,
          pred.mean = round(mean, 3),
          pred.median = round(median, 3),
          pred.lower = round(pc2.5, 3),
          pred.upper = round(pc97.5, 3)) %>%
-  select(Year, state, stateID, type, obs, pred.mean, pred.lower, pred.upper)
+  select(Year, state, stateID, type, obs, pred.mean, pred.median, pred.lower, pred.upper)
 write.csv(pred_out, file = "predicted_3a.csv", row.names = FALSE)
