@@ -33,7 +33,8 @@ model_rep <- bugs(data = datlist,
                   parameters.to.save = c("farm.rep"),
                   n.iter = 3000, n.chains = 3, n.burnin = 1000, n.thin = 20,
                   model.file="mod_3a.R", 
-                  codaPkg = TRUE, debug = FALSE)
+                  codaPkg = TRUE, debug = FALSE,
+                  bugs.seed = 9)
 end <- proc.time()
 print((end - start)/60)
 
@@ -104,6 +105,7 @@ options(scipen = 999)
 pred_out <- pred_df %>%
   mutate(Year = year + 2000,
          pred.mean = round(mean, 3),
+         pred.median = round(median, 3),
          pred.lower = round(pc2.5, 3),
          pred.upper = round(pc97.5, 3)) %>%
   select(Year, state, stateID, type, obs, pred.mean, pred.lower, pred.upper)
