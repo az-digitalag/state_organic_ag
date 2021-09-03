@@ -17,11 +17,18 @@ dat <- x %>%
 
 # Load coda
 load("coda/coda_out_3a.Rdata")
+load("coda/coda_rep_3a.Rdata")
 
 # Summarize chains
 sum_out<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_out)
 sum_out$var <- row.names(sum_out)
 sum_out$sig<-ifelse(sum_out$pc2.5*sum_out$pc97.5 > 0, TRUE, FALSE)
+
+sum_rep<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_rep)
+sum_rep$var <- row.names(sum_rep)
+sum_rep$year <- rep(dat$year + 2014, each = 3)
+sum_rep$Var <- rep(c("number~(k)", "area~(kha)", "sales~(MM)"), 300)
+sum_rep$state <- rep(dat$state, each = 3)
 
 ## Table
 sum1 <- sum_out %>%
@@ -58,6 +65,8 @@ labs <- c("Number (k)", "Area (kha)", "Sales (MM)")
 states <- unique(dat$state)
 
 ## rates
+dat_rep <- sum_rep %>%
+  filter(year == 2019) # Include predicted value for the year 2019
 dat_B <- sum_out[grep("B\\[", row.names(sum_out)),]
 dat_B$state <- rep(unique(dat$state), 3)
 dat_B$state <- factor(dat_B$state, levels = unique(dat$state[rev(order(dat_B$mean[101:150]))]))
@@ -65,7 +74,8 @@ dat_B$var <- rep(c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"), 
 dat_B$var <- factor(dat_B$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
 dat_B$Var <- rep(c("number~(k)", "area~(kha)", "sales~(MM)"), each = 50)
 dat_B$Var <- factor(dat_B$Var, c("number~(k)", "area~(kha)", "sales~(MM)"))
-
+dat_B <- dat_B %>%
+  left_join(dat_rep, by = c("state", "Var"), suffix = c("", ".y"))
 
 dat_mu <- sum_out[grep("mu.natl", row.names(sum_out)),]
 dat_mu$var <- c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)")
@@ -74,16 +84,20 @@ dat_mu$Var <- c("number~(k)", "area~(kha)", "sales~(MM)")
 dat_mu$Var <- factor(dat_mu$Var, c("number~(k)", "area~(kha)", "sales~(MM)"))
 
 fig_rates <- ggplot() +
-  geom_rect(data = dat_mu, aes(xmin = -Inf, xmax = Inf, 
+  geom_rect(data = dat_mu, aes(xmin = -Inf, xmax = Inf,
                                ymin = pc2.5*100, ymax = pc97.5*100),
             alpha = 0.1, col = "gray80") +
-  geom_hline(data = dat_mu, aes(yintercept = mean*100),
+  geom_hline(yintercept = 0,
              size = 1, lty = 2, col = "red") +
-  geom_pointrange(data = dat_B, aes(x = fct_rev(state), y = mean*100, 
-                                     ymin = pc2.5*100, ymax = pc97.5*100),
-                  size = 0.5) +
+  geom_hline(data = dat_mu, aes(yintercept = mean*100),
+             size = 1, lty = 2, col = "gray50") +
+  geom_errorbar(data = dat_B, aes(x = fct_rev(state), 
+                                    ymin = pc2.5*100, ymax = pc97.5*100),
+                width = 0) +
+  geom_point(data = dat_B, aes(x = fct_rev(state), y = mean*100), size = 2.5) +
   scale_y_continuous(expression(paste("Annual percent change")))+ 
-  scale_x_discrete(labels = rev(unique(dat$state[rev(order(dat_B$mean[101:150]))]))) +
+  scale_x_discrete(labels = rev(unique(dat$state[rev(order(dat_B$mean[101:150]))]))) + 
+  # scale_size(range = c(1, 3)) +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
