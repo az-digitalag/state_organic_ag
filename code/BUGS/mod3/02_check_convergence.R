@@ -38,7 +38,7 @@ save(saved.state, file = "inits/inits_3a.Rdata")
 # }
 
 # Check convergence with Gelman diagnostic
-gel <- gelman.diag(coda_out, multivariate = F)
+gel <- gelman.diag(coda_out, multivariate = FALSE)
 str(gel)
 gel$psrf[match("Dsum[1]", row.names(gel$psrf)):match("Dsum[3]", row.names(gel$psrf)),]
 Bs<-matrix(NA, ncol = 3, nrow = 50)
