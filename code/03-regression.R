@@ -14,19 +14,8 @@ all <- readr::read_csv('derived_data/all_transformed.csv',
                   farm_msales = col_double()
                 ))
 
-
-# scale predictors x/(2*SD) per Gelman and Hill
-# “a 1-unit change in the rescaled predictor corresponds to a change from 
-# 1 standard deviation below the mean, to 1 standard deviation above.”
-
-gh_rescale <- function(x){
-  y <- scale(x, center = mean(x, na.rm = TRUE), scale = 2*sd(x, na.rm = TRUE))
-  return(as.vector(y))
-}
-
 all_rescaled <- all %>% 
-  mutate(across(starts_with('farm'),  gh_rescale)) %>% 
-  mutate(year = year - 2000)
+  mutate(year = year - 2019)
 
 ## LMER multivariate
 
@@ -70,15 +59,16 @@ brms_formula_re_yr_state <-
   set_rescor(TRUE)
 
 priors <- 
-  prior(normal(0, 2),    class = Intercept) +
-  prior(normal(0, 4),    class = b) +
+  prior(normal(0, 10), class = Intercept)
+  prior(normal(0, 1),  class = b, coef = year) +
+  prior(normal(0, 4),  class = )
   prior(inv_gamma(2, 1), class = sigma) 
 
 
 ## Univariate
 mod_rys_no <- brm(farm_knumber  ~ 1 + year + (1 + year | state),
                      inits = "0",
-                     prior = priors,
+                     #prior = priors,
                      data = all_rescaled,
                      iter = 5000,
                      chains = 4,
@@ -87,7 +77,7 @@ mod_rys_no <- brm(farm_knumber  ~ 1 + year + (1 + year | state),
                      file = 'derived_data/mod_rys_no') 
 mod_rys_sales <- brm(farm_msales|mi() ~ 1 + year + (1 + year | state),
                      inits = "0",
-                     prior = priors,
+                     #prior = priors,
                      data = all_rescaled,
                      iter = 5000,
                      chains = 4,
@@ -96,7 +86,7 @@ mod_rys_sales <- brm(farm_msales|mi() ~ 1 + year + (1 + year | state),
                      file = 'derived_data/mod_rys_sales') 
 mod_rys_area <- brm(farm_kha|mi()  ~ 1 + year + (1 + year | state),
                      inits = "0",
-                     prior = priors,
+                     #prior = priors,
                      data = all_rescaled,
                      iter = 5000,
                      chains = 4,
@@ -111,15 +101,15 @@ mmm <-
   bf(farm_msales  ~ 1 + year + (1 + year | state)) +
   set_rescor(TRUE)
 
-priors <- 
-  prior(normal(0, 2),    class = Intercept) +
-  prior(normal(0, 4),    class = b) +
-  prior(inv_gamma(2, 1), class = sigma, resp = 'farmkha') +
-  prior(inv_gamma(2, 1), class = sigma, resp = 'farmknumber') +
-  prior(inv_gamma(2, 1), class = sigma, resp = 'farmmsales') 
+# priors <- 
+#   prior(normal(0, 2),    class = Intercept) +
+#   prior(normal(0, 4),    class = b) +
+#   prior(inv_gamma(2, 1), class = sigma, resp = 'farmkha') +
+#   prior(inv_gamma(2, 1), class = sigma, resp = 'farmknumber') +
+#   prior(inv_gamma(2, 1), class = sigma, resp = 'farmmsales') 
 mod_mvbrm_rys_complete <- brm(mmm,
                               inits = "0",
-                              prior = priors,
+                              #prior = priors,
                               data = all_complete,
                               iter = 5000,
                               chains = 4,
@@ -129,7 +119,7 @@ mod_mvbrm_rys_complete <- brm(mmm,
 
 ## Multivariate w/ Missing Data  
 mod_mvbrm <- brm(brms_formula,
-                 prior = priors,
+                 #prior = priors,
                  data = all_rescaled,
                  iter = 5000,
                  chains = 4,
@@ -138,7 +128,7 @@ mod_mvbrm <- brm(brms_formula,
                  file = 'derived_data/mod_mvbrm')
 
 mod_mvbrm_rs <- brm(brms_formula_re_state,
-                    prior = priors,
+                    #prior = priors,
                     data = all_rescaled,
                     iter = 5000,
                     chains = 4,
@@ -147,7 +137,7 @@ mod_mvbrm_rs <- brm(brms_formula_re_state,
                     file = 'derived_data/mod_mvbrm_re_state')
 
 mod_mvbrm_rys <- brm(brms_formula_re_yr_state,inits = "0",
-                     prior = priors,
+                     #prior = priors,
                      data = all_rescaled,
                      iter = 5000,
                      chains = 4,
