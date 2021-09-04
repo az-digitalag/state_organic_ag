@@ -26,7 +26,7 @@ dat <- x %>%
 
 #plot
 d <- pivot_longer(dat, 3:5, names_to = "type", values_to = "value")
-ggplot(d[complete.cases(d),],
+ggplot(d[complete.cases(d), ],
        aes(x = year, y = log(value), group = state)) +
   geom_line() +
   geom_smooth(method= 'lm', se = FALSE) +
@@ -51,30 +51,35 @@ params <- c("deviance", "Dsum",
             "Sig", "Rho", "sig.eps", "sig.natl") #variance terms to monitor
 
 # Function to initialize precision matrix, use in initials funcion
-# farm_mat <- as.matrix(log(dat[,3:5]))
-# omega.gen<-function(x){
-#  noise = rnorm(n = nrow(farm_mat)*ncol(farm_mat), mean = 0, sd = 10)
-#  nois.mat = matrix(noise,ncol=ncol(farm_mat))
-#  return(solve(cov(farm_mat+nois.mat, use="complete.obs")))
-# }
+farm_mat <- as.matrix(log(dat[, 3:5]))
+omega.gen <- function(x){
+ noise <- rnorm(n = nrow(farm_mat)*ncol(farm_mat), mean = 0, sd = 10)
+ nois.mat <- matrix(noise, ncol = ncol(farm_mat))
+ return(solve(cov(farm_mat + nois.mat, use = "complete.obs")))
+}
 
-# Initials function, use if no prior initials are available
-# indexing order [r,c] is opposite in BUGS
-# inits <- function(){
-#  list(A = rnorm(3, 0, 10),
-#       mu.natl = rnorm(3, 0, 10), 
-#       tau.natl = runif(3, 0, 1),
-#       tau.Eps = rgamma(3, 0.1, 0.1),
-#       omega = round(omega.gen(), 4)
-#  )
-# }
-# initslist <- list(inits(), inits(), inits())
 
-# Alternately, load existing 
-load("inits/inits_3a.Rdata")
-initslist <- list(saved.state[[2]][[1]], 
-                  saved.state[[2]][[2]],
-                  saved.state[[2]][[3]])
+if(file.exists("inits/inits_3a.Rdata")){
+  load("inits/inits_3a.Rdata")
+  initslist <- list(saved.state[[2]][[1]], 
+                    saved.state[[2]][[2]],
+                    saved.state[[2]][[3]])
+  
+} else {
+  # Initials function, use if no prior initials are available
+  # indexing order [r,c] is opposite in BUGS
+  
+  inits <- function(){
+    list(A = rnorm(3, 0, 10),
+         mu.natl = rnorm(3, 0, 10),
+         tau.natl = runif(3, 0, 1),
+         tau.Eps = rgamma(3, 0.1, 0.1),
+         omega = round(omega.gen(), 4)
+    )
+  }
+  initslist <- list(inits(), inits(), inits())
+}
+
 
 # Compile and adapt BUGS model
 start <- proc.time()
@@ -91,4 +96,5 @@ print((end - start)/60)
 #change to coda object
 coda_out <- read.bugs(model)
 
+dir.create('coda', showWarnings = FALSE)
 save(coda_out, file = "coda/coda_out_3a.Rdata")
