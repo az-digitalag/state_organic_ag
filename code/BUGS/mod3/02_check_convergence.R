@@ -19,8 +19,13 @@ caterplot(coda_out, regex = c("Estar\\[3"), reorder = FALSE)
 newinits <- initfind(coda_out, OpenBUGS = TRUE)
 saved.state <- removevars(initsin = newinits, 
                           variables=c(2:7))
+load(file = "inits/inits_3a.Rdata")
 
-save(saved.state, file = "inits/inits_3a.Rdata")
+# Write saved.state to .txt file
+dput(inits <- saved.state[[2]], file = "inits/inits_3a.txt")
+
+inits <- paste0("inits <- list(", dput(saved.state[[2]]), ")")
+# save(saved.state, file = "inits/inits_3a.Rdata")
 
 # If not converged and some chains in local minima, reinitialize with lowest Dsum
 # round(apply(coda_out[[1]][,7:9],2,mean), 3)

@@ -2,9 +2,10 @@
 # of state-level organic farm survey
 # multivariate log likelihood of farm number, acerage, and sales
 # predictor of year
-# random effect of state
-# using "mod_2a.R", which is identical to "mod_1b.R"
-# but now using inflation-corrected data from 4 time points
+# random effect of state (intercept)
+# and random slope for each state
+# using "mod_3a.R", which is identical to "mod_2a.R"
+# but now adding state-specific slopes
 
 # Load packages
 library(dplyr)
@@ -16,6 +17,8 @@ library(R2OpenBUGS)
 library(postjags)
 library(mcmcplots)
 library(cowplot)
+
+set.seed(8675203)
 
 # Read in data
 x <- readr::read_csv('../../../derived_data/all_transformed.csv')
@@ -59,11 +62,9 @@ omega.gen <- function(x){
 }
 
 
-if(file.exists("inits/inits_3a.Rdata")){
-  load("inits/inits_3a.Rdata")
-  initslist <- list(saved.state[[2]][[1]], 
-                    saved.state[[2]][[2]],
-                    saved.state[[2]][[3]])
+if(file.exists("inits/inits_3a.txt")){
+  initslist <- dget("inits/inits_3a.txt")
+
   
 } else {
   # Initials function, use if no prior initials are available
