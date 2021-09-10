@@ -10,10 +10,12 @@ library(postjags)
 # Read in data and manage data
 x <- readr::read_csv('../../../derived_data/all_transformed.csv')
 
+# Transform data
 dat <- x %>% 
   mutate(year = year - 2014,
          stateID = as.numeric(as.factor(state))) # "center" by using years since 2014
 
+# Compile data in list format
 datlist <- list(farm = as.matrix(log(dat[,3:5])),
                 year = dat$year,
                 st = dat$stateID,
@@ -21,15 +23,33 @@ datlist <- list(farm = as.matrix(log(dat[,3:5])),
                 Nst = length(unique(dat$stateID)),
                 R = diag(x = 1, 3, 3),
                 Ab = 10,
-                ts = 3)
+                ts = length(unique(dat$year)))
 
-load("inits/inits_3a.Rdata")
+if(file.exists("inits/inits_3a.txt")){
+  # Load prior initials
+  initslist <- dget("inits/inits_3a.txt")
+  
+} else {
+  # Initials function, use if no prior initials are available
+  # indexing order [r,c] is opposite in BUGS
+  
+  inits <- function(){
+    list(A = rnorm(3, 0, 10),
+         mu.natl = rnorm(3, 0, 10),
+         tau.natl = runif(3, 0, 1),
+         tau.Eps = rgamma(3, 0.1, 0.1),
+         omega = round(omega.gen(), 4)
+    )
+  }
+  initslist <- list(inits(), inits(), inits())
+}
+
 
 # Replicated data
 # Compile and adapt BUGS model
 start <- proc.time()
 model_rep <- bugs(data = datlist, 
-                  inits = saved.state[[2]],
+                  inits = initslist,
                   parameters.to.save = c("farm.rep"),
                   n.iter = 3000, n.chains = 3, n.burnin = 1000, n.thin = 20,
                   model.file="mod_3a.R", 
@@ -65,6 +85,7 @@ fitByType <- by(
   FUN     = function(subset)
     summary(lm(mean ~ obs, data = subset)))
 
+# Create dataframe of R2
 bestfit <- data.frame(Type = labs,
                       R2 = c(fitByType[[1]]$adj.r.squared, 
                              fitByType[[2]]$adj.r.squared,
@@ -80,6 +101,7 @@ bestfit <- data.frame(Type = labs,
   mutate(r2 = paste0("R^2==", round(R2, 3)),
          Type = factor(Type, levels = labs))
 
+# Observed vs. fitted
 fig_fit <- ggplot() +
   geom_abline(slope = 1, intercept = 0, col = "black") +
   geom_abline(data = bestfit, aes(slope = slope, intercept = int), col = "gray", lty = 2) +
@@ -101,6 +123,7 @@ jpeg(filename = "figs_3a/fig_fit.jpg", height = 3, width = 10, units = "in",
 print(fig_fit)
 dev.off()
 
+# Write out posterior predictions for each observation
 options(scipen = 999)
 pred_out <- pred_df %>%
   mutate(Year = year + 2014,
