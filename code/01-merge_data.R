@@ -39,7 +39,8 @@ all_transformed <- rbind(data_2008, all) %>%
            year == 2016 ~ sales * 1.09,
            year == 2019 ~ sales * 1.02),
          farm_msales = sales / 1000000) %>% 
-  select(state, year, farm_kha, farm_knumber, farm_msales)
+  select(state, year, farm_kha, farm_knumber, farm_msales) %>%
+  arrange(year, state)
 
 readr::write_csv(all_transformed, 'derived_data/all_transformed.csv')
 
