@@ -17,7 +17,6 @@ dat <- x %>%
 
 # Load coda
 load("coda/coda_out_3a.Rdata")
-load("coda/coda_rep_3a.Rdata")
 
 # Summarize chains
 sum_out<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_out)
