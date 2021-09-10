@@ -44,16 +44,17 @@ datlist <- list(farm = as.matrix(log(dat[,3:5])),
                 Nst = length(unique(dat$stateID)),
                 R = diag(x = 1, 3, 3),
                 Ab = 10,
-                ts = 3)
+                ts = length(unique(dat$year)))
 
 # Parameters to monitor
-params <- c("deviance", "Dsum", 
-            "A", "Astar", "B", "Estar",
-            "mu.natl", "tau.natl",
-            "tau.Eps", "omega",
+params <- c("deviance", "Dsum", # model fit 
+            "A", "Astar", "B", "Estar", # regression model parameters 
+            "mu.natl", "tau.natl", # national level parameters
+            "natl.rep", "natl.mu", # national totals
+            "tau.Eps", "omega", # root node variance terms
             "Sig", "Rho", "sig.eps", "sig.natl") #variance terms to monitor
 
-# Function to initialize precision matrix, use in initials funcion
+# Function to initialize precision matrix, used below in inits() function
 farm_mat <- as.matrix(log(dat[, 3:5]))
 omega.gen <- function(x){
  noise <- rnorm(n = nrow(farm_mat)*ncol(farm_mat), mean = 0, sd = 10)
@@ -63,9 +64,9 @@ omega.gen <- function(x){
 
 
 if(file.exists("inits/inits_3a.txt")){
+  # Load prior initials
   initslist <- dget("inits/inits_3a.txt")
 
-  
 } else {
   # Initials function, use if no prior initials are available
   # indexing order [r,c] is opposite in BUGS
@@ -97,5 +98,7 @@ print((end - start)/60)
 #change to coda object
 coda_out <- read.bugs(model)
 
-dir.create('coda', showWarnings = FALSE)
+if(!dir.exists("coda")){
+  dir.create('coda', showWarnings = FALSE)
+}
 save(coda_out, file = "coda/coda_out_3a.Rdata")
