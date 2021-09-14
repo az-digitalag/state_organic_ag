@@ -61,10 +61,11 @@ print((end - start)/60)
 #change to coda object and save
 coda_rep <- read.bugs(model_rep)
 save(coda_rep, file = "coda/coda_rep_3a.Rdata")
+#load("coda/coda_rep_3a.Rdata")
 
 #summarizing chains, reshape, append to data
 sum_rep <- coda.fast(chains = 3, burn.in = 0, thin = 1, coda = coda_rep)
-labs <- c("Number (k)", "Area (kha)", "Sales (MM)")
+labs <- c("Area (kha)", "Number (k)", "Sales (MM)")
 
 pred_df <- data.frame(pivot_longer(dat,3:5, names_to = "type", values_to = "obs"),
                       sum_rep[grep("farm.rep", row.names(sum_rep)),]) %>%
