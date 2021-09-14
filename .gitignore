@@ -7,3 +7,5 @@
 #exception for initial values
 !/code/BUGS/mod1/inits/*.Rdata
 !/code/BUGS/mod2/inits/*.Rdata
+!/code/BUGS/mod3/inits/*.Rdata
+!/code/BUGS/mod3/coda/*.Rdata

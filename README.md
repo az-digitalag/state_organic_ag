@@ -108,13 +108,11 @@ and for each state.” collected for 2016, 2019; also available for
 #### Bayesian Multivariate Regression Model
 
 The cleaned and derived data of farm number, area, and sales are modeled
-as a multivariate normal likelihood where the expected values are a
-linear regression on time (year). Slope and intercepts are estimated for
-each response variable, and the multivariate formulation allows for
-estimates of covariance among the response variables. The response
-variables were log transformed; on the log scale, slope differences were
-not substantially different for each state. Therefore, the random effect
-of state was added to the intercepts only. Random effects were modeled
+as a multivariate lognormal likelihood where the expected values are a
+linear regression on time (year). The multivariate formulation allows for
+estimates of covariance among the response variables. For each variable, state-specific slopes 
+were modeled hierarchically as belonging to an national-level slope, while state-level
+intercepts were modeled as random effects. Intercept random effects were modeled
 as a normal distribution centered at zero and a precision drawn from a
 folded-t distribution. Post-sweeping was employed to maintain
 identifiability between random effects and the intercepts and impose a
@@ -123,25 +121,31 @@ drawn from a Wishart distribution, from which standard deviations and
 correlation coefficients among the response variables were monitored.
 
 The model was run in OpenBUGS using the `R2OpenBUGS` package. Three
-chains of 4000 samples were monitored at a thinning interval of 20 to
+chains of 3000 samples were monitored at a thinning interval of 20 to
 reduce auto-correlation and storage requirements. Convergence was
-assessed with the Gelman-Rubin diagnostic.
+assessed visually and confirmed with the Gelman-Rubin diagnostic. Posterior chains were summarized as mean
+and central 95% credible interval (CI). State-level slopes indicate the annual percent rate of change (in farm number, area, and sales, respectively) and differed significantly
+from the national slope when its 95% CI does not contain the posterior mean of the national
+slope, and vice versa. 
 
-#### Found in `/code/BUGS/mod2` folder.
+#### Found in `/code/BUGS/mod3` folder.
 
--   `mod_2a.R` contains a multivariate normal Bayesian model code
+-   `mod_3a.R` contains a multivariate normal Bayesian model code
 -   `01_run_model.R` modifies `all_transformed.csv`, models data with
-    `mod_2a.R`, and produces a coda object
--   `02_check_convergence.R` visually and algorithmically inspect for
+    `mod_3a.R`, and produces a coda object
+-   `02_check_convergence.R` visually and algorithmically inspects for
     convergence; produces starting values
 -   `03_plot_parameters.R` plots the slope and intercept, random
-    effects, and variance and covariance terms
+    effects, variance of the slope and RE terms, and variance and covariance terms
 -   `04_assess_fit.R` runs model for replicated data and assesses model
     fit
--   `fig_2a/` contains generated plots
--   `predicted_2a.csv` contains input data in long format (with missing
+-   `fig_3a/` contains generated plots
+-   `params_3a.csv` contains summarized model parameters
+-   `predicted_3a.csv` contains input data in long format (with missing
     values) and predicted values with the central 95% credible interval
     (complete)
+-   `inits/` contains initial values to re-run the model
+-   `coda/` contains raw mcmc chains for the parameters `coda_out_3a.Rdata` and for the replicated data `coda_rep_3a.Rdata`
 
 #### Run the model
 
@@ -153,7 +157,7 @@ source('01_run_model.R')
 
 ### TODO
 
--   move mod2 model output to `derived_data/ folder`
+-   move mod3 model output to `derived_data/ folder`
 -   document unused models code/03-regression.R, code/BUGS/mod1
 -   This figure from the “[Organic Farming: Results from 2019 Organic
     Survey](https://www.nass.usda.gov/Publications/Highlights/2020/census-organics.pdf)”
