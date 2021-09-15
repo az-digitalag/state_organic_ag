@@ -16,11 +16,14 @@ caterplot(coda_out, regex = c("Estar\\[2"), reorder = FALSE)
 caterplot(coda_out, regex = c("Estar\\[3"), reorder = FALSE)
 
 # Extract final iteration, save initials for reuse
-newinits <- initfind(coda_out, OpenBUGS = TRUE)
-saved.state <- removevars(initsin = newinits, 
-                          variables=c(2:7))
+# newinits <- initfind(coda_out, OpenBUGS = TRUE)
+# saved.state <- removevars(initsin = newinits,
+#                           variables=c(2:7, 10:11))
 
-save(saved.state, file = "inits/inits_3a.Rdata")
+# Write saved.state to .txt file
+# dput(inits <- saved.state[[2]], file = "inits/inits_3a.txt")
+
+# save(saved.state, file = "inits/inits_3a.Rdata")
 
 # If not converged and some chains in local minima, reinitialize with lowest Dsum
 # round(apply(coda_out[[1]][,7:9],2,mean), 3)
@@ -40,8 +43,12 @@ save(saved.state, file = "inits/inits_3a.Rdata")
 # Check convergence with Gelman diagnostic
 gel <- gelman.diag(coda_out, multivariate = FALSE)
 str(gel)
+
+# Posterior predictive loss
 gel$psrf[match("Dsum[1]", row.names(gel$psrf)):match("Dsum[3]", row.names(gel$psrf)),]
-Bs<-matrix(NA, ncol = 3, nrow = 50)
+
+# State-specific slopes
+Bs <- matrix(NA, ncol = 3, nrow = 50)
 for(i in 1:3){
   for(j in 1:50){
     Bs[j, i]<-paste0("B[", i, ",", j, "]")
@@ -51,7 +58,8 @@ gel$psrf[match(Bs[,1], row.names(gel$psrf)),]
 gel$psrf[match(Bs[,2], row.names(gel$psrf)),]
 gel$psrf[match(Bs[,3], row.names(gel$psrf)),]
 
-Estars<-matrix(NA, ncol = 3, nrow = 50)
+# State random effects (intercepts)
+Estars <- matrix(NA, ncol = 3, nrow = 50)
 for(i in 1:3){
   for(j in 1:50){
     Estars[j,i]<-paste0("Estar[", i, ",", j, "]")
@@ -61,14 +69,17 @@ gel$psrf[match(Estars[,1], row.names(gel$psrf)),]
 gel$psrf[match(Estars[,2], row.names(gel$psrf)),]
 gel$psrf[match(Estars[,3], row.names(gel$psrf)),]
 
-# population level mean and precision
+# Population level mean and precision
 gel$psrf[grep("mu.natl", row.names(gel$psrf)),]
 gel$psrf[grep("tau.natl", row.names(gel$psrf)),]
 
-#Sig or sd of each response
+# Standard deviation of each response
 gel$psrf[match("Sig[1]", row.names(gel$psrf)):match("Sig[3]", row.names(gel$psrf)),]
-#Rho, or correlation coefficient between each pair of traits
+
+# Correlation coefficient between each pair of traits
 gel$psrf[match("Rho[3,1]", row.names(gel$psrf)):match("Rho[3,2]", row.names(gel$psrf)),]
 gel$psrf[match("Rho[2,1]", row.names(gel$psrf)),]
-#Omega (precision matrix)
+
+# Precision matrix
 gel$psrf[match("omega[1,1]", row.names(gel$psrf)):match("omega[3,3]", row.names(gel$psrf)),]
+

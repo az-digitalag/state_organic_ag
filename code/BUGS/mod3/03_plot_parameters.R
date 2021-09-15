@@ -27,7 +27,7 @@ sum_out$sig<-ifelse(sum_out$pc2.5*sum_out$pc97.5 > 0, TRUE, FALSE)
 sum_rep<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_rep)
 sum_rep$var <- row.names(sum_rep)
 sum_rep$year <- rep(dat$year + 2014, each = 3)
-sum_rep$Var <- rep(c("number~(k)", "area~(kha)", "sales~(MM)"), 300)
+sum_rep$Var <- rep(c("area~(kha)", "number~(k)", "sales~(MM)"), 300)
 sum_rep$state <- rep(dat$state, each = 3)
 
 ## Table
@@ -49,19 +49,19 @@ sum_df$Parameter <- c(rep("intercept", 3),
                       rep("stdev", 3),
                       rep("mu.slope", 3),
                       rep("tau.slope", 3))
-sum_df$Variable <- c(c("farm_knumber", "farm_kha", "farm_msales"),
-                     rep(c("farm_knumber", "farm_kha", "farm_msales"), each = 50),
-                     c("kha-knumber", "msales-knumber", "msales-kha"),
-                     c("farm_knumber", "farm_kha", "farm_msales"),
-                     c("farm_knumber", "farm_kha", "farm_msales"),
-                     c("farm_knumber", "farm_kha", "farm_msales"))
+sum_df$Variable <- c(c("farm_kha", "farm_knumber", "farm_msales"),
+                     rep(c("farm_kha", "farm_knumber", "farm_msales"), each = 50),
+                     c("kha-knumber", "kha-msales", "knumber-msales"),
+                     c("farm_kha", "farm_knumber", "farm_msales"),
+                     c("farm_kha", "farm_knumber", "farm_msales"),
+                     c("farm_kha", "farm_knumber", "farm_msales"))
 sum_df$State[sum_df$Parameter == "slope"] <- rep(unique(dat$state), 3)
 sum_df$significant[grep("R|S|tau.natl", sum_df$var)] <- NA
 
 write.csv(sum_df, file = "params_3a.csv", row.names = FALSE)
 
 ## Plots
-labs <- c("Number (k)", "Area (kha)", "Sales (MM)")
+labs <- c("Area (kha)", "Number (k)", "Sales (MM)")
 states <- unique(dat$state)
 
 ## rates
@@ -69,19 +69,23 @@ dat_rep <- sum_rep %>%
   filter(year == 2019) # Include predicted value for the year 2019
 dat_B <- sum_out[grep("B\\[", row.names(sum_out)),]
 dat_B$state <- rep(unique(dat$state), 3)
-dat_B$state <- factor(dat_B$state, levels = unique(dat$state[rev(order(dat_B$mean[101:150]))]))
-dat_B$var <- rep(c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"), each = 50)
-dat_B$var <- factor(dat_B$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
-dat_B$Var <- rep(c("number~(k)", "area~(kha)", "sales~(MM)"), each = 50)
-dat_B$Var <- factor(dat_B$Var, c("number~(k)", "area~(kha)", "sales~(MM)"))
+dat_B$var <- rep(c("area~(kha~yr^-1)", "number~(k~yr^-1)", "sales~(MM~yr^-1)"), each = 50)
+dat_B$var <- factor(dat_B$var, c("area~(kha~yr^-1)", "number~(k~yr^-1)", "sales~(MM~yr^-1)"))
+dat_B$Var <- rep(c("area~(kha)", "number~(k)", "sales~(MM)"), each = 50)
+dat_B$Var <- factor(dat_B$Var, c("area~(kha)", "number~(k)", "sales~(MM)"))
 dat_B <- dat_B %>%
   left_join(dat_rep, by = c("state", "Var"), suffix = c("", ".y"))
 
+# Order by sales
+ord <- order(dat_B$mean[101:150])
+dat_B$state <- factor(dat_B$state, levels = states[rev(ord)])
+
+
 dat_mu <- sum_out[grep("mu.natl", row.names(sum_out)),]
-dat_mu$var <- c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)")
-dat_mu$var <- factor(dat_mu$var, c("number~(k~yr^-1)", "area~(kha~yr^-1)", "sales~(MM~yr^-1)"))
-dat_mu$Var <- c("number~(k)", "area~(kha)", "sales~(MM)")
-dat_mu$Var <- factor(dat_mu$Var, c("number~(k)", "area~(kha)", "sales~(MM)"))
+dat_mu$var <- c("area~(kha~yr^-1)", "number~(k~yr^-1)", "sales~(MM~yr^-1)")
+dat_mu$var <- factor(dat_mu$var, c("area~(kha~yr^-1)", "number~(k~yr^-1)", "sales~(MM~yr^-1)"))
+dat_mu$Var <- c("area~(kha)", "number~(k)", "sales~(MM)")
+dat_mu$Var <- factor(dat_mu$Var, c("area~(kha)", "number~(k)", "sales~(MM)"))
 
 fig_rates <- ggplot() +
   geom_rect(data = dat_mu, aes(xmin = -Inf, xmax = Inf,
@@ -96,7 +100,6 @@ fig_rates <- ggplot() +
                 width = 0) +
   geom_point(data = dat_B, aes(x = fct_rev(state), y = mean*100), size = 2.5) +
   scale_y_continuous(expression(paste("Annual percent change")))+ 
-  scale_x_discrete(labels = rev(unique(dat$state[rev(order(dat_B$mean[101:150]))]))) + 
   # scale_size(range = c(1, 3)) +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
@@ -115,7 +118,7 @@ jpeg(filename = "figs_3a/fig_B.jpg", height = 10, width = 8, units = "in",
 print(fig_rates)
 dev.off()
 
-### intercepts
+### intercepts (national average of 2014 value, log scale)
 dat_A <- sum_out[grep("Astar", row.names(sum_out)),]
 fig_int <- ggplot() +
   geom_pointrange(data = dat_A, aes(x = var, y = mean, 
@@ -141,7 +144,7 @@ fig_RE1<-ggplot() +
                                       ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
-  scale_y_continuous("RE (number)")+ 
+  scale_y_continuous("RE (area)")+ 
   scale_x_discrete() +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
@@ -159,7 +162,7 @@ fig_RE2<-ggplot() +
                                       ymin = pc2.5, ymax = pc97.5), 
                   size = 0.25) +
   geom_hline(yintercept = 0, col = "red") +
-  scale_y_continuous("RE (area)")+ 
+  scale_y_continuous("RE (number)")+ 
   scale_x_discrete() +
   theme_bw(base_size = 12)+
   theme(panel.grid.minor = element_blank(),
