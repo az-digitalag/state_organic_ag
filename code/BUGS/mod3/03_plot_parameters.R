@@ -20,11 +20,11 @@ load("coda/coda_out_3a.Rdata")
 load("coda/coda_rep_3a.Rdata")
 
 # Summarize chains
-sum_out<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_out)
+sum_out <- coda.fast(chains = 3, burn.in = 0, thin = 1, coda = coda_out)
 sum_out$var <- row.names(sum_out)
-sum_out$sig<-ifelse(sum_out$pc2.5*sum_out$pc97.5 > 0, TRUE, FALSE)
+sum_out$sig <- ifelse(sum_out$pc2.5*sum_out$pc97.5 > 0, TRUE, FALSE)
 
-sum_rep<-coda.fast(chains=3, burn.in=0, thin=1, coda=coda_rep)
+sum_rep <- coda.fast(chains = 3, burn.in = 0, thin = 1, coda = coda_rep)
 sum_rep$var <- row.names(sum_rep)
 sum_rep$year <- rep(dat$year + 2014, each = 3)
 sum_rep$Var <- rep(c("area~(kha)", "number~(k)", "sales~(MM)"), 300)
