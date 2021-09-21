@@ -77,6 +77,24 @@ for 2008 & 2014 adjust # of farms but not total sales or acerage b/c tiny % of t
 
 > "The 2014 and 2015 Organic Certifier Survey data is a tabulation of USDA-accredited organic certifiers' acreage and livestock data received. The data underwent editing, summarization, and disclosure programming prior to publishing. The 2008, 2011, 2014, and 2015 organic producer surveys as well as the 2007 and 2012 Census of Agriculture collected and published data on organic operations which had production in the reference year. The data from these programs were adjusted for non-response, misclassification, and coverage. Therefore, the certifier survey data and producer survey/census data are not comparable and data users should account for these differences whenreviewing the data. Data users should allow for differences when comparing the data between datasets including reference periods, organic definitions, and differing survey methodologies." - USDA 2016
 
+Missing data
+
+removed Alaska farm area for 2015; suspected to be incorrect.
+
+```{r, eval=FALSE}
+x <- readr::read_csv('../../../derived_data/all_transformed.csv')
+knitr::kable(x %>% filter(state == 'Alaska'), digits = c(NA, 4, 2, 3, 3))
+x$farm_kha[x$state == 'Alaska' & x$year == 2015] <- NA
+```
+
+|state  | year| farm_kha| farm_knumber| farm_msales|
+|:------|----:|--------:|------------:|-----------:|
+|Alaska | 2008|     0.13|        0.006|       0.576|
+|Alaska | 2011|       NA|        0.004|       0.698|
+|Alaska | 2014|     0.11|        0.007|          NA|
+|Alaska | 2015|   281.33|        0.004|          NA|
+|Alaska | 2016|       NA|        0.008|          NA|
+|Alaska | 2019|       NA|        0.008|          NA|
 
 
 ### Analysis
