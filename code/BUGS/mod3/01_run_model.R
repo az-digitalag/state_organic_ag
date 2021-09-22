@@ -23,6 +23,8 @@ set.seed(8675203)
 # Read in data
 x <- readr::read_csv('../../../derived_data/all_transformed.csv')
 
+x$farm_kha[x$state == 'Alaska' & x$year == 2015] <- NA
+
 dat <- x %>% 
   mutate(year = year - 2014,
          stateID = as.numeric(as.factor(state))) # "center" by using years since 2014
