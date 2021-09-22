@@ -52,6 +52,8 @@ imputed_long <- imputed %>%
   tidyr::pivot_longer(cols = farm_kha:farm_msales, 
                       names_to = 'metric', 
                       values_to = 'value')
+
+readr::write_csv(imputed_long, 'derived_data/imputed_long.csv')
 ## Table 1
 vars <- data.frame(metric = c('area', 'sales', 'number'), label = factor(c("area~(kha~yr^-1)", "number~(k~yr^-1)", "sales~(MM~yr^-1)")))
 imp_summary <- imputed %>% 

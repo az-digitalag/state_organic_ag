@@ -38,11 +38,31 @@ ggplot(data = z %>% mutate(factor = gsub("\\ \\(farms\\)", "", factor)),
   scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
   ggtitle("percent of farms reporting having adopted the practice")
   
+ggplot(data = z %>% mutate(factor = gsub("\\ \\(farms\\)", "", factor)), 
+       aes(year, number, color = factor)) +
+  geom_point() + 
+  geom_bump() +   
+  geom_text_repel(data = z %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+                  aes(x = year, hjust = 0, label = factor), 
+                  size = 3, direction = 'y') +
+  #  geom_text(data = z %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+  #                  aes(x = year + 0.1, label = factor), 
+  #                  size = 3) +
+  
+  theme_minimal_grid(font_size = 10, line_size = 1) + 
+  theme(legend.position = "none",
+        panel.grid.major = element_blank()) +
+  scale_x_continuous(limits = c(2008, 2019),
+                     breaks = c(2008, 2014, 2019)) +
+  scale_y_continuous(position = 'right', name = "") +
+  scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
+  ggtitle("number of farms reporting having adopted the practice")
 
 
-a <- aov(number ~ factor * year, data = practices)
-a <- lm(number ~ factor * year, data = practices)
-broom::tidy(a)
+broom::tidy(aov(percent ~ factor * year, data = practices))
+broom::tidy(aov(number ~ factor * year, data = practices))
+a <- lm(percent ~ factor * year, data = practices)
+broom::tidy(a) %>% knitr::kable()
 broom::tidy(summary(a))
 broom::augment(a)
 

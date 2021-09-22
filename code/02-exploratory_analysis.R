@@ -99,7 +99,6 @@ ggplot(data = all_long %>% filter(name == 'farm_knumber')) +
 # library 
 library(usmap)
 
-
 us_states <- map_data("state")
 plot_usmap(data = all %>% filter(year == 2019) %>% mutate(number = farm_knumber * 1000), 
            values = 'number', color = 'white') + 
@@ -119,7 +118,7 @@ ggplot(all %>% mutate(year = lubridate::ymd(year, truncated = 2L),
   scale_x_date(guide = guide_axis(angle = 90),
                labels = NULL) + 
 #               breaks = lubridate::ymd(c(2008, 2011, 2014, 2015, 2016, 2019), truncated = 2L)) +
-  scale_y_log10(breaks = c(10, 100, 1000)) + 
+#  scale_y_log10(breaks = c(10, 100, 1000)) + 
   theme_minimal() +
   theme(legend.position = 'right') +
   scale_color_binned(name = "Farm\nNumber", trans = 'log', breaks = c(10, 50, 100, 500, 1000), low = 'white', high = 'black') +
@@ -130,6 +129,42 @@ ggplot(all %>% mutate(year = lubridate::ymd(year, truncated = 2L),
         panel.grid.minor = element_blank(),
         panel.background = element_rect(color='black', fill = NULL)#element_blank()
         )
+
+### run after 05-predicted_plots
+
+params <- readr::read_csv('code/BUGS/mod3/params_3a.csv') %>% 
+  mutate(variable = Variable, state = State) %>% 
+  filter(Parameter == 'slope') %>% 
+  left_join(s, copy = TRUE)
+
+
+ggplot(params, 
+       aes(variable, mean * 100, fill = variable)) +
+  geom_col(width = 0.5) +
+#  geom_linerange(aes(ymin = pc2.5 * 100, ymax = pc97.5 * 100), size=.2) +
+#  coord_flip() +
+  theme_minimal() +
+  geom_hline(yintercept = 0) +
+  facet_geo(~ abb, grid = 'us_state_without_DC_grid2') +
+  theme(legend.position = 'right') +
+#  scale_color_binned(name = "legend name", trans = 'log', breaks = c(10, 50, 100, 500, 1000), low = 'white', high = 'black') +
+  xlab("") + ylab("") +
+  scale_y_continuous(#labels = scales::percent_format(scale = 1),
+                     breaks = c(-5, 0, 5, 10, 15, 20),
+                     labels = c("", "0%", "", "", "", "20%")) +
+  theme(text = element_text(size = 10),
+        axis.line = element_blank(),
+        plot.background = element_blank(),
+        axis.text.x = element_blank(),
+        #panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.spacing = unit(0, units = 'lines')
+  ) +
+  scale_fill_manual(name="Variable",
+                      breaks=c("farm_kha", "farm_knumber", "farm_msales"),
+                      labels=c("Area", "Number", "Sales"), 
+                      values = wes_palette(name = "Zissou1", 3, type = 'continuous'))
 
 
 ## Bump Chart - ranks
