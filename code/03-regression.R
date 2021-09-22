@@ -14,13 +14,15 @@ all <- readr::read_csv('derived_data/all_transformed.csv',
                   farm_msales = col_double()
                 ))
 
-all_rescaled <- all %>% 
-  mutate(year = year - 2019)
+# Implausible that Alaska went from 0.1 kha in 2014 to > 200 kha in 2015; 
+# also, data for only 3 of 6 years was available
+
+all$farm_kha[all$state == 'Alaska' & all$year == 2015] <- NA
 
 ## LMER multivariate
 
 
-all_complete <-  all_rescaled[complete.cases(all_rescaled),]
+all_complete <-  all[complete.cases(all),]
 # m1 <- rstanarm::stan_glmer(farm_knumber ~ year + (1 + year | state),
 #                            data = all_complete,
 #                            family = gaussian(link = "identity")
@@ -69,7 +71,7 @@ priors <-
 mod_rys_no <- brm(farm_knumber  ~ 1 + year + (1 + year | state),
                      inits = "0",
                      #prior = priors,
-                     data = all_rescaled,
+                     data = all,
                      iter = 5000,
                      chains = 4,
                      cores = 4,
@@ -78,7 +80,7 @@ mod_rys_no <- brm(farm_knumber  ~ 1 + year + (1 + year | state),
 mod_rys_sales <- brm(farm_msales|mi() ~ 1 + year + (1 + year | state),
                      inits = "0",
                      #prior = priors,
-                     data = all_rescaled,
+                     data = all,
                      iter = 5000,
                      chains = 4,
                      cores = 4,
@@ -87,7 +89,7 @@ mod_rys_sales <- brm(farm_msales|mi() ~ 1 + year + (1 + year | state),
 mod_rys_area <- brm(farm_kha|mi()  ~ 1 + year + (1 + year | state),
                      inits = "0",
                      #prior = priors,
-                     data = all_rescaled,
+                     data = all,
                      iter = 5000,
                      chains = 4,
                      cores = 4,
@@ -120,7 +122,7 @@ mod_mvbrm_rys_complete <- brm(mmm,
 ## Multivariate w/ Missing Data  
 mod_mvbrm <- brm(brms_formula,
                  #prior = priors,
-                 data = all_rescaled,
+                 data = all,
                  iter = 5000,
                  chains = 4,
                  cores = 4,
@@ -129,7 +131,7 @@ mod_mvbrm <- brm(brms_formula,
 
 mod_mvbrm_rs <- brm(brms_formula_re_state,
                     #prior = priors,
-                    data = all_rescaled,
+                    data = all,
                     iter = 5000,
                     chains = 4,
                     cores = 4,
@@ -138,7 +140,7 @@ mod_mvbrm_rs <- brm(brms_formula_re_state,
 
 mod_mvbrm_rys <- brm(brms_formula_re_yr_state,inits = "0",
                      #prior = priors,
-                     data = all_rescaled,
+                     data = all,
                      iter = 5000,
                      chains = 4,
                      cores = 4,
