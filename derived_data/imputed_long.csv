@@ -1,0 +1,901 @@
+state,year,metric,value
+Alabama,2008,farm_kha,0.14771085026041
+Alabama,2008,farm_knumber,0.004
+Alabama,2008,farm_msales,0.614
+Alaska,2008,farm_kha,0.130713985298938
+Alaska,2008,farm_knumber,0.006
+Alaska,2008,farm_msales,0.57574606
+Arizona,2008,farm_kha,8.32279820946739
+Arizona,2008,farm_knumber,0.038
+Arizona,2008,farm_msales,51.33352276
+Arkansas,2008,farm_kha,2.53374694104227
+Arkansas,2008,farm_knumber,0.025
+Arkansas,2008,farm_msales,15.67474666
+California,2008,farm_kha,186.790284992183
+California,2008,farm_knumber,2.286
+California,2008,farm_msales,1401.35338186
+Colorado,2008,farm_kha,60.2878800183407
+Colorado,2008,farm_knumber,0.163
+Colorado,2008,farm_msales,85.68166628
+Connecticut,2008,farm_kha,0.193035823491002
+Connecticut,2008,farm_knumber,0.037
+Connecticut,2008,farm_msales,6.2988295
+Delaware,2008,farm_kha,0.0967202553759946
+Delaware,2008,farm_knumber,0.004
+Delaware,2008,farm_msales,0.218
+Florida,2008,farm_kha,3.01613415613928
+Florida,2008,farm_knumber,0.099
+Florida,2008,farm_msales,52.9485368
+Georgia,2008,farm_kha,1.50058036374137
+Georgia,2008,farm_knumber,0.058
+Georgia,2008,farm_msales,7.13184306
+Hawaii,2008,farm_kha,3.97160077933059
+Hawaii,2008,farm_knumber,0.18
+Hawaii,2008,farm_msales,12.29481962
+Idaho,2008,farm_kha,59.9532036535041
+Idaho,2008,farm_knumber,0.219
+Idaho,2008,farm_msales,86.9244754
+Illinois,2008,farm_kha,12.0940787946092
+Illinois,2008,farm_knumber,0.162
+Illinois,2008,farm_msales,28.75674688
+Indiana,2008,farm_kha,5.09056105596082
+Indiana,2008,farm_knumber,0.108
+Indiana,2008,farm_msales,16.9294337
+Iowa,2008,farm_kha,37.8228807864067
+Iowa,2008,farm_knumber,0.476
+Iowa,2008,farm_msales,87.28531602
+Kansas,2008,farm_kha,21.3869123686634
+Kansas,2008,farm_knumber,0.087
+Kansas,2008,farm_msales,17.6485261
+Kentucky,2008,farm_kha,2.17600340232939
+Kentucky,2008,farm_knumber,0.052
+Kentucky,2008,farm_msales,2.98300126
+Louisiana,2008,farm_kha,0.850652622595568
+Louisiana,2008,farm_knumber,0.016
+Louisiana,2008,farm_msales,2.53854916
+Maine,2008,farm_kha,10.6578437053648
+Maine,2008,farm_knumber,0.276
+Maine,2008,farm_msales,37.42293514
+Maryland,2008,farm_kha,3.54708384255478
+Maryland,2008,farm_knumber,0.095
+Maryland,2008,farm_msales,12.69207236
+Massachusetts,2008,farm_kha,1.48924912043372
+Massachusetts,2008,farm_knumber,0.08
+Massachusetts,2008,farm_msales,18.40035842
+Michigan,2008,farm_kha,26.8198388474196
+Michigan,2008,farm_knumber,0.309
+Michigan,2008,farm_msales,86.75519552
+Minnesota,2008,farm_kha,48.5782541216695
+Minnesota,2008,farm_knumber,0.462
+Minnesota,2008,farm_msales,84.2446966
+Mississippi,2008,farm_kha,1.566
+Mississippi,2008,farm_knumber,0.01
+Mississippi,2008,farm_msales,4.741
+Missouri,2008,farm_kha,11.1119028121927
+Missouri,2008,farm_knumber,0.115
+Missouri,2008,farm_msales,11.3748103
+Montana,2008,farm_kha,114.943727425519
+Montana,2008,farm_knumber,0.133
+Montana,2008,farm_msales,30.96680982
+Nebraska,2008,farm_kha,59.0734135481174
+Nebraska,2008,farm_knumber,0.146
+Nebraska,2008,farm_msales,59.33630064
+Nevada,2008,farm_kha,1.62724747643044
+Nevada,2008,farm_knumber,0.02
+Nevada,2008,farm_msales,3.4170797
+New Hampshire,2008,farm_kha,3.32248241270676
+New Hampshire,2008,farm_knumber,0.079
+New Hampshire,2008,farm_msales,13.07979812
+New Jersey,2008,farm_kha,1.09144154288309
+New Jersey,2008,farm_knumber,0.062
+New Jersey,2008,farm_msales,3.17397152
+New Mexico,2008,farm_kha,47.3382923540041
+New Mexico,2008,farm_knumber,0.139
+New Mexico,2008,farm_msales,40.8274647
+New York,2008,farm_kha,66.4824279222752
+New York,2008,farm_knumber,0.684
+New York,2008,farm_msales,128.26262966
+North Carolina,2008,farm_kha,3.48516669162371
+North Carolina,2008,farm_knumber,0.134
+North Carolina,2008,farm_msales,64.41054294
+North Dakota,2008,farm_kha,61.8050525597825
+North Dakota,2008,farm_knumber,0.124
+North Dakota,2008,farm_msales,23.999047
+Ohio,2008,farm_kha,24.1598294809493
+Ohio,2008,farm_knumber,0.42
+Ohio,2008,farm_msales,52.17338784
+Oklahoma,2008,farm_kha,11.134969986069
+Oklahoma,2008,farm_knumber,0.058
+Oklahoma,2008,farm_msales,6.837307
+Oregon,2008,farm_kha,40.5310479369346
+Oregon,2008,farm_knumber,0.433
+Oregon,2008,farm_msales,189.84772336
+Pennsylvania,2008,farm_kha,20.9348766981405
+Pennsylvania,2008,farm_knumber,0.466
+Pennsylvania,2008,farm_msales,259.5420009
+Rhode Island,2008,farm_kha,0.04
+Rhode Island,2008,farm_knumber,0.022
+Rhode Island,2008,farm_msales,1.36242402
+South Carolina,2008,farm_kha,0.227029553413946
+South Carolina,2008,farm_knumber,0.016
+South Carolina,2008,farm_msales,2.09136914
+South Dakota,2008,farm_kha,53.3879622185051
+South Dakota,2008,farm_knumber,0.094
+South Dakota,2008,farm_msales,18.48014642
+Tennessee,2008,farm_kha,0.492099709360709
+Tennessee,2008,farm_knumber,0.019
+Tennessee,2008,farm_msales,1.49522468
+Texas,2008,farm_kha,124.916030910771
+Texas,2008,farm_knumber,0.185
+Texas,2008,farm_msales,182.18011852
+Utah,2008,farm_kha,57.9326001593939
+Utah,2008,farm_knumber,0.054
+Utah,2008,farm_msales,15.56340458
+Vermont,2008,farm_kha,30.6890537497204
+Vermont,2008,farm_knumber,0.41
+Vermont,2008,farm_msales,88.88519718
+Virginia,2008,farm_kha,4.30708651868917
+Virginia,2008,farm_knumber,0.085
+Virginia,2008,farm_msales,23.41269426
+Washington,2008,farm_kha,32.4984104935952
+Washington,2008,farm_knumber,0.707
+Washington,2008,farm_msales,344.00309012
+West Virginia,2008,farm_kha,0.0562515292772521
+West Virginia,2008,farm_knumber,0.005
+West Virginia,2008,farm_msales,0.4986201
+Wisconsin,2008,farm_kha,77.1633388015163
+Wisconsin,2008,farm_knumber,0.994
+Wisconsin,2008,farm_msales,161.97233864
+Wyoming,2008,farm_kha,273.778216428691
+Wyoming,2008,farm_knumber,0.047
+Wyoming,2008,farm_msales,16.4975415
+Alabama,2011,farm_kha,0.321
+Alabama,2011,farm_knumber,0.003
+Alabama,2011,farm_msales,0.871
+Alaska,2011,farm_kha,1.138
+Alaska,2011,farm_knumber,0.004
+Alaska,2011,farm_msales,0.69811326
+Arizona,2011,farm_kha,5.97925428108921
+Arizona,2011,farm_knumber,0.029
+Arizona,2011,farm_msales,90.1986345
+Arkansas,2011,farm_kha,1.14647901037738
+Arkansas,2011,farm_knumber,0.01
+Arkansas,2011,farm_msales,14.628
+California,2011,farm_kha,236.028584036523
+California,2011,farm_knumber,1.884
+California,2011,farm_msales,1624.95099234
+Colorado,2011,farm_kha,31.4559361092916
+Colorado,2011,farm_knumber,0.117
+Colorado,2011,farm_msales,82.14894675
+Connecticut,2011,farm_kha,0.120192116513265
+Connecticut,2011,farm_knumber,0.035
+Connecticut,2011,farm_msales,1.35237024
+Delaware,2011,farm_kha,0.128285861733014
+Delaware,2011,farm_knumber,0.004
+Delaware,2011,farm_msales,0.62865036
+Florida,2011,farm_kha,5.89426995628185
+Florida,2011,farm_knumber,0.091
+Florida,2011,farm_msales,115.37094699
+Georgia,2011,farm_kha,0.661258984453453
+Georgia,2011,farm_knumber,0.039
+Georgia,2011,farm_msales,14.70049659
+Hawaii,2011,farm_kha,1.09306029192704
+Hawaii,2011,farm_knumber,0.103
+Hawaii,2011,farm_msales,8.74623321
+Idaho,2011,farm_kha,52.8019750645953
+Idaho,2011,farm_knumber,0.142
+Idaho,2011,farm_msales,62.30167047
+Illinois,2011,farm_kha,11.6400196877813
+Illinois,2011,farm_knumber,0.135
+Illinois,2011,farm_msales,32.6075841
+Indiana,2011,farm_kha,6.23339788098931
+Indiana,2011,farm_knumber,0.156
+Indiana,2011,farm_msales,35.5562415
+Iowa,2011,farm_kha,33.0362398634475
+Iowa,2011,farm_knumber,0.466
+Iowa,2011,farm_msales,71.02287504
+Kansas,2011,farm_kha,22.8239568324298
+Kansas,2011,farm_knumber,0.064
+Kansas,2011,farm_msales,18.981
+Kentucky,2011,farm_kha,1.41964291154389
+Kentucky,2011,farm_knumber,0.043
+Kentucky,2011,farm_msales,4.11728733
+Louisiana,2011,farm_kha,0.825562012414347
+Louisiana,2011,farm_knumber,0.015
+Louisiana,2011,farm_msales,3.25629603
+Maine,2011,farm_kha,10.4498344532173
+Maine,2011,farm_knumber,0.221
+Maine,2011,farm_msales,28.55051667
+Maryland,2011,farm_kha,3.31843554009689
+Maryland,2011,farm_knumber,0.072
+Maryland,2011,farm_msales,10.54672983
+Massachusetts,2011,farm_kha,1.0364040753888
+Massachusetts,2011,farm_knumber,0.077
+Massachusetts,2011,farm_msales,12.58739001
+Michigan,2011,farm_kha,25.8020503860363
+Michigan,2011,farm_knumber,0.219
+Michigan,2011,farm_msales,116.07078015
+Minnesota,2011,farm_kha,50.4418389585166
+Minnesota,2011,farm_knumber,0.434
+Minnesota,2011,farm_msales,80.94197826
+Mississippi,2011,farm_kha,1.969
+Mississippi,2011,farm_knumber,0.013
+Mississippi,2011,farm_msales,7.095
+Missouri,2011,farm_kha,8.9949837499675
+Missouri,2011,farm_knumber,0.096
+Missouri,2011,farm_msales,46.80493272
+Montana,2011,farm_kha,81.970214087525
+Montana,2011,farm_knumber,0.099
+Montana,2011,farm_msales,34.30149957
+Nebraska,2011,farm_kha,56.0026466117448
+Nebraska,2011,farm_knumber,0.127
+Nebraska,2011,farm_msales,63.155
+Nevada,2011,farm_kha,2.69157497282737
+Nevada,2011,farm_knumber,0.028
+Nevada,2011,farm_msales,2.38072887
+New Hampshire,2011,farm_kha,2.01250974889047
+New Hampshire,2011,farm_knumber,0.074
+New Hampshire,2011,farm_msales,19.68752448
+New Jersey,2011,farm_kha,0.66490116980234
+New Jersey,2011,farm_knumber,0.044
+New Jersey,2011,farm_msales,7.45897815
+New Mexico,2011,farm_kha,59.9936723796028
+New Mexico,2011,farm_knumber,0.064
+New Mexico,2011,farm_msales,25.95732282
+New York,2011,farm_kha,67.100790057064
+New York,2011,farm_knumber,0.59
+New York,2011,farm_msales,124.92530856
+North Carolina,2011,farm_kha,4.88943148725007
+North Carolina,2011,farm_knumber,0.092
+North Carolina,2011,farm_msales,28.24564392
+North Dakota,2011,farm_kha,49.560025416825
+North Dakota,2011,farm_knumber,0.112
+North Dakota,2011,farm_msales,24.91794045
+Ohio,2011,farm_kha,22.045743229551
+Ohio,2011,farm_knumber,0.329
+Ohio,2011,farm_msales,65.88320661
+Oklahoma,2011,farm_kha,5.8380184270046
+Oklahoma,2011,farm_knumber,0.029
+Oklahoma,2011,farm_msales,1.56598884
+Oregon,2011,farm_kha,53.7331604521274
+Oregon,2011,farm_knumber,0.352
+Oregon,2011,farm_msales,273.1385241
+Pennsylvania,2011,farm_kha,24.7874994227408
+Pennsylvania,2011,farm_knumber,0.435
+Pennsylvania,2011,farm_msales,144.08753814
+Rhode Island,2011,farm_kha,0.0392546643157802
+Rhode Island,2011,farm_knumber,0.017
+Rhode Island,2011,farm_msales,0.35910927
+South Carolina,2011,farm_kha,0.315251376309204
+South Carolina,2011,farm_knumber,0.013
+South Carolina,2011,farm_msales,4.935
+South Dakota,2011,farm_kha,40.5047432649704
+South Dakota,2011,farm_knumber,0.077
+South Dakota,2011,farm_msales,13.33852065
+Tennessee,2011,farm_kha,0.625241818225572
+Tennessee,2011,farm_knumber,0.017
+Tennessee,2011,farm_msales,2.764
+Texas,2011,farm_kha,32.7869525106792
+Texas,2011,farm_knumber,0.133
+Texas,2011,farm_msales,193.63374225
+Utah,2011,farm_kha,31.474956410558
+Utah,2011,farm_knumber,0.035
+Utah,2011,farm_msales,13.13341029
+Vermont,2011,farm_kha,33.1438866748701
+Vermont,2011,farm_knumber,0.373
+Vermont,2011,farm_msales,76.94834823
+Virginia,2011,farm_kha,5.09986886296353
+Virginia,2011,farm_knumber,0.064
+Virginia,2011,farm_msales,24.98736942
+Washington,2011,farm_kha,29.091753130603
+Washington,2011,farm_knumber,0.491
+Washington,2011,farm_msales,347.61188007
+West Virginia,2011,farm_kha,0.0914593209831581
+West Virginia,2011,farm_knumber,0.005
+West Virginia,2011,farm_msales,0.15821676
+Wisconsin,2011,farm_kha,70.4333896512954
+Wisconsin,2011,farm_knumber,0.863
+Wisconsin,2011,farm_msales,154.97509248
+Wyoming,2011,farm_kha,289.596227398906
+Wyoming,2011,farm_knumber,0.043
+Wyoming,2011,farm_msales,21.00717333
+Alabama,2014,farm_kha,0.526093439283653
+Alabama,2014,farm_knumber,0.015
+Alabama,2014,farm_msales,1.4663
+Alaska,2014,farm_kha,0.114121807598454
+Alaska,2014,farm_knumber,0.007
+Alaska,2014,farm_msales,1.564
+Arizona,2014,farm_kha,7.20748011818604
+Arizona,2014,farm_knumber,0.061
+Arizona,2014,farm_msales,102.8115
+Arkansas,2014,farm_kha,0.121406178296228
+Arkansas,2014,farm_knumber,0.026
+Arkansas,2014,farm_msales,20.656
+California,2014,farm_kha,277.553948573704
+California,2014,farm_knumber,2.632
+California,2014,farm_msales,2453.6963
+Colorado,2014,farm_kha,46.437863198307
+Colorado,2014,farm_knumber,0.134
+Colorado,2014,farm_msales,161.4063
+Connecticut,2014,farm_kha,0.907713526394795
+Connecticut,2014,farm_knumber,0.078
+Connecticut,2014,farm_msales,3.9446
+Delaware,2014,farm_kha,0.083770263024397
+Delaware,2014,farm_knumber,0.006
+Delaware,2014,farm_msales,0.2717
+Florida,2014,farm_kha,7.788206337703
+Florida,2014,farm_knumber,0.146
+Florida,2014,farm_msales,62.8133
+Georgia,2014,farm_kha,3.33138553244848
+Georgia,2014,farm_knumber,0.086
+Georgia,2014,farm_msales,13.5223
+Hawaii,2014,farm_kha,1.36501013131059
+Hawaii,2014,farm_knumber,0.121
+Hawaii,2014,farm_msales,14.5464
+Idaho,2014,farm_kha,50.590359183299
+Idaho,2014,farm_knumber,0.151
+Idaho,2014,farm_msales,72.2469
+Illinois,2014,farm_kha,16.382145012032
+Illinois,2014,farm_knumber,0.215
+Illinois,2014,farm_msales,57.86
+Indiana,2014,farm_kha,10.26651112399
+Indiana,2014,farm_knumber,0.251
+Indiana,2014,farm_msales,65.6315
+Iowa,2014,farm_kha,39.3299361463239
+Iowa,2014,farm_knumber,0.583
+Iowa,2014,farm_msales,112.7819
+Kansas,2014,farm_kha,17.0199321353481
+Kansas,2014,farm_knumber,0.077
+Kansas,2014,farm_msales,18.9189
+Kentucky,2014,farm_kha,2.83159676512901
+Kentucky,2014,farm_knumber,0.086
+Kentucky,2014,farm_msales,8.4381
+Louisiana,2014,farm_kha,1.62036779299365
+Louisiana,2014,farm_knumber,0.014
+Louisiana,2014,farm_msales,6.683
+Maine,2014,farm_kha,22.657630368164
+Maine,2014,farm_knumber,0.444
+Maine,2014,farm_msales,59.2966
+Maryland,2014,farm_kha,5.65671853408223
+Maryland,2014,farm_knumber,0.11
+Maryland,2014,farm_msales,20.8197
+Massachusetts,2014,farm_kha,2.80124522055496
+Massachusetts,2014,farm_knumber,0.131
+Massachusetts,2014,farm_msales,27.0545
+Michigan,2014,farm_kha,23.267494070472
+Michigan,2014,farm_knumber,0.285
+Michigan,2014,farm_msales,136.9709
+Minnesota,2014,farm_kha,53.1107514447287
+Minnesota,2014,farm_knumber,0.472
+Minnesota,2014,farm_msales,101.2968
+Mississippi,2014,farm_kha,1.13393370528677
+Mississippi,2014,farm_knumber,0.008
+Mississippi,2014,farm_msales,6.6
+Missouri,2014,farm_kha,19.6799415018185
+Missouri,2014,farm_knumber,0.182
+Missouri,2014,farm_msales,47.4969
+Montana,2014,farm_kha,128.641177148161
+Montana,2014,farm_knumber,0.138
+Montana,2014,farm_msales,47.9633
+Nebraska,2014,farm_kha,44.5742783614599
+Nebraska,2014,farm_knumber,0.166
+Nebraska,2014,farm_msales,83.4977
+Nevada,2014,farm_kha,2.85587800078826
+Nevada,2014,farm_knumber,0.045
+Nevada,2014,farm_msales,13.963
+New Hampshire,2014,farm_kha,2.95543106699117
+New Hampshire,2014,farm_knumber,0.112
+New Hampshire,2014,farm_msales,22.8085
+New Jersey,2014,farm_kha,0.946563503449588
+New Jersey,2014,farm_knumber,0.06
+New Jersey,2014,farm_msales,8.3963
+New Mexico,2014,farm_kha,13.9260980250993
+New Mexico,2014,farm_knumber,0.105
+New Mexico,2014,farm_msales,24.0174
+New York,2014,farm_kha,85.3368074116793
+New York,2014,farm_knumber,0.855
+New York,2014,farm_msales,180.2493
+North Carolina,2014,farm_kha,8.73922140102345
+North Carolina,2014,farm_knumber,0.2
+North Carolina,2014,farm_msales,73.3579
+North Dakota,2014,farm_kha,54.483855321259
+North Dakota,2014,farm_knumber,0.094
+North Dakota,2014,farm_msales,30.0069
+Ohio,2014,farm_kha,29.697569960301202
+Ohio,2014,farm_knumber,0.489
+Ohio,2014,farm_msales,97.603
+Oklahoma,2014,farm_kha,4.20591470344231
+Oklahoma,2014,farm_knumber,0.035
+Oklahoma,2014,farm_msales,4.319
+Oregon,2014,farm_kha,82.3761154102953
+Oregon,2014,farm_knumber,0.455
+Oregon,2014,farm_msales,260.5515
+Pennsylvania,2014,farm_kha,39.2376674508188
+Pennsylvania,2014,farm_knumber,0.644
+Pennsylvania,2014,farm_msales,344.7356
+Rhode Island,2014,farm_kha,0.0258999847031952
+Rhode Island,2014,farm_knumber,0.023
+Rhode Island,2014,farm_msales,1.15
+South Carolina,2014,farm_kha,0.995530662029066
+South Carolina,2014,farm_knumber,0.035
+South Carolina,2014,farm_msales,8.115
+South Dakota,2014,farm_kha,31.6942969060132
+South Dakota,2014,farm_knumber,0.078
+South Dakota,2014,farm_msales,16.72
+Tennessee,2014,farm_kha,1.28771486446199
+Tennessee,2014,farm_knumber,0.03
+Tennessee,2014,farm_msales,4.3659
+Texas,2014,farm_kha,50.7368559717765
+Texas,2014,farm_knumber,0.178
+Texas,2014,farm_msales,218.71190000000001
+Utah,2014,farm_kha,48.7393196515425
+Utah,2014,farm_knumber,0.059
+Utah,2014,farm_msales,20.3038
+Vermont,2014,farm_kha,45.6564120973403
+Vermont,2014,farm_knumber,0.506
+Vermont,2014,farm_msales,103.1624
+Virginia,2014,farm_kha,11.3692839101807
+Virginia,2014,farm_knumber,0.139
+Virginia,2014,farm_msales,45.3684
+Washington,2014,farm_kha,29.7206371341775
+Washington,2014,farm_knumber,0.642
+Washington,2014,farm_msales,566.0765
+West Virginia,2014,farm_kha,0.775380792051907
+West Virginia,2014,farm_knumber,0.009
+West Virginia,2014,farm_msales,1.801
+Wisconsin,2014,farm_kha,91.4819834697734
+Wisconsin,2014,farm_knumber,1.128
+Wisconsin,2014,farm_msales,220.462
+Wyoming,2014,farm_kha,52.0031224114061
+Wyoming,2014,farm_knumber,0.049
+Wyoming,2014,farm_msales,18.3843
+Alabama,2015,farm_kha,0.560491856467584
+Alabama,2015,farm_knumber,0.022
+Alabama,2015,farm_msales,1.7754
+Alaska,2015,farm_kha,281.332918216804
+Alaska,2015,farm_knumber,0.004
+Alaska,2015,farm_msales,1.743
+Arizona,2015,farm_kha,9.33451636193595
+Arizona,2015,farm_knumber,0.048
+Arizona,2015,farm_msales,141.6481
+Arkansas,2015,farm_kha,0.815444830889662
+Arkansas,2015,farm_knumber,0.032
+Arkansas,2015,farm_msales,17.9003
+California,2015,farm_kha,319.870072018854
+California,2015,farm_knumber,2.635
+California,2015,farm_msales,2679.1534
+Colorado,2015,farm_kha,61.338852835125
+Colorado,2015,farm_knumber,0.133
+Colorado,2015,farm_msales,170.7266
+Connecticut,2015,farm_kha,1.02628689386411
+Connecticut,2015,farm_knumber,0.059
+Connecticut,2015,farm_msales,5.1447
+Delaware,2015,farm_kha,0.121
+Delaware,2015,farm_knumber,0.003
+Delaware,2015,farm_msales,1.223
+Florida,2015,farm_kha,5.16259538841658
+Florida,2015,farm_knumber,0.159
+Florida,2015,farm_msales,69.1141
+Georgia,2015,farm_kha,1.27921643198125
+Georgia,2015,farm_knumber,0.093
+Georgia,2015,farm_msales,21.9604
+Hawaii,2015,farm_kha,0.666115231585302
+Hawaii,2015,farm_knumber,0.119
+Hawaii,2015,farm_msales,13.8336
+Idaho,2015,farm_kha,67.6564256663997
+Idaho,2015,farm_knumber,0.168
+Idaho,2015,farm_msales,93.5154
+Illinois,2015,farm_kha,14.9540036680073
+Illinois,2015,farm_knumber,0.196
+Illinois,2015,farm_msales,58.685
+Indiana,2015,farm_kha,14.1065885434997
+Indiana,2015,farm_knumber,0.332
+Indiana,2015,farm_msales,65.395
+Iowa,2015,farm_kha,37.9220291653486
+Iowa,2015,farm_knumber,0.672
+Iowa,2015,farm_msales,132.5984
+Kansas,2015,farm_kha,21.1242703362826
+Kansas,2015,farm_knumber,0.08
+Kansas,2015,farm_msales,19.58
+Kentucky,2015,farm_kha,3.03394039562273
+Kentucky,2015,farm_knumber,0.086
+Kentucky,2015,farm_msales,10.3092
+Louisiana,2015,farm_kha,1.09832122631987
+Louisiana,2015,farm_knumber,0.007
+Louisiana,2015,farm_msales,5.6672
+Maine,2015,farm_kha,19.6281415324121
+Maine,2015,farm_knumber,0.475
+Maine,2015,farm_msales,52.6064
+Maryland,2015,farm_kha,4.22574437923069
+Maryland,2015,farm_knumber,0.088
+Maryland,2015,farm_msales,15.2724
+Massachusetts,2015,farm_kha,2.37430016021322
+Massachusetts,2015,farm_knumber,0.13
+Massachusetts,2015,farm_msales,33.5335
+Michigan,2015,farm_kha,22.6325397579827
+Michigan,2015,farm_knumber,0.298
+Michigan,2015,farm_msales,205.6098
+Minnesota,2015,farm_kha,46.6689396243309
+Minnesota,2015,farm_knumber,0.431
+Minnesota,2015,farm_msales,101.1923
+Mississippi,2015,farm_kha,1.23186802244572
+Mississippi,2015,farm_knumber,0.012
+Mississippi,2015,farm_msales,8.1048
+Missouri,2015,farm_kha,12.8208971153426
+Missouri,2015,farm_knumber,0.176
+Missouri,2015,farm_msales,101.7808
+Montana,2015,farm_kha,101.386704182441
+Montana,2015,farm_knumber,0.138
+Montana,2015,farm_msales,53.8098
+Nebraska,2015,farm_kha,48.885411752759
+Nebraska,2015,farm_knumber,0.161
+Nebraska,2015,farm_msales,79.222
+Nevada,2015,farm_kha,4.97077362670854
+Nevada,2015,farm_knumber,0.031
+Nevada,2015,farm_msales,20.6316
+New Hampshire,2015,farm_kha,3.75630715648528
+New Hampshire,2015,farm_knumber,0.101
+New Hampshire,2015,farm_msales,20.6195
+New Jersey,2015,farm_kha,0.950610376059462
+New Jersey,2015,farm_knumber,0.075
+New Jersey,2015,farm_msales,12.4014
+New Mexico,2015,farm_kha,20.8972407828687
+New Mexico,2015,farm_knumber,0.088
+New Mexico,2015,farm_msales,35.3573
+New York,2015,farm_kha,96.5988491976984
+New York,2015,farm_knumber,0.931
+New York,2015,farm_msales,242.935
+North Carolina,2015,farm_kha,11.6254509463858
+North Carolina,2015,farm_knumber,0.203
+North Carolina,2015,farm_msales,90.6697
+North Dakota,2015,farm_kha,44.8328735212309
+North Dakota,2015,farm_knumber,0.1
+North Dakota,2015,farm_msales,23.4564
+Ohio,2015,farm_kha,26.9764528174218
+Ohio,2015,farm_knumber,0.463
+Ohio,2015,farm_msales,84.7154
+Oklahoma,2015,farm_kha,2.46130792132552
+Oklahoma,2015,farm_knumber,0.023
+Oklahoma,2015,farm_msales,2.2803
+Oregon,2015,farm_kha,71.0934345739659
+Oregon,2015,farm_knumber,0.409
+Oregon,2015,farm_msales,296.4082
+Pennsylvania,2015,farm_kha,34.4647858947331
+Pennsylvania,2015,farm_knumber,0.668
+Pennsylvania,2015,farm_msales,364.6533
+Rhode Island,2015,farm_kha,0.049
+Rhode Island,2015,farm_knumber,0.019
+Rhode Island,2015,farm_msales,0.5214
+South Carolina,2015,farm_kha,1.10924778236653
+South Carolina,2015,farm_knumber,0.026
+South Carolina,2015,farm_msales,11.099
+South Dakota,2015,farm_kha,37.4181935254193
+South Dakota,2015,farm_knumber,0.097
+South Dakota,2015,farm_msales,19.2181
+Tennessee,2015,farm_kha,0.939279132751814
+Tennessee,2015,farm_knumber,0.025
+Tennessee,2015,farm_msales,5.1568
+Texas,2015,farm_kha,35.0722214734752
+Texas,2015,farm_knumber,0.133
+Texas,2015,farm_msales,231.3223
+Utah,2015,farm_kha,40.677140038151
+Utah,2015,farm_knumber,0.054
+Utah,2015,farm_msales,31.1454
+Vermont,2015,farm_kha,53.678932359155
+Vermont,2015,farm_knumber,0.568
+Vermont,2015,farm_msales,119.5557
+Virginia,2015,farm_kha,9.49113033193808
+Virginia,2015,farm_knumber,0.136
+Virginia,2015,farm_msales,50.7056
+Washington,2015,farm_kha,29.0488562809384
+Washington,2015,farm_knumber,0.598
+Washington,2015,farm_msales,689.0895
+West Virginia,2015,farm_kha,0.98703222954833
+West Virginia,2015,farm_knumber,0.016
+West Virginia,2015,farm_msales,4.2471
+Wisconsin,2015,farm_kha,84.8285202118791
+Wisconsin,2015,farm_knumber,1.204
+Wisconsin,2015,farm_msales,244.6719
+Wyoming,2015,farm_kha,52.0496614464197
+Wyoming,2015,farm_knumber,0.054
+Wyoming,2015,farm_msales,18.3238
+Alabama,2016,farm_kha,0.815040143628674
+Alabama,2016,farm_knumber,0.018
+Alabama,2016,farm_msales,2.08735
+Alaska,2016,farm_kha,5.232
+Alaska,2016,farm_knumber,0.008
+Alaska,2016,farm_msales,1.989
+Arizona,2016,farm_kha,13.4287373813457
+Arizona,2016,farm_knumber,0.038
+Arizona,2016,farm_msales,128.3911
+Arkansas,2016,farm_kha,1.97123164826975
+Arkansas,2016,farm_knumber,0.064
+Arkansas,2016,farm_msales,43.34712
+California,2016,farm_kha,432.995134893496
+California,2016,farm_knumber,2.713
+California,2016,farm_msales,3149.18004
+Colorado,2016,farm_kha,71.4256828152366
+Colorado,2016,farm_knumber,0.181
+Colorado,2016,farm_msales,197.61373
+Connecticut,2016,farm_kha,0.684326158329736
+Connecticut,2016,farm_knumber,0.057
+Connecticut,2016,farm_msales,7.56787
+Delaware,2016,farm_kha,0.123
+Delaware,2016,farm_knumber,0.002
+Delaware,2016,farm_msales,1.561
+Florida,2016,farm_kha,4.72634252107214
+Florida,2016,farm_knumber,0.123
+Florida,2016,farm_msales,78.86259
+Georgia,2016,farm_kha,2.16386278449976
+Georgia,2016,farm_knumber,0.083
+Georgia,2016,farm_msales,52.57397
+Hawaii,2016,farm_kha,2.89877485045293
+Hawaii,2016,farm_knumber,0.113
+Hawaii,2016,farm_msales,14.61472
+Idaho,2016,farm_kha,72.2637901327416
+Idaho,2016,farm_knumber,0.166
+Idaho,2016,farm_msales,106.82545
+Illinois,2016,farm_kha,15.8447203294407
+Illinois,2016,farm_knumber,0.205
+Illinois,2016,farm_msales,56.79554
+Indiana,2016,farm_kha,17.4901787326155
+Indiana,2016,farm_knumber,0.42
+Indiana,2016,farm_msales,108.04516
+Iowa,2016,farm_kha,41.7378253491991
+Iowa,2016,farm_knumber,0.732
+Iowa,2016,farm_msales,142.99492
+Kansas,2016,farm_kha,21.9372870436063
+Kansas,2016,farm_knumber,0.086
+Kansas,2016,farm_msales,54.5218
+Kentucky,2016,farm_kha,4.15006786142605
+Kentucky,2016,farm_knumber,0.1
+Kentucky,2016,farm_msales,13.27729
+Louisiana,2016,farm_kha,2.19583307811777
+Louisiana,2016,farm_knumber,0.021
+Louisiana,2016,farm_msales,12.1208
+Maine,2016,farm_kha,22.3856805287804
+Maine,2016,farm_knumber,0.494
+Maine,2016,farm_msales,71.55632
+Maryland,2016,farm_kha,5.03835639929344
+Maryland,2016,farm_knumber,0.111
+Maryland,2016,farm_msales,19.27011
+Massachusetts,2016,farm_kha,2.93074514407093
+Massachusetts,2016,farm_knumber,0.127
+Massachusetts,2016,farm_msales,28.47625
+Michigan,2016,farm_kha,30.8339317891539
+Michigan,2016,farm_knumber,0.402
+Michigan,2016,farm_msales,219.16303
+Minnesota,2016,farm_kha,52.8877687639246
+Minnesota,2016,farm_knumber,0.545
+Minnesota,2016,farm_msales,116.06211
+Mississippi,2016,farm_kha,9.47534752875957
+Mississippi,2016,farm_knumber,0.029
+Mississippi,2016,farm_msales,17.85529
+Missouri,2016,farm_kha,16.6237433068415
+Missouri,2016,farm_knumber,0.302
+Missouri,2016,farm_msales,110.41482
+Montana,2016,farm_kha,107.666236411182
+Montana,2016,farm_knumber,0.156
+Montana,2016,farm_msales,57.97383
+Nebraska,2016,farm_kha,43.4516758994808
+Nebraska,2016,farm_knumber,0.162
+Nebraska,2016,farm_msales,104.60839
+Nevada,2016,farm_kha,4.93839864582955
+Nevada,2016,farm_knumber,0.034
+Nevada,2016,farm_msales,31.70919
+New Hampshire,2016,farm_kha,3.18003249683919
+New Hampshire,2016,farm_knumber,0.107
+New Hampshire,2016,farm_msales,9.8645
+New Jersey,2016,farm_kha,0.615529323961874
+New Jersey,2016,farm_knumber,0.053
+New Jersey,2016,farm_msales,9.62579
+New Mexico,2016,farm_kha,38.0984728111392
+New Mexico,2016,farm_knumber,0.075
+New Mexico,2016,farm_msales,49.02711
+New York,2016,farm_kha,106.99324149616
+New York,2016,farm_knumber,1.059
+New York,2016,farm_msales,235.28631
+North Carolina,2016,farm_kha,12.8690548994001
+North Carolina,2016,farm_knumber,0.247
+North Carolina,2016,farm_msales,157.95953
+North Dakota,2016,farm_kha,47.0671518891425
+North Dakota,2016,farm_knumber,0.114
+North Dakota,2016,farm_msales,24.78769
+Ohio,2016,farm_kha,33.392
+Ohio,2016,farm_knumber,0.575
+Ohio,2016,farm_msales,110.35378
+Oklahoma,2016,farm_kha,7.28760819586155
+Oklahoma,2016,farm_knumber,0.034
+Oklahoma,2016,farm_msales,5.02272
+Oregon,2016,farm_kha,78.8205331352598
+Oregon,2016,farm_knumber,0.461
+Oregon,2016,farm_msales,382.47664
+Pennsylvania,2016,farm_kha,37.8050745469233
+Pennsylvania,2016,farm_knumber,0.781
+Pennsylvania,2016,farm_msales,718.99561
+Rhode Island,2016,farm_kha,0.0554421547552773
+Rhode Island,2016,farm_knumber,0.025
+Rhode Island,2016,farm_msales,2.47975
+South Carolina,2016,farm_kha,1.28002580650323
+South Carolina,2016,farm_knumber,0.044
+South Carolina,2016,farm_msales,12.59277
+South Dakota,2016,farm_kha,46.8546910771241
+South Dakota,2016,farm_knumber,0.086
+South Dakota,2016,farm_msales,18.8788
+Tennessee,2016,farm_kha,1.35206013895899
+Tennessee,2016,farm_knumber,0.038
+Tennessee,2016,farm_msales,6.11926
+Texas,2016,farm_kha,59.408494600215
+Texas,2016,farm_knumber,0.213
+Texas,2016,farm_msales,324.25756
+Utah,2016,farm_kha,39.6265719086277
+Utah,2016,farm_knumber,0.051
+Utah,2016,farm_msales,28.46862
+Vermont,2016,farm_kha,54.3640678920068
+Vermont,2016,farm_knumber,0.55
+Vermont,2016,farm_msales,138.48886
+Virginia,2016,farm_kha,10.0556690610155
+Virginia,2016,farm_knumber,0.165
+Virginia,2016,farm_msales,60.94626
+Washington,2016,farm_kha,31.8646702428889
+Washington,2016,farm_knumber,0.677
+Washington,2016,farm_msales,693.50705
+West Virginia,2016,farm_kha,0.955871310452298
+West Virginia,2016,farm_knumber,0.014
+West Virginia,2016,farm_msales,2.20725
+Wisconsin,2016,farm_kha,88.7341569676688
+Wisconsin,2016,farm_knumber,1.276
+Wisconsin,2016,farm_msales,278.4405
+Wyoming,2016,farm_kha,48.5098619745627
+Wyoming,2016,farm_knumber,0.048
+Wyoming,2016,farm_msales,16.41758
+Alabama,2019,farm_kha,0.878980730864688
+Alabama,2019,farm_knumber,0.011
+Alabama,2019,farm_msales,2.171
+Alaska,2019,farm_kha,12.955
+Alaska,2019,farm_knumber,0.008
+Alaska,2019,farm_msales,2.873
+Arizona,2019,farm_kha,10.8043404938423
+Arizona,2019,farm_knumber,0.062
+Arizona,2019,farm_msales,206.55612
+Arkansas,2019,farm_kha,8.50207466608482
+Arkansas,2019,farm_knumber,0.067
+Arkansas,2019,farm_msales,56.43762
+California,2019,farm_kha,390.627211478939
+California,2019,farm_knumber,3.012
+California,2019,farm_msales,3668.86146
+Colorado,2019,farm_kha,67.7851162153937
+Colorado,2019,farm_knumber,0.238
+Colorado,2019,farm_msales,187.80138
+Connecticut,2019,farm_kha,0.728437069777365
+Connecticut,2019,farm_knumber,0.063
+Connecticut,2019,farm_msales,6.27504
+Delaware,2019,farm_kha,0.214888935584323
+Delaware,2019,farm_knumber,0.012
+Delaware,2019,farm_msales,13.83528
+Florida,2019,farm_kha,7.24875821880676
+Florida,2019,farm_knumber,0.126
+Florida,2019,farm_msales,88.18716
+Georgia,2019,farm_kha,2.88137329823047
+Georgia,2019,farm_knumber,0.102
+Georgia,2019,farm_msales,53.25624
+Hawaii,2019,farm_kha,1.1290774581549201
+Hawaii,2019,farm_knumber,0.129
+Hawaii,2019,farm_msales,17.62866
+Idaho,2019,farm_kha,73.1399380527793
+Idaho,2019,farm_knumber,0.24
+Idaho,2019,farm_msales,210.08736
+Illinois,2019,farm_kha,24.5596604948049
+Illinois,2019,farm_knumber,0.258
+Illinois,2019,farm_msales,74.15604
+Indiana,2019,farm_kha,17.205
+Indiana,2019,farm_knumber,0.595
+Indiana,2019,farm_msales,184.57002
+Iowa,2019,farm_kha,54.1030446086699
+Iowa,2019,farm_knumber,0.779
+Iowa,2019,farm_msales,147.48792
+Kansas,2019,farm_kha,34.6655107761828
+Kansas,2019,farm_knumber,0.11
+Kansas,2019,farm_msales,70.42896
+Kentucky,2019,farm_kha,7.8909969019938
+Kentucky,2019,farm_knumber,0.185
+Kentucky,2019,farm_msales,39.22818
+Louisiana,2019,farm_kha,1.35246482621997
+Louisiana,2019,farm_knumber,0.01
+Louisiana,2019,farm_msales,14.61966
+Maine,2019,farm_kha,22.3634227294261
+Maine,2019,farm_knumber,0.456
+Maine,2019,farm_msales,65.0964
+Maryland,2019,farm_kha,6.95900213993976
+Maryland,2019,farm_knumber,0.12
+Maryland,2019,farm_msales,51.0816
+Massachusetts,2019,farm_kha,3.30629492226726
+Massachusetts,2019,farm_knumber,0.133
+Massachusetts,2019,farm_msales,33.5529
+Michigan,2019,farm_kha,49.4742317174957
+Michigan,2019,farm_knumber,0.541
+Michigan,2019,farm_msales,235.5741
+Minnesota,2019,farm_kha,69.997946158473
+Minnesota,2019,farm_knumber,0.635
+Minnesota,2019,farm_msales,115.87812
+Mississippi,2019,farm_kha,3.59645568839525
+Mississippi,2019,farm_knumber,0.029
+Mississippi,2019,farm_msales,30.11754
+Missouri,2019,farm_kha,20.7082518319875
+Missouri,2019,farm_knumber,0.355
+Missouri,2019,farm_msales,116.1576
+Montana,2019,farm_kha,143.95656654023
+Montana,2019,farm_knumber,0.208
+Montana,2019,farm_msales,66.77634
+Nebraska,2019,farm_kha,93.8198617764977
+Nebraska,2019,farm_knumber,0.238
+Nebraska,2019,farm_msales,188.32668
+Nevada,2019,farm_kha,39.6059328583173
+Nevada,2019,farm_knumber,0.04
+Nevada,2019,farm_msales,68.13906
+New Hampshire,2019,farm_kha,4.73807845164077
+New Hampshire,2019,farm_knumber,0.08
+New Hampshire,2019,farm_msales,11.49948
+New Jersey,2019,farm_kha,1.59325374650749
+New Jersey,2019,farm_knumber,0.068
+New Jersey,2019,farm_msales,26.77092
+New Mexico,2019,farm_kha,15.801014105254
+New Mexico,2019,farm_knumber,0.101
+New Mexico,2019,farm_msales,72.18744
+New York,2019,farm_kha,130.746764967078
+New York,2019,farm_knumber,1.321
+New York,2019,farm_msales,304.3884
+North Carolina,2019,farm_kha,17.2963335346026
+North Carolina,2019,farm_knumber,0.347
+North Carolina,2019,farm_msales,377.16336
+North Dakota,2019,farm_kha,45.9328134965947
+North Dakota,2019,farm_knumber,0.117
+North Dakota,2019,farm_msales,27.12996
+Ohio,2019,farm_kha,45.2925982497126
+Ohio,2019,farm_knumber,0.785
+Ohio,2019,farm_msales,119.33898
+Oklahoma,2019,farm_kha,6.50049147324101
+Oklahoma,2019,farm_knumber,0.034
+Oklahoma,2019,farm_msales,10.35504
+Oregon,2019,farm_kha,79.3369140802798
+Oregon,2019,farm_knumber,0.455
+Oregon,2019,farm_msales,463.49412
+Pennsylvania,2019,farm_kha,43.5241149191976
+Pennsylvania,2019,farm_knumber,0.944
+Pennsylvania,2019,farm_msales,756.59928
+Rhode Island,2019,farm_kha,0.0598937146261389
+Rhode Island,2019,farm_knumber,0.02
+Rhode Island,2019,farm_msales,2.2225799999999998
+South Carolina,2019,farm_kha,1.94492697630557
+South Carolina,2019,farm_knumber,0.039
+South Carolina,2019,farm_msales,22.1136
+South Dakota,2019,farm_kha,29.6040872030131
+South Dakota,2019,farm_knumber,0.068
+South Dakota,2019,farm_msales,14.7084
+Tennessee,2019,farm_kha,2.02222224315416
+Tennessee,2019,farm_knumber,0.038
+Tennessee,2019,farm_msales,9.21162
+Texas,2019,farm_kha,99.6773051920297
+Texas,2019,farm_knumber,0.233
+Texas,2019,farm_msales,432.78906
+Utah,2019,farm_kha,38.2797727040615
+Utah,2019,farm_knumber,0.048
+Utah,2019,farm_msales,27.44106
+Vermont,2019,farm_kha,82.1523233549693
+Vermont,2019,farm_knumber,0.655
+Vermont,2019,farm_msales,162.93684
+Virginia,2019,farm_kha,11.4716697872105
+Virginia,2019,farm_knumber,0.163
+Virginia,2019,farm_msales,64.04682
+Washington,2019,farm_kha,45.2966451223225
+Washington,2019,farm_knumber,0.743
+Washington,2019,farm_msales,903.6894
+West Virginia,2019,farm_kha,1.2359148950556
+West Virginia,2019,farm_knumber,0.027
+West Virginia,2019,farm_msales,13.62108
+Wisconsin,2019,farm_kha,101.552221272184
+Wisconsin,2019,farm_knumber,1.364
+Wisconsin,2019,farm_msales,274.29942
+Wyoming,2019,farm_kha,52.6364579748514
+Wyoming,2019,farm_knumber,0.064
+Wyoming,2019,farm_msales,15.95178
