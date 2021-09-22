@@ -46,3 +46,44 @@ slopes <- params %>% filter(Parameter == 'slope') %>%
   pivot_wider(names_from = variable, values_from = c(slope, significant)) 
 
 readr::write_csv(slopes, 'derived_data/slopes.csv')
+
+
+imputed_long <- imputed %>% 
+  tidyr::pivot_longer(cols = farm_kha:farm_msales, 
+                      names_to = 'metric', 
+                      values_to = 'value')
+## Table 1
+vars <- data.frame(metric = c('area', 'sales', 'number'), label = factor(c("area~(kha~yr^-1)", "number~(k~yr^-1)", "sales~(MM~yr^-1)")))
+imp_summary <- imputed %>% 
+  mutate(year = lubridate::ymd(year, truncated = 2L)) %>% 
+  mutate(area = farm_kha, number = farm_knumber * 1000, sales = farm_msales) %>%
+  select(-farm_kha:-farm_msales) %>% 
+  tidyr::pivot_longer(cols = area:sales, 
+                      names_to = 'metric', 
+                      values_to = 'value') %>% 
+  group_by(year, metric) %>% 
+  summarise(total = sum(value)) %>% 
+  left_join(vars)
+
+
+imp_summary %>% 
+  pivot_wider(id_cols = metric, names_from = year, values_from = total )  %>% 
+  knitr::kable()
+
+plot_names <- as_labeller(c(area = "Area~(10^3~ha)", 
+                            number = "Farm~Number", 
+                            sales = "Sales~(Million~'US$')"), 
+                          default = label_parsed)
+ggplot(data = imp_summary, 
+       aes(year, total, group = metric)) + 
+  geom_point() + 
+  geom_line() + 
+  facet_wrap(~metric, scales = 'free_y', ncol = 3, labeller = plot_names) +
+  theme_minimal() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, NA), labels = scales::comma) + 
+  theme_minimal() +
+  ylab("") + xlab("Year")
+
+imputed_long %>% 
+  group_by(year, metric) %>% 
+  summarise(total = sum(value))
