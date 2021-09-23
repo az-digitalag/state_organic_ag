@@ -76,7 +76,8 @@ summary(mod_lm)
 
 
 library(statebins)
-all_long <- all %>% pivot_longer(cols = c('farm_knumber', 'farm_msales', 'farm_kha'))
+all_long <- all %>% 
+  pivot_longer(cols = c('farm_knumber', 'farm_msales', 'farm_kha'))
 
 ggplot(data = all_long %>% filter(year == 2019 & name == 'farm_knumber')) + 
   geom_statebins(aes(state = state, fill = value * 1000)) +
@@ -153,7 +154,7 @@ fig2 <- ggplot(params,
 #  geom_linerange(aes(ymin = pc2.5 * 100, ymax = pc97.5 * 100), size=.2) +
 #  coord_flip() +
   theme_minimal() +
-  geom_hline(yintercept = 0) +
+  geom_hline(yintercept = 0, size = 0.25) +
   facet_geo(~ abb, grid = mygrid) +
   theme(legend.position = 'right') +
 #  scale_color_binned(name = "legend name", trans = 'log', breaks = c(10, 50, 100, 500, 1000), low = 'white', high = 'black') +
@@ -161,20 +162,25 @@ fig2 <- ggplot(params,
   scale_y_continuous(#labels = scales::percent_format(scale = 1),
                      breaks = c(-10, 0, 10, 20),
                      labels = c("", "0%", "", "20%")) +
-  theme(text = element_text(size = 9),
+  geom_text(aes(x = 'farm_knumber', y = 20, label = abb, fontface = 'plain'), 
+            
+            size = 2.75, hjust = 0.5, color = 'gray40') +
+  theme(strip.text = element_blank(),
+        text = element_text(size = 9),
         axis.line = element_blank(),
         plot.background = element_blank(),
         axis.text.x = element_blank(),
         panel.grid.major = element_line(color = "gray90", size = 0.1),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
-        panel.spacing = unit(0, units = 'lines')
+        panel.spacing = unit(0.3, units = 'lines')
   ) +
   scale_fill_manual(name="Variable",
-                      breaks=c("farm_kha", "farm_knumber", "farm_msales"),
-                      labels=c("Area", "Number", "Sales"), 
-                      values = wes_palette(name = "Zissou1", 3, type = 'continuous'))
+                    breaks=c("farm_kha", "farm_knumber", "farm_msales"),
+                    labels=c("Area", "Number", "Sales"),
+                    values = wes_palette(name = "Zissou1", 3, type = 'continuous'))
 
+fig2
 ggsave(filename = "figures/Fig2_pred_rates.png",
        plot = fig2,
        device = "png",

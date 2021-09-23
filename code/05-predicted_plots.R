@@ -103,7 +103,7 @@ imp_summary <- imputed %>%
 
 plot_names <- as_labeller(c(area = "Area~(10^3~ha)", 
                             number = "Farm~Number", 
-                            sales = "Sales~(million~'USD')"), 
+                            sales = "Sales~(million~'USD in 2020')"), 
                           default = label_parsed)
 
 fig1 <- ggplot() + 

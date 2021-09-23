@@ -9,10 +9,7 @@ library(dplyr)
 
 ### Proportional and raw trends in practices
 practices <- readr::read_csv('raw_data/practices.csv') %>% 
-  select(-4)
-
-
-practices <- practices %>% 
+  select(-4) %>% 
   mutate(year = case_when(year == 2007 ~ 2008,
                           year == 2012 ~ 2014, 
                           year == 2017 ~ 2019 ),
@@ -23,24 +20,23 @@ practices <- practices %>%
                               factor == "Released beneficial organisms (farms)" ~ "Beneficial organisms",
                               factor == "Used no-till or minimum till (farms)" ~ "No/minimum till",
                               factor == "Used water management practices (farms)" ~ "Water management",
-                              factor == "Selected planting locations to avoid pests (farms)" ~ "Location selection (pest avoidance)",
-                              factor == "Chose pest resistant varieties (farms)" ~ "Variety selection (pest resistance)",
-                              factor == "Planned plantings to avoid cross- contamination (farms)" ~ "Planning (contamination avoidance)",
+                              factor == "Selected planting locations to avoid pests (farms)" ~ "Location (avoid pests)",
+                              factor == "Chose pest resistant varieties (farms)" ~ "Variety (resist pests)",
+                              factor == "Planned plantings to avoid cross- contamination (farms)" ~ "Planning (avoid contaminants)",
                               factor == "Maintained buffer strips (farms)" ~ "Buffer strips",
                               factor == "Produced or used organic mulch/compost (farms)" ~ "Organic mulch/compost",
                               factor == "Used green or animal manures (farms)" ~ "Green/animal manures",
                               factor == "Practiced rotational grazing (farms)" ~ "Rotational grazing")
   )
-z <- practices %>% mutate(factor = gsub("\\ \\(farms\\)", "", factor)) 
 
-fig3a <- ggplot(data = z, 
+fig3a <- ggplot(data = practices, 
                 aes(year, number, color = practice)) +
   geom_point() + 
   geom_bump() +   
-  geom_text_repel(data = z %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+  geom_text_repel(data = practices %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
                   aes(x = year, hjust = 0, label = practice), 
-                  size = 3, direction = 'y') +
-  #  geom_text(data = z %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+                  size = 3.5, direction = 'y') +
+  #  geom_text(data = practices %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
   #                  aes(x = year + 0.1, label = factor), 
   #                  size = 3) +
   theme_minimal_grid(font_size = 12, line_size = 1) + 
@@ -56,17 +52,16 @@ fig3a <- ggplot(data = z,
   scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
   ggtitle("# of farms adopted practice")
 
-fig3b <- ggplot(data = z, 
+fig3b <- ggplot(data = practices, 
        aes(year, percent, color = practice)) +
   geom_point() + 
   geom_bump() +   
-  geom_text_repel(data = z %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+  geom_text_repel(data = practices %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
                             aes(x = year, hjust = 0, label = practice), 
-            size = 3, direction = 'y') +
-#  geom_text(data = z %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+            size = 3.5, direction = 'y') +
+#  geom_text(data = practices %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
 #                  aes(x = year + 0.1, label = factor), 
 #                  size = 3) +
-  
   theme_minimal_grid(font_size = 12, line_size = 1) + 
   theme(axis.title.x = element_blank(),
         legend.position = "none",
@@ -126,7 +121,7 @@ fig4a <- ggplot(data = challenges,
   geom_bump() +   
   geom_text_repel(data = challenges %>% filter(year == median(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
                   aes(x = year, hjust = 0.5, label = factor), 
-                  size = 3, direction = 'y') +
+                  size = 4, direction = 'y') +
   #  geom_text(data = challenges %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
   #                  aes(x = year + 0.1, label = factor), 
   #                  size = 3) +
@@ -149,7 +144,7 @@ fig4b <- ggplot(data = challenges,
   geom_bump() +   
   geom_text_repel(data = challenges %>% filter(year == median(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
                   aes(x = year, hjust = 0.5, label = factor), 
-                  size = 3, direction = 'y') +
+                  size = 4, direction = 'y') +
   #  geom_text(data = challenges %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
   #                  aes(x = year + 0.1, label = factor), 
   #                  size = 3) +
