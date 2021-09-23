@@ -2,6 +2,7 @@ library(dplyr)
 library(tidyr)
 library(readr)
 library(ggplot2)
+library(wesanderson)
 
 all <- read_csv('derived_data/all_transformed.csv',
                 col_types = cols(
@@ -132,31 +133,39 @@ ggplot(all %>% mutate(year = lubridate::ymd(year, truncated = 2L),
 
 ### run after 05-predicted_plots
 
+# include both state and national level rates
 params <- readr::read_csv('code/BUGS/mod3/params_3a.csv') %>% 
   mutate(variable = Variable, state = State) %>% 
-  filter(Parameter == 'slope') %>% 
-  left_join(s, copy = TRUE)
+  filter(Parameter %in% c('slope', 'mu.slope')) %>% 
+  left_join(s, copy = TRUE) %>%
+  mutate(abb = case_when(is.na(abb) ~ 'US',
+                         !is.na(abb) ~ abb))
 
+ 
 
-ggplot(params, 
+# Figure 2 for Isaac's ms
+# add national means at top
+mygrid <- bind_rows(us_state_without_DC_grid2, 
+                    data.frame(row = 1, col = 5, code = "US", name = "United States"))
+fig2 <- ggplot(params, 
        aes(variable, mean * 100, fill = variable)) +
   geom_col(width = 0.5) +
 #  geom_linerange(aes(ymin = pc2.5 * 100, ymax = pc97.5 * 100), size=.2) +
 #  coord_flip() +
   theme_minimal() +
   geom_hline(yintercept = 0) +
-  facet_geo(~ abb, grid = 'us_state_without_DC_grid2') +
+  facet_geo(~ abb, grid = mygrid) +
   theme(legend.position = 'right') +
 #  scale_color_binned(name = "legend name", trans = 'log', breaks = c(10, 50, 100, 500, 1000), low = 'white', high = 'black') +
   xlab("") + ylab("") +
   scale_y_continuous(#labels = scales::percent_format(scale = 1),
-                     breaks = c(-5, 0, 5, 10, 15, 20),
-                     labels = c("", "0%", "", "", "", "20%")) +
-  theme(text = element_text(size = 10),
+                     breaks = c(-10, 0, 10, 20),
+                     labels = c("", "0%", "", "20%")) +
+  theme(text = element_text(size = 9),
         axis.line = element_blank(),
         plot.background = element_blank(),
         axis.text.x = element_blank(),
-        #panel.grid.major = element_blank(),
+        panel.grid.major = element_line(color = "gray90", size = 0.1),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.spacing = unit(0, units = 'lines')
@@ -166,6 +175,12 @@ ggplot(params,
                       labels=c("Area", "Number", "Sales"), 
                       values = wes_palette(name = "Zissou1", 3, type = 'continuous'))
 
+ggsave(filename = "figures/Fig2_pred_rates.png",
+       plot = fig2,
+       device = "png",
+       height = 4,
+       width = 7,
+       units = "in")
 
 ## Bump Chart - ranks
 ## https://github.com/davidsjoberg/ggbump
