@@ -67,12 +67,24 @@ save(coda_rep, file = "coda/coda_rep_3a.Rdata")
 sum_rep <- coda.fast(chains = 3, burn.in = 0, thin = 1, coda = coda_rep)
 labs <- c("Area (kha)", "Number (k)", "Sales (MM)")
 
+# On raw, not log scale
+# pred_df <- data.frame(pivot_longer(dat,3:5, names_to = "type", values_to = "obs"),
+#                       sum_rep[grep("farm.rep", row.names(sum_rep)),]) %>%
+#   mutate(mean = exp(mean),
+#          median = exp(median),
+#          pc2.5 = exp(pc2.5),
+#          pc97.5 = exp(pc97.5),
+#          Type = case_when(type == "farm_kha" ~ "Area (kha)",
+#                           type == "farm_knumber" ~ "Number (k)",
+#                           type == "farm_msales" ~ "Sales (MM)"),
+#          Type = factor(Type, levels = labs),
+#          coverage = ifelse(obs <= pc97.5 & obs >= pc2.5, 1, 0))
+# tapply(pred_df$coverage, pred_df$Type, mean,  na.rm = TRUE)
+
+# On log, not raw scale
 pred_df <- data.frame(pivot_longer(dat,3:5, names_to = "type", values_to = "obs"),
                       sum_rep[grep("farm.rep", row.names(sum_rep)),]) %>%
-  mutate(mean = exp(mean),
-         median = exp(median),
-         pc2.5 = exp(pc2.5),
-         pc97.5 = exp(pc97.5),
+  mutate(obs = log(obs),
          Type = case_when(type == "farm_kha" ~ "Area (kha)",
                           type == "farm_knumber" ~ "Number (k)",
                           type == "farm_msales" ~ "Sales (MM)"),
@@ -97,13 +109,13 @@ bestfit <- data.frame(Type = labs,
                       int = c(fitByType[[1]]$coef[1,1],
                               fitByType[[2]]$coef[1,1],
                               fitByType[[3]]$coef[1,1]),
-                      x = rep(0, 3),
+                      x = c(-2, -4, 0),
                       y = tapply(pred_df$pc97.5, pred_df$Type, max, na.rm = T)) %>%
   mutate(r2 = paste0("R^2==", round(R2, 3)),
          Type = factor(Type, levels = labs))
 
 # Observed vs. fitted
-fig_fit <- ggplot() +
+fig_fit_log <- ggplot() +
   geom_abline(slope = 1, intercept = 0, col = "black") +
   geom_abline(data = bestfit, aes(slope = slope, intercept = int), col = "gray", lty = 2) +
   geom_errorbar(data = pred_df, aes(x = obs, ymin = pc2.5, ymax = pc97.5), color = "gray", width = 0, alpha = 0.5) +
@@ -119,7 +131,7 @@ fig_fit <- ggplot() +
         strip.background = element_blank(),
         legend.title = element_blank())
 
-jpeg(filename = "figs_3a/fig_fit.jpg", height = 3, width = 10, units = "in",
+jpeg(filename = "figs_3a/fig_fit_log.jpg", height = 3, width = 10, units = "in",
      res = 600)
 print(fig_fit)
 dev.off()
