@@ -29,7 +29,7 @@ practices <- readr::read_csv('raw_data/practices.csv') %>%
                               factor == "Practiced rotational grazing (farms)" ~ "Rotational grazing")
   )
 
-fig3a <- ggplot(data = practices, 
+fig4a <- ggplot(data = practices, 
                 aes(year, number, color = practice)) +
   geom_point() + 
   geom_bump() +   
@@ -52,7 +52,7 @@ fig3a <- ggplot(data = practices,
   scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
   ggtitle("# of farms adopted practice")
 
-fig3b <- ggplot(data = practices, 
+fig4b <- ggplot(data = practices, 
        aes(year, percent, color = practice)) +
   geom_point() + 
   geom_bump() +   
@@ -77,14 +77,15 @@ fig3b <- ggplot(data = practices,
   
 
 
-fig3 <- plot_grid(fig3a, fig3b, ncol = 2)
+fig4 <- plot_grid(fig4a, fig4b, ncol = 2)
 
-ggsave(filename = "figures/Fig3_practices.png",
-       plot = fig3,
+ggsave(filename = "figures/Fig4_practices.png",
+       plot = fig4,
        device = "png",
        height = 6,
        width = 6,
-       units = "in")
+       units = "in",
+       dpi = 600)
 
 # broom::tidy(aov(percent ~ factor * year, data = practices))
 # broom::tidy(aov(number ~ factor * year, data = practices))
@@ -115,7 +116,7 @@ challenges <- readr::read_csv('raw_data/challenges.csv') %>%
 # 
 # broom::tidy(b)
 
-fig4a <- ggplot(data = challenges, 
+fig5a <- ggplot(data = challenges, 
                 aes(year, number, color = factor)) +
   geom_point() + 
   geom_bump() +   
@@ -138,7 +139,7 @@ fig4a <- ggplot(data = challenges,
   scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
   ggtitle("# of farms faced challenge")
 
-fig4b <- ggplot(data = challenges, 
+fig5b <- ggplot(data = challenges, 
                 aes(year, percent, color = factor)) +
   geom_point() + 
   geom_bump() +   
@@ -164,11 +165,12 @@ fig4b <- ggplot(data = challenges,
 
 
 
-fig4 <- plot_grid(fig4a, fig4b, ncol = 2)
+fig5 <- plot_grid(fig5a, fig5b, ncol = 2)
 
-ggsave(filename = "figures/Fig4_challenges.png",
-       plot = fig4,
+ggsave(filename = "figures/Fig5_challenges.png",
+       plot = fig5,
        device = "png",
        height = 6,
        width = 6,
-       units = "in")
+       units = "in",
+       dpi = 600)

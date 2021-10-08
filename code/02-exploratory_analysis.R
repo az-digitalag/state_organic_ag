@@ -148,7 +148,7 @@ params <- readr::read_csv('code/BUGS/mod3/params_3a.csv') %>%
 # add national means at top
 mygrid <- bind_rows(us_state_without_DC_grid2, 
                     data.frame(row = 1, col = 5, code = "US", name = "United States"))
-fig2 <- ggplot(params, 
+fig3 <- ggplot(params, 
        aes(variable, mean * 100, fill = variable)) +
   geom_col(width = 0.5) +
 #  geom_linerange(aes(ymin = pc2.5 * 100, ymax = pc97.5 * 100), size=.2) +
@@ -180,13 +180,14 @@ fig2 <- ggplot(params,
                     labels=c("Area", "Number", "Sales"),
                     values = wes_palette(name = "Zissou1", 3, type = 'continuous'))
 
-fig2
-ggsave(filename = "figures/Fig2_pred_rates.png",
-       plot = fig2,
+
+ggsave(filename = "figures/Fig3_pred_rates.png",
+       plot = fig3,
        device = "png",
        height = 4,
        width = 7,
-       units = "in")
+       units = "in",
+       dpi = 600)
 
 ## Bump Chart - ranks
 ## https://github.com/davidsjoberg/ggbump

@@ -106,7 +106,7 @@ plot_names <- as_labeller(c(area = "Area~(10^3~ha)",
                             sales = "Sales~(million~'USD in 2020')"), 
                           default = label_parsed)
 
-fig1 <- ggplot() + 
+fig2 <- ggplot() + 
   geom_point(data = imp_summary, 
              aes(year, total, group = metric)) + 
   # geom_point(data = raw_long, 
@@ -120,12 +120,13 @@ fig1 <- ggplot() +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         panel.grid.minor = element_blank())
-ggsave(filename = "figures/Fig1_imputed_natl_sum.png",
-       plot = fig1,
+ggsave(filename = "figures/Fig2_imputed_natl_sum.png",
+       plot = fig2,
        device = "png",
        height = 2,
        width = 8,
-       units = "in")
+       units = "in",
+       dpi = 600)
 
 imputed_long %>% 
   group_by(year, metric) %>% 
@@ -136,15 +137,16 @@ imputed_long %>%
 imp_summary
 
 us_states <- map_data("state")
-fig0 <- plot_usmap(data = imputed %>% filter(year == 2019) %>% mutate(number = farm_knumber * 1000), 
+fig1 <- plot_usmap(data = imputed %>% filter(year == 2019) %>% mutate(number = farm_knumber * 1000), 
            values = 'number', color = 'gray') + 
   scale_fill_binned(name = "Farm\nNumber", trans = 'log', breaks = c(10, 50, 100, 500, 1000), low = 'white', high = 'black') +
   ggtitle("2019 US total: 16,476") +
   theme(legend.position = 'right') 
 
-ggsave(filename = "figures/Fig0_2019number_bystate.png",
-       plot = fig0,
+ggsave(filename = "figures/Fig1_2019number_bystate.png",
+       plot = fig1,
        device = "png",
        height = 4,
        width = 7,
-       units = "in")
+       units = "in",
+       dpi = 600)
