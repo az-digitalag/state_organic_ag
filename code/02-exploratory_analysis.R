@@ -127,7 +127,7 @@ ggplot(all %>% mutate(year = lubridate::ymd(year, truncated = 2L),
         plot.background = element_blank(),
         #panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_rect(color='black', fill = NULL)#element_blank()
+        panel.background = element_rect(color='black', fill = NULL),#element_blank()
         )
 
 ### run after 05-predicted_plots
@@ -143,8 +143,11 @@ ggplot(params,
   geom_col(width = 0.5) +
 #  geom_linerange(aes(ymin = pc2.5 * 100, ymax = pc97.5 * 100), size=.2) +
 #  coord_flip() +
-  theme_minimal() +
-  geom_hline(yintercept = 0) +
+  theme_minimal() +  
+  geom_text(aes(x = 'farm_knumber', y = 20, label = abb, fontface = 'plain'), 
+            size = 3, hjust = 0.5, color = 'gray40') +
+
+  geom_hline(yintercept = 0, color = 'gray40') +
   facet_geo(~ abb, grid = 'us_state_without_DC_grid2') +
   theme(legend.position = 'right') +
 #  scale_color_binned(name = "legend name", trans = 'log', breaks = c(10, 50, 100, 500, 1000), low = 'white', high = 'black') +
@@ -159,7 +162,8 @@ ggplot(params,
         #panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
-        panel.spacing = unit(0, units = 'lines')
+        panel.spacing = unit(0.3, units = 'lines'),
+        strip.text = element_blank()
   ) +
   scale_fill_manual(name="Variable",
                       breaks=c("farm_kha", "farm_knumber", "farm_msales"),

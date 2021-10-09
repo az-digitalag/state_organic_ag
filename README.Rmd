@@ -1,17 +1,19 @@
 ---
-title: "US State Organic Ag"
+title:  "Data and Code from: On-farm land management strategies and production challenges in United States Organic Agricultural Systems."
 author: David LeBauer, Jessica Guo
-date: May 22, 2021
+date: Oct 01, 2021
 output:
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
 
-# US State Organic Ag
+# Data and Code from: On-farm land management strategies and production challenges in United States Organic Agricultural Systems.
 
--   Trends of USA Organic Agriculture trends on farm numbers, hectares, and sales over the years.
--   panel data analysis?
--   goal: predict farm number, area, and sales for next three census (2022, 2027, 2032)
+This repository contains data and code used in Mpanga et al 2021. 
+
+It provides USDA Surveys of Agricultural Production from 2008-2019 to investigate state and national trends by state in organic farm area, number, and sales, as well USDA censuses from 2007 to 2017 to evaluate national trends in on-farm land-use practices and challenges facing US organic production. 
+
+The data include state and national level measurements of organic farm number, area, and sales.
 
 ## Repository Content
 
@@ -20,16 +22,31 @@ output:
 
 **Preprocessing:** Data were copied from TXT and PDF files provided by the USDA Organic Production Surveys: <https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/index.php>. Units were converted from acres to hectares.
 
+
+
+#### Contents of the `[raw_data/](raw_data) folder
+
+This folder contains inputs to analyses.
+
+
+- [challenges.csv](raw_data/challenges.csv) contains 
+- [practices.csv](raw_data/practices.csv) contains 
+
+
+Area, Number, and Sales for 2008, 2011, 2014, 2015, 2016, 2019: 
+- [E2E0BF24-9F88-35DB-8526-8E47D941FDBF.csv](raw_data/E2E0BF24-9F88-35DB-8526-8E47D941FDBF.csv) was downloaded from USDA Quickstats Database (2021) it was parsed into state level area, number, and sales in the three files below
+- [farm_area.csv](raw_data/farm_area.csv) contains 
+- [farm_number.csv](raw_data/farm_number.csv) contains 
+- [farm_sales.csv](raw_data/farm_sales.csv) contains 
+- [2008.csv](raw_data/farm_sales.csv) contains farm area, number, and sales data from 2008 corrected for the fact that ... 
+- [organic tables.xlsx](raw_data/organic tables.xlsx) contains corrections performed by USDA NASS Statistician to correct for small organic farms that are exempt from the requirement that they be certified. 
+
 **Variables:**
 
 -   `state`
-
 -   `year`
-
 -   `farm_number`: number of farms
-
 -   `farm_ha`: area of farms in hectares (ha) converted from reported areas using a conversion factor of 2.47 ha/a
-
 -   `farm_sales`: total sales (USD); adjusted to 2020 dollars by dividing sales for each year by the adjustment factor provided by the [U.S. Bureau of Labor Statistics CPI Inflation Calculator](https://www.bls.gov/data/inflation_calculator.htm) comparing from July in year Y to July in 2020.
 
     | Year | $\textbf{CPI}_{Y/2020}$ |
@@ -179,11 +196,7 @@ The best place to retrieve the organic data is from our Quickstats database.
 
 This query should get you there, but some of it is difficult to view over time because of the change in the scope of the survey. For example, the 2008 and 2014 surveys included all organic farms (certified and exempt), but the 2011 and 2019 survey was only for certified farms.
 
-https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF
 
-
-- [ ] get farm number and area for 2008 from https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/appendix_a.pdf
-- [ ] use farm sales amount, assuming  https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/appendix_a.pdf
 
 ### Contact Info
 
@@ -202,6 +215,8 @@ USDA (2016) "2014 and 2015 Organic Certifier Data" [pdf](https://www.nass.usda.g
 USDA (2017) "2016 Certified Organic Survey" [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)
 
 USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-17-SS-4: [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)
+
+USDA (2021) Quickstats Database. URL: https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF
 
 ## Software Dependencies
 
