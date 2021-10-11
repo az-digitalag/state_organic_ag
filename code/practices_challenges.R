@@ -29,7 +29,15 @@ practices <- readr::read_csv('raw_data/practices.csv') %>%
                               factor == "Practiced rotational grazing (farms)" ~ "Rotational grazing")
   )
 
-fig4a <- ggplot(data = practices, 
+### Latebreaking note: 2019 asked about green and animal manure separately
+# current value was sum of green + animal
+# needs to be removed (unclear how many farms said yes to both)
+
+practices2 <- practices %>%
+  filter(practice != "Green/animal manures" | year !=2019)
+
+
+fig4a <- ggplot(data = practices2, 
                 aes(year, number, color = practice)) +
   geom_point() + 
   geom_bump() +   
@@ -52,7 +60,7 @@ fig4a <- ggplot(data = practices,
   scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
   ggtitle("# of farms adopted practice")
 
-fig4b <- ggplot(data = practices, 
+fig4b <- ggplot(data = practices2, 
        aes(year, percent, color = practice)) +
   geom_point() + 
   geom_bump() +   
