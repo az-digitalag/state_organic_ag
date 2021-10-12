@@ -29,11 +29,39 @@ practices <- readr::read_csv('raw_data/practices.csv') %>%
                               factor == "Practiced rotational grazing (farms)" ~ "Rotational grazing")
   )
 
-fig4a <- ggplot(data = practices, 
+### Latebreaking note: 2019 asked about green and animal manure separately
+# current value was sum of green + animal
+# needs to be removed (unclear how many farms said yes to both)
+# Original data say 9160 animal and 7564 green for 2019
+
+practices2 <- practices %>%
+  mutate(type = "constant") %>%
+  filter(practice != "Green/animal manures" | year != 2019) %>%
+  add_row(factor = NULL, year = 2019, number = 9610, percent = 9610/16476 * 100,
+          practice = "Green manure", type = "changing") %>%
+  add_row(factor = NULL, year = 2014, number = 9409, percent = 9409/12595 * 100,
+          practice = "Green manure", type = "changing") %>%
+  add_row(factor = NULL, year = 2014, number = 9409, percent = 9409/12595 * 100,
+          practice = "Animal manure", type = "changing") %>%
+  add_row(factor = NULL, year = 2019, number = 7564, percent = 7564/16476 * 100,
+          practice = "Animal manure", type = "changing")
+  
+
+# Labels (cannot use only minimum now)
+label_x <- practices2 %>% 
+  group_by(practice) %>%
+  summarize(year = min(year)) 
+
+labels <- label_x %>%
+  left_join(practices2) %>% 
+  mutate(rank = rank(-number), pos = rank %% 2)
+
+
+fig4a <- ggplot(data = practices2, 
                 aes(year, number, color = practice)) +
   geom_point() + 
-  geom_bump() +   
-  geom_text_repel(data = practices %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
+  geom_bump(aes(linetype=type)) +   
+  geom_text_repel(data = labels,
                   aes(x = year, hjust = 0, label = practice), 
                   size = 3.5, direction = 'y') +
   #  geom_text(data = practices %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
@@ -49,16 +77,17 @@ fig4a <- ggplot(data = practices,
   scale_y_continuous(position = 'right', name = "", 
                      breaks = seq(0, 15000, 5000),
                      labels = seq(0, 15000, 5000)) +
-  scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
+  scale_color_manual(values = wes_palette(n = 13, name = "FantasticFox1", type = "continuous")) +
+  scale_linetype_manual(values = c("longdash", "solid")) +
   ggtitle("# of farms adopted practice")
 
-fig4b <- ggplot(data = practices, 
+fig4b <- ggplot(data = practices2, 
        aes(year, percent, color = practice)) +
   geom_point() + 
-  geom_bump() +   
-  geom_text_repel(data = practices %>% filter(year == min(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
-                            aes(x = year, hjust = 0, label = practice), 
-            size = 3.5, direction = 'y') +
+  geom_bump(aes(linetype=type)) +   
+  geom_text_repel(data = labels, 
+                  aes(x = year, hjust = 0, label = practice),
+                  size = 3.5, direction = 'y') +
 #  geom_text(data = practices %>% filter(year == max(year)) %>% mutate(rank = rank(-number), pos = rank %% 2),
 #                  aes(x = year + 0.1, label = factor), 
 #                  size = 3) +
@@ -72,14 +101,15 @@ fig4b <- ggplot(data = practices,
   scale_y_continuous(position = 'right', name = "", 
                      breaks = seq(0, 100, 25),
                      labels = seq(0, 100, 25)) +
-  scale_color_manual(values = wes_palette(n = 11, name = "FantasticFox1", type = "continuous")) +
+  scale_color_manual(values = wes_palette(n = 13, name = "FantasticFox1", type = "continuous")) +
+  scale_linetype_manual(values = c("longdash", "solid")) +
   ggtitle("% of farms adopted practice")
   
 
 
 fig4 <- plot_grid(fig4a, fig4b, ncol = 2)
 
-ggsave(filename = "figures/Fig4_practices.png",
+ggsave(filename = "figures/Fig4_practices_dotted.png",
        plot = fig4,
        device = "png",
        height = 6,
