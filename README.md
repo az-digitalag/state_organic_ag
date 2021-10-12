@@ -1,67 +1,154 @@
-# US State Organic Ag
+# Data and Code from: On-farm land management strategies and production challenges in United States Organic Agricultural Systems.
 
--   Trends of USA Organic Agriculture trends on farm numbers, hectares, and sales over the years.
--   panel data analysis?
--   goal: predict farm number, area, and sales for next three census (2022, 2027, 2032)
+This repository contains data and code used in Mpanga et al 2021.
+
+It provides USDA Surveys of Agricultural Production from 2008-2019 to
+investigate state and national trends by state in organic farm area,
+number, and sales, as well USDA censuses from 2007 to 2017 to evaluate
+national trends in on-farm land-use practices and challenges facing US
+organic production.
+
+The data include state and national level measurements of organic farm
+number, area, and sales.
 
 ## Repository Content
 
 ### Raw Data
 
-**Preprocessing:** Data were copied from TXT and PDF files provided by the USDA Organic Production Surveys: <https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/index.php>. Units were converted from acres to hectares.
+#### Sources of data
 
-**Variables:**
+Farm sales, area, and number data were downloaded from the USDA
+Quickstats database and preprocessed by USDA NASS Statistician.
 
--   `state`
+**Preprocessing:** Data were originally copied from TXT and PDF files
+provided by the USDA Organic Production Surveys. We later learned how to
+access these data from the Quickstats database, the extraction and
+comparison of the data from two sources helped confirm that the values
+were what we were looking for (not that we had any reason to doubt
+NASS!):
 
--   `year`
+But, the sources below - except Greene 2001 which we didn’t end up using
+becuase it is not cmparable - can all be found here:
+<https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/index.php>.
 
--   `farm_number`: number of farms
+| census year <sup>⋆</sup> | survey year <sup>⋆</sup> | publication year | farms | area | sales | source      | raw data                                                                                                                                                                           | file                                      | used                                   | QA$^\\S$ |
+|--------------------------|--------------------------|------------------|-------|------|-------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------|----------|
+| 1997                     |                          | 2001             | X     |      |       | Greene 2001 | [PDF](raw_data/Greene_2001.pdf)                                                                                                                                                    | 1997\_area.csv                            | No; not comparable (pre certification) |          |
+| 2007                     | **2008**                 | 2010             | X     | X    | X     | USDA 2010   | Table 1<sup>†</sup> [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)                                                            | 2008\_2014\_2017\_number\_area\_sales.csv | Yes                                    | Yes      |
+| NA                       | 2011                     | 2012             | X     | X    | X     | USDA 2012   | Table 1 [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)                                          | 2011\_number\_area\_sales.csv             | No<sup>‡</sup>                         | Yes      |
+| 2012                     | **2014**                 | 2016             | X     | X    |       | USDA 2016   | Table 1<sup>†</sup> [TXT](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt)                                                             | 2008\_2014\_2017\_number\_area\_sales.csv | Yes                                    | Yes      |
+| NA                       | 2015                     | 2016             | X     | X    |       | USDA 2016   | [PDF](raw_data/OrganicProduction-09-15-2016.pdf) [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt) |                                           | No<sup>‡</sup>                         |          |
+| NA                       | **2016**                 | 2017             | X     | X    | X     | USDA 2017a  | Table 1<sup>†</sup> [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)                   | 2016\_number\_area\_sales.csv             | Yes, used in fig below<sup>‡</sup>     | Yes      |
+| 2017                     | **2019**                 | 2020             | X     | X    | X     | USDA 2020   | Table 1<sup>†</sup> [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)                                                             | 2008\_2014\_2017\_number\_area\_sales.csv | Yes                                    | Yes      |
 
--   `farm_ha`: area of farms in hectares (ha) converted from reported areas using a conversion factor of 2.47 ha/a
+-   <sup>⋆</sup> “census year” is the year of the USDA Census; “survey
+    year” is the year data was collected (different because the organic
+    census is a follow on to the overall census.
+-   <sup>⋆</sup> only surveys conducted in 2008, 2012, 2016, and 2019
+    are used in the present analysis
+-   <sup>‡</sup> “Data users should allow for differences when comparing
+    data between the 2011 COPS and the 2008 Organic Production” USDA
+    2010 Greene, Catherine R. (2001) US organic farming emerges in the
+    1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
+-   <sup>†</sup>number of farms from first line of table - previously
+    the second line was used for 2008 and 2012 and first in 2016 and
+    2019
+-   $^\\S$ csv files cross referenced w/ original data source at state
+    level and for US totals
 
--   `farm_sales`: total sales (USD); adjusted to 2020 dollars by dividing sales for each year by the adjustment factor provided by the [U.S. Bureau of Labor Statistics CPI Inflation Calculator](https://www.bls.gov/data/inflation_calculator.htm) comparing from July in year Y to July in 2020.
+2008 - certified & exempt; 2011 - certified 2014 - certified & exempt
+2015 - certified; more sparse b/c for RMA data for crop insurance policy
+purposes; lots on crops and livestock but not on organic farming
+practices 2016 - certified 2019 - certified
 
-    | Year | **CPI**<sub>*Y*/2020</sub> |
-    |------|----------------------------|
-    | 2008 | 1.18                       |
-    | 2014 | 1.09                       |
-    | 2016 | 1.08                       |
-    | 2019 | 1.01                       |
+#### Contents of the \`[raw\_data/](raw_data) folder
 
--   `[variable]_cv`<sup>\*</sup>: coefficient of variance for `[variable]`
+This folder contains inputs to analyses.
 
-<sup>\*</sup>defined as "statistical precision estimates for the number of farms and acres and the total value of sales for the United States and for each state." collected for 2016, 2019; also available for [2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt), [2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt)
+-   [challenges.csv](raw_data/challenges.csv) contains
+-   [practices.csv](raw_data/practices.csv) contains
 
-**Sources of data:**
+Area, Number, and Sales for 2008, 2011, 2014, 2015, 2016, 2019:
 
-| census year <sup>⋆</sup> | survey year <sup>⋆</sup> | publication year | farms | area | sales | source      | raw data                                                                                                                                                                           | file                                 | used                                   | QA$^\\S$ |
-|--------------------------|--------------------------|------------------|-------|------|-------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|----------------------------------------|----------|
-| 1997                     |                          | 2001             | X     |      |       | Greene 2001 | [PDF](raw_data/Greene_2001.pdf)                                                                                                                                                    | 1997_area.csv                        | No; not comparable (pre certification) |          |
-| 2007                     | **2008**                 | 2010             | X     | X    | X     | USDA 2010   | Table 1<sup>†</sup> [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)                                                            | 2008_2014_2017_number_area_sales.csv | Yes                                    | Yes      |
-| NA                       | 2011                     | 2012             | X     | X    | X     | USDA 2012   | Table 1 [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)                                          | 2011_number_area_sales.csv           | No<sup>‡</sup>                         | Yes      |
-| 2012                     | **2014**                 | 2016             | X     | X    |       | USDA 2016   | Table 1<sup>†</sup> [TXT](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt)                                                             | 2008_2014_2017_number_area_sales.csv | Yes                                    | Yes      |
-| NA                       | 2015                     | 2016             | X     | X    |       | USDA 2016   | [PDF](raw_data/OrganicProduction-09-15-2016.pdf) [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt) |                                      | No<sup>‡</sup>                         |          |
-| NA                       | **2016**                 | 2017             | X     | X    | X     | USDA 2017a  | Table 1<sup>†</sup> [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)                   | 2016_number_area_sales.csv           | Yes, used in fig below<sup>‡</sup>     | Yes      |
-| 2017                     | **2019**                 | 2020             | X     | X    | X     | USDA 2020   | Table 1<sup>†</sup> [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)                                                             | 2008_2014_2017_number_area_sales.csv | Yes                                    | Yes      |
+-   [E2E0BF24-9F88-35DB-8526-8E47D941FDBF.csv](raw_data/E2E0BF24-9F88-35DB-8526-8E47D941FDBF.csv)
+    was downloaded from USDA Quickstats Database (2021) and is the
+    original source of data used in this analysis.
+-   [organic tables.xlsx](raw_data/organic%20tables.xlsx) was provided
+    by USDA NASS Statistician Virginia Harris. This sheet was used to
+    organize the raw data and provide corrections and analysis of the
+    impact of changes in survey methodology described below.
 
--   <sup>⋆</sup> "census year" is the year of the USDA Census; "survey year" is the year data was collected (different because the organic census is a follow on to the overall census.
--   <sup>⋆</sup> only surveys conducted in 2008, 2012, 2016, and 2019 are used in the present analysis
--   <sup>‡</sup> "Data users should allow for differences when comparing data between the 2011 COPS and the 2008 Organic Production" USDA 2010 Greene, Catherine R. (2001) US organic farming emerges in the 1990s: adoption of certified systems. No. 1474-2016-120887. 2001.
--   <sup>†</sup>number of farms from first line of table - previously the second line was used for 2008 and 2012 and first in 2016 and 2019
--   $^\\S$ csv files cross referenced w/ original data source at state level and for US totals
-
-2008 - certified & exempt; 2011 - certified 2014 - certified & exempt 2015 - certified; more sparse b/c for RMA data for crop insurance policy purposes; lots on crops and livestock but not on organic farming practices 2016 - certified 2019 - certified
-
-for 2008 & 2014 adjust \# of farms but not total sales or acerage b/c tiny % of total.
+The three files used as the starting point for this analysis were
+exported from the spreadsheet provided by USDA NASS. These files contain
+state level area, number, and sales in the three files below after
+corrections. - [farm\_area.csv](raw_data/farm_area.csv) contains -
+[farm\_number.csv](raw_data/farm_number.csv) contains -
+[farm\_sales.csv](raw_data/farm_sales.csv) contains -
+[2008.csv](raw_data/farm_sales.csv) contains farm area, number, and
+sales data from 2008 corrected for the fact that exempt farms were not
+included in these numbers.
 
 **Note:**
 
-> "The 2014 and 2015 Organic Certifier Survey data is a tabulation of USDA-accredited organic certifiers' acreage and livestock data received. The data underwent editing, summarization, and disclosure programming prior to publishing. The 2008, 2011, 2014, and 2015 organic producer surveys as well as the 2007 and 2012 Census of Agriculture collected and published data on organic operations which had production in the reference year. The data from these programs were adjusted for non-response, misclassification, and coverage. Therefore, the certifier survey data and producer survey/census data are not comparable and data users should account for these differences whenreviewing the data. Data users should allow for differences when comparing the data between datasets including reference periods, organic definitions, and differing survey methodologies." - USDA 2016
+> “The 2014 and 2015 Organic Certifier Survey data is a tabulation of
+> USDA-accredited organic certifiers’ acreage and livestock data
+> received. The data underwent editing, summarization, and disclosure
+> programming prior to publishing. The 2008, 2011, 2014, and 2015
+> organic producer surveys as well as the 2007 and 2012 Census of
+> Agriculture collected and published data on organic operations which
+> had production in the reference year. The data from these programs
+> were adjusted for non-response, misclassification, and coverage.
+> Therefore, the certifier survey data and producer survey/census data
+> are not comparable and data users should account for these differences
+> whenreviewing the data. Data users should allow for differences when
+> comparing the data between datasets including reference periods,
+> organic definitions, and differing survey methodologies.” - USDA 2016
 
-Missing data
+As advised, we consulted with NASS about combining these data across
+multiple surveys, and have made the corrections suggested.
 
-removed Alaska farm area for 2015; suspected to be incorrect.
+The key difference in survey methodology that is accounted for is that
+the 2008 and 2014 surveys included both certified and organic farms. The
+other surveys were just certified farms. we are using include both
+exempt and certified organic farms in is whether the estimate is for all
+organic farms (including exempt from certification farms) or just
+certified organic farms. Exempt farms are defined as farms with less
+than $5k / y in sales. We corrected for these by multiplying the number
+of exempt farms by $2,500 which accounted for much less than 1% of
+total.
+
+In addition, prior to the 2019 organic survey, farmers were asked if
+they used animal or green manure as a single question; in 2019 this
+question was asked separately.
+
+### Derived Data
+
+#### Transformations and Removal
+
+Area units were converted from acres to hectares using a conversion
+factor of 2.47 ha/a.
+
+Sales figures were adjusted to 2020 dollars by dividing sales for each
+year by the adjustment factor below obtained from the [U.S. Bureau of
+Labor Statistics CPI Inflation
+Calculator](https://www.bls.gov/data/inflation_calculator.htm) comparing
+from July in year Y to July in 2020.
+
+    | Year | $\textbf{CPI}_{Y/2020}$ |
+    |------|-------------------------|
+    | 2008 | 1.22                    |
+    | 2011 | 1.17                    |
+    | 2014 | 1.10                    |
+    | 2015 | 1.10                    |
+    | 2016 | 1.09                    |
+    | 2019 | 1.02                    |
+
+Farm area, number, and sales figures for 2008 were adjusted for missing
+data. We removed the Alaska farm area value from all analyses because is
+an extreme outlier, because subsequent years were not reported, and
+because a one year, 2500x increase in farm area coinciding with a
+decrease in farm number seemed either implausible or at least spurious
+and uncharacteristic of the trends that are the focus of this study.
 
 ``` r
 x <- readr::read_csv('../../../derived_data/all_transformed.csv')
@@ -69,165 +156,131 @@ knitr::kable(x %>% filter(state == 'Alaska'), digits = c(NA, 4, 2, 3, 3))
 x$farm_kha[x$state == 'Alaska' & x$year == 2015] <- NA
 ```
 
-| state  | year | farm_kha | farm_knumber | farm_msales |
-|:-------|-----:|---------:|-------------:|------------:|
-| Alaska | 2008 |     0.13 |        0.006 |       0.576 |
-| Alaska | 2011 |       NA |        0.004 |       0.698 |
-| Alaska | 2014 |     0.11 |        0.007 |          NA |
-| Alaska | 2015 |   281.33 |        0.004 |          NA |
-| Alaska | 2016 |       NA |        0.008 |          NA |
-| Alaska | 2019 |       NA |        0.008 |          NA |
+| state  | year |  farm\_kha | farm\_knumber | farm\_msales |
+|:-------|-----:|-----------:|--------------:|-------------:|
+| Alaska | 2008 |       0.13 |         0.006 |        0.576 |
+| Alaska | 2011 |         NA |         0.004 |        0.698 |
+| Alaska | 2014 |       0.11 |         0.007 |           NA |
+| Alaska | 2015 | **281.33** |         0.004 |           NA |
+| Alaska | 2016 |         NA |         0.008 |           NA |
+| Alaska | 2019 |         NA |         0.008 |           NA |
+
+-   [all\_transformed](derived_data/all_transformed.csv) contains all
+    data with values scaled and in the case of sales, corrected for the
+    consumer price index.
+    -   Columns:
+        -   state: full state name
+        -   year: year of survey
+        -   farm\_kha: farm area in units of 1000 ha
+        -   farm\_knumber: farm number in units of 1000 farms
+        -   farm\_msales: farm sales in millions of $US
+-   [imputed.csv](derived_data/imputed.csv) contains same structure as
+    all\_transformed.csv described above, but with missing values
+    imputed from the hierarchical model.
+
+The following were used during different steps of the analysis and
+included for convenience, since these were prepared for analyses:
+
+-   [imputed\_wide.csv](derived_data/imputed_wide.csv), and
+    [all\_wide.csv](derived_data/all_wide.csv) are similar to above
+    except there is one column per year per metric. These were used to
+    create sparkline graphs in the file
+    (us\_organic\_sparklines.pdf)\[figures/us\_organic\_sparklines.pdf\]
+    during a previous iteration.
+-   [imputed\_long.csv](derived_data/imputed_long.csv) is imputed.csv
+    collapsed to four columns: state, year, metric, and value and is
+    used in plotting.
 
 ### Analysis
 
 #### Code: in `code/` folder.
 
--   `01-merge_data.R` combines files from `raw_data` folder to generate `all_transformed.R`
--   `02-exploratory_analysis.R` some plots and a simple linear regression
--   `03-regression.R` initial modeling using `brms` for multivariate Generalized Linear Model with missing data
+-   [01-merge\_data.R](code/01-merge_data.R) combines files from the
+    `raw_data` folder and performs the transformations described above
+    to generate the `all_transformed.csv` that was the beginning of
+    downstream analyses.
+-   [02-exploratory\_analysis.R](code/02-exploratory_analysis.R)
+    exploratory data analysis plots and linear regression.
+-   [03-regression.R](code/03-regression.R) initial modeling using the
+    `brms` interface to the Stan modeling language to implement
+    multivariate Generalized Linear Models with missing data. These were
+    later reimplemented in the models described below.
+-   [04-practices\_challenges.R](code/04-practices_challenges.R) code
+    for visualizing the Organic farm practices and challenges over time.
+-   [05-predicted\_plots.R](code/05-predicted_plots.R)
 
-#### Bayesian Multivariate Regression Model
+#### Bayesian Multivariate Regression Models in `code/BUGS/mod3`
 
-The cleaned and derived data of farm number, area, and sales are modeled as a multivariate normal likelihood where the expected values are a linear regression on time (year). Slope and intercepts are estimated for each response variable, and the multivariate formulation allows for estimates of covariance among the response variables. The response variables were log transformed; on the log scale, slope differences were not substantially different for each state. Therefore, the random effect of state was added to the intercepts only. Random effects were modeled as a normal distribution centered at zero and a precision drawn from a folded-t distribution. Post-sweeping was employed to maintain identifiability between random effects and the intercepts and impose a sum-to-zero constraint on the random effects. The precision matrix was drawn from a Wishart distribution, from which standard deviations and correlation coefficients among the response variables were monitored.
+The cleaned and derived data of farm number, area, and sales are modeled
+as a multivariate normal likelihood where the expected values are a
+linear regression on time (year). Slope and intercepts are estimated for
+each response variable, and the multivariate formulation allows for
+estimates of covariance among the response variables. The response
+variables were log transformed; on the log scale, slope differences were
+not substantially different for each state. Therefore, the random effect
+of state was added to the intercepts only. Random effects were modeled
+as a normal distribution centered at zero and a precision drawn from a
+folded-t distribution. Post-sweeping was employed to maintain
+identifiability between random effects and the intercepts and impose a
+sum-to-zero constraint on the random effects. The precision matrix was
+drawn from a Wishart distribution, from which standard deviations and
+correlation coefficients among the response variables were monitored.
 
-The model was run in OpenBUGS using the `R2OpenBUGS` package. Three chains of 4000 samples were monitored at a thinning interval of 20 to reduce auto-correlation and storage requirements. Convergence was assessed with the Gelman-Rubin diagnostic.
+The model was run in OpenBUGS using the `R2OpenBUGS` package. Three
+chains of 4000 samples were monitored at a thinning interval of 20 to
+reduce auto-correlation and storage requirements. Convergence was
+assessed with the Gelman-Rubin diagnostic.
 
-#### Found in `/code/BUGS/mod2` folder.
+There are three iterations of these models. ‘mod3’ is the one used in
+the paper and described below. There are similar contents in the folders
+‘mod1’ and ‘mod2’. Much of the content includes intermediate inputs and
+outputs and are retained for efficiency. Other than MCMC chains,
+summaries and initial values found in `.Rdata` files are also provided
+as TXT or CSV files.
 
--   `mod_2a.R` contains a multivariate normal Bayesian model code
--   `01_run_model.R` modifies `all_transformed.csv`, models data with `mod_2a.R`, and produces a coda object
--   `02_check_convergence.R` visually and algorithmically inspect for convergence; produces starting values
--   `03_plot_parameters.R` plots the slope and intercept, random effects, and variance and covariance terms
--   `04_assess_fit.R` runs model for replicated data and assesses model fit
--   `fig_2a/` contains generated plots
--   `predicted_2a.csv` contains input data in long format (with missing values) and predicted values with the central 95% credible interval (complete)
-
-#### Run the model
-
-``` r
-source('01_run_model.R')
-```
-
-### Derived Data
-
-### TODO
-
--   move mod2 model output to `derived_data/ folder`
-
--   document unused models code/03-regression.R, code/BUGS/mod1
-
--   This figure from the "[Organic Farming: Results from 2019 Organic Survey](https://www.nass.usda.gov/Publications/Highlights/2020/census-organics.pdf)" and tables in the ["2019 Organic Survey Data Release" presentation](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/pdf/2019_Organic_Executive_Briefing.pdf) implies that USDA has reliable, consistent data for 2008, 2014, 2016, 2019
-
-    -   However, the available data for, e.g., 2008 (first cell of Table 1 from [USDA 2010](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt))
-    -   total organic farms in US is 14,540; much higher than in the figure …
-    -   Have reviewed, and will assume figure is in error. Email sent to NASS on 2021-05-12
-
--   ![](figures/usda_census_highlights_fig1.png)
-
-quickstats - domain category - certified & exempt, certified, transitioning
-
--   2019 only certified
-
--   2008, 2011, 2014 some tables for all farms, some for
-
--   2008
-
-**how to correct to certified number** - exempt farms are small in terms of sales - can multiply $5k \* \# of exempt farms as an upper bound
-
-first org. survey 2008 follow on to census of agriculture item nonresponse / census nonresponse have supplemented responses with integrity database
-
-all operations in the integrity database <https://organic.ams.usda.gov/integrity/>
-
--   <https://organic.ams.usda.gov/Integrity/Reports/DataHistory.aspx>
-
-**Update from USDA**
-
-I think the difference in numbers you are citing is whether the estimate is for all organic farms (including exempt from certification farms) or just certified organic farms.
-
-The best place to retrieve the organic data is from our Quickstats database.
-
-This query should get you there, but some of it is difficult to view over time because of the change in the scope of the survey. For example, the 2008 and 2014 surveys included all organic farms (certified and exempt), but the 2011 and 2019 survey was only for certified farms.
-
-<https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF>
-
--   [ ] get farm number and area for 2008 from <https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/appendix_a.pdf>
--   [ ] use farm sales amount, assuming <https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/appendix_a.pdf>
+-   `mod_3a.R` contains a multivariate normal Bayesian model code
+-   `01_run_model.R` modifies `all_transformed.csv`, models data with
+    `mod_2a.R`, and produces the output as a coda object in found in the
+    `coda/` folder.
+-   `02_check_convergence.R` visually and algorithmically inspect for
+    convergence; produces starting values
+-   `03_plot_parameters.R` plots the slope and intercept, random
+    effects, and variance and covariance terms
+-   `04_assess_fit.R` runs model for replicated data and assesses model
+    fit
+-   `figs_3a/` contains plots of model parameters and diagnostics.
+-   `predicted_3a.csv` contains input data in long format (with missing
+    values) and predicted values with the central 95% credible interval
+    (complete)
+-   `params_3a.csv` contains model parameters, 95% credible interval for
+    each.
 
 ### Contact Info
 
-Project Lead: Dr. Isaac Mpanga Area Associate Agent Commercial Horticulture and Small Acreage 2830 N Commonwealth Dr, Camp Verde, AZ 86322 email: [mpangai\@arizona.edu](mailto:mpangai@arizona.edu)
-
-Analysis in this repository: David LeBauer ([dlebauer\@arizona.edu](mailto:dlebauer@arizona.edu)) and Jessica Guo ([jessicaguo\@arizona.edu](mailto:jessicaguo@arizona.edu))
+Analysis in this repository conducted by: David LeBauer
+(<dlebauer@arizona.edu>) and Jessica Guo (<jessicaguo@arizona.edu>) in
+collaboration with Isaac Mpanga and Russel Trondstad.
 
 ## References
 
-USDA (2010) "2008 Organic Production Survey" [TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)
+USDA (2010) “2008 Organic Production Survey”
+[TXT](https://www.nass.usda.gov/Publications/AgCensus/2007/Online_Highlights/Organics/ORGANICS.txt)
 
-USDA (2012) "2011 Certified Organic Production Survey" [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)
+USDA (2012) “2011 Certified Organic Production Survey”
+[TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/8623j1717/4b29b896g/OrganicProduction-10-04-2012.txt)
 
-USDA (2016) "2014 and 2015 Organic Certifier Data" [pdf](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/Organic_Certifiers/2016/USDA_Accredited_Certifying_Agent_Certified_Organic_Data_2014_2015.pdf). (Raw data from [2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt), [2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt))
+USDA (2016) “2014 and 2015 Organic Certifier Data”
+[pdf](https://www.nass.usda.gov/Surveys/Guide_to_NASS_Surveys/Organic_Production/Organic_Certifiers/2016/USDA_Accredited_Certifying_Agent_Certified_Organic_Data_2014_2015.pdf).
+(Raw data from
+[2014](https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Organics/ORGANICS.txt),
+[2015](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/pr76f6075/hx11xj08s/OrganicProduction-09-15-2016.txt))
 
-USDA (2017) "2016 Certified Organic Survey" [TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)
+USDA (2017) “2016 Certified Organic Survey”
+[TXT](https://downloads.usda.library.cornell.edu/usda-esmis/files/zg64tk92g/70795b52w/6q182n781/OrganicProduction-09-20-2017_correction.txt)
 
-USDA (2020) "2019 Certified Organic Survey" Volume 3 Special Studies Part 4. AC-17-SS-4: [TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)
+USDA (2020) “2019 Certified Organic Survey” Volume 3 Special Studies
+Part 4. AC-17-SS-4:
+[TXT](https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Organics/ORGANICS.txt)
 
-## Software Dependencies
-
-``` r
-devtools::session_info()
-```
-
-    ## - Session info ---------------------------------------------------------------
-    ##  setting  value                       
-    ##  version  R version 4.0.2 (2020-06-22)
-    ##  os       Windows 10 x64              
-    ##  system   x86_64, mingw32             
-    ##  ui       RTerm                       
-    ##  language (EN)                        
-    ##  collate  English_United States.1252  
-    ##  ctype    English_United States.1252  
-    ##  tz       America/Phoenix             
-    ##  date     2021-09-20                  
-    ## 
-    ## - Packages -------------------------------------------------------------------
-    ##  package     * version date       lib source        
-    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.2)
-    ##  cachem        1.0.4   2021-02-13 [1] CRAN (R 4.0.4)
-    ##  callr         3.7.0   2021-04-20 [1] CRAN (R 4.0.5)
-    ##  cli           2.3.1   2021-02-23 [1] CRAN (R 4.0.4)
-    ##  crayon        1.4.1   2021-02-08 [1] CRAN (R 4.0.2)
-    ##  desc          1.3.0   2021-03-05 [1] CRAN (R 4.0.4)
-    ##  devtools      2.3.2   2020-09-18 [1] CRAN (R 4.0.2)
-    ##  digest        0.6.27  2020-10-24 [1] CRAN (R 4.0.3)
-    ##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.2)
-    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.2)
-    ##  fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.0.3)
-    ##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.3)
-    ##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)
-    ##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.0.3)
-    ##  knitr         1.31    2021-01-27 [1] CRAN (R 4.0.3)
-    ##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.0.4)
-    ##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.0.3)
-    ##  memoise       2.0.0   2021-01-26 [1] CRAN (R 4.0.3)
-    ##  pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 4.0.3)
-    ##  pkgload       1.2.0   2021-02-23 [1] CRAN (R 4.0.4)
-    ##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.2)
-    ##  processx      3.5.2   2021-04-30 [1] CRAN (R 4.0.5)
-    ##  ps            1.6.0   2021-02-28 [1] CRAN (R 4.0.4)
-    ##  purrr         0.3.4   2020-04-17 [1] CRAN (R 4.0.2)
-    ##  R6            2.5.0   2020-10-28 [1] CRAN (R 4.0.3)
-    ##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)
-    ##  rlang         0.4.10  2020-12-30 [1] CRAN (R 4.0.3)
-    ##  rmarkdown     2.7     2021-02-19 [1] CRAN (R 4.0.4)
-    ##  rprojroot     2.0.2   2020-11-15 [1] CRAN (R 4.0.3)
-    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.2)
-    ##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.3)
-    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.2)
-    ##  testthat      3.0.2   2021-02-14 [1] CRAN (R 4.0.4)
-    ##  usethis       2.0.1   2021-02-10 [1] CRAN (R 4.0.2)
-    ##  withr         2.4.1   2021-01-26 [1] CRAN (R 4.0.3)
-    ##  xfun          0.20    2021-01-06 [1] CRAN (R 4.0.3)
-    ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.2)
-    ## 
-    ## [1] C:/Users/David/Documents/lib/R
-    ## [2] C:/Program Files/R/R-4.0.2/library
+USDA (2021) Quickstats Database. URL:
+<https://quickstats.nass.usda.gov/results/12827E57-2B20-368C-A91F-1B97FF8F7B35#E2E0BF24-9F88-35DB-8526-8E47D941FDBF>
