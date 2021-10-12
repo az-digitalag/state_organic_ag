@@ -32,6 +32,11 @@ if(file.exists("inits/inits_3a.txt")){
 } else {
   # Initials function, use if no prior initials are available
   # indexing order [r,c] is opposite in BUGS
+  omega.gen <- function(x){
+    noise <- rnorm(n = nrow(farm_mat)*ncol(farm_mat), mean = 0, sd = 10)
+    nois.mat <- matrix(noise, ncol = ncol(farm_mat))
+    return(solve(cov(farm_mat + nois.mat, use = "complete.obs")))
+  }
   
   inits <- function(){
     list(A = rnorm(3, 0, 10),
