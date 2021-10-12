@@ -42,6 +42,11 @@ all_transformed <- rbind(data_2008, all) %>%
   select(state, year, farm_kha, farm_knumber, farm_msales) %>%
   arrange(year, state)
 
+# Implausible that Alaska went from 0.1 kha in 2014 to > 200 kha in 2015; 
+# also, data for only 3 of 6 years was available
+
+all_transformed$farm_kha[all_transformed$state == 'Alaska' && all$year == 2015] <- NA
+
 readr::write_csv(all_transformed, 'derived_data/all_transformed.csv')
 
 all_wide <- all_transformed %>%
