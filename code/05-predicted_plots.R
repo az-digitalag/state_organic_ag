@@ -97,7 +97,7 @@ imp_summary <- imputed %>%
   left_join(vars)
 
 
-16476 %>% 
+imp_summary %>% 
   pivot_wider(id_cols = metric, names_from = year, values_from = total )  %>% 
   knitr::kable()
 
