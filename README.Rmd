@@ -9,15 +9,11 @@ output:
 
 # Data and Code from: On-farm land management strategies and production challenges in United States Organic Agricultural Systems.
 
-This repository contains data and code used in:
+Isaac Mpanga, Russel Trondstad, Jessica Guo, David LeBauer, and John Omololu, 2021. On-farm land management strategies and production challenges in United States Organic Agricultural Systems. Current Research in Environmental Sustainability.
 
-Isaac Mpanga, Russel Trondstad, Jessica Guo, David LeBauer, and John Omololu, 2021. On-farm land management strategies and production challenges in United States Organic Agricultural Systems. Current Research in Environmental Sustainability. 
+It provides USDA Surveys of Agricultural Production from 2008-2019 to investigate state and national trends by state in organic farm area, number, and sales, as well to evaluate national trends in on-farm land-use practices and challenges facing US organic production.
 
-
-
-It provides USDA Surveys of Agricultural Production from 2008-2019 to investigate state and national trends by state in organic farm area, number, and sales, as well USDA censuses from 2007 to 2017 to evaluate national trends in on-farm land-use practices and challenges facing US organic production. 
-
-The data include state and national level measurements of organic farm number, area, and sales.
+It also includes code used to transform, visualize, and analyze the data, and derived data products - notably organic farm area and sales with values imputed to correct for redacted state level measures.
 
 ## Repository Content
 
