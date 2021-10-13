@@ -1,0 +1,12 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: David 
+    given-names: LeBauer
+    orcid: https://orcid.org/0000-0001-7228-053X
+  - family-names: Jessica
+    given-names: Guo
+    orcid: https://orcid.org/0000-0001-7228-053X
+title: Data and Code from: On-farm land management strategies and production challenges in United States Organic Agricultural Systems.
+version: mpanga2021
+date-released: 2021-10-13
