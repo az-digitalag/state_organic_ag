@@ -174,10 +174,12 @@ National trends in organic ag sales, farm number, and farm area:
 
 ![](figures/Fig2_imputed_natl_sum.png)
 
-Rates of change in these metrics by state:
+Annual rates of change in organic farm area, number, and sales by state:
 
 ![](figures/Fig3_pred_rates.png)
+Same as above, but with credible intervals, ranked by state (Sales in Delaware are growing the fastest!) and national mean in grey. Where CI's do not overlap 0 they are significantly different - sales growth is >0 in all but a few states.
 
+![](code/BUGS/mod3/figs_3a/fig_B.jpg)
 
 
 ### Contact Info
