@@ -3,7 +3,7 @@
 Isaac Mpanga, Russel Trondstad, Jessica Guo, David LeBauer, and John
 Omololu, 2021. On-farm land management strategies and production
 challenges in United States Organic Agricultural Systems. Current
-Research in Environmental Sustainability.
+Research in Environmental Sustainability. [doi:10.1016/j.crsust.2021.100097](https://doi.org/10.1016/j.crsust.2021.100097)
 
 It provides USDA Surveys of Agricultural Production from 2008-2019 to
 investigate state and national trends by state in organic farm area,
@@ -156,7 +156,7 @@ Labor Statistics CPI Inflation
 Calculator](https://www.bls.gov/data/inflation_calculator.htm) comparing
 from July in year Y to July in 2020.
 
-| Year | Conversion $\\frac{\\textrm{CPI}\_{2020}}{\\textrm{CPI}\_{\\textrm{Year}}}$ |
+| Year | Conversion CPI_2020/CPI_year |
 |:-----|:----------------------------------------------------------------------------|
 | 2008 | 1.22                                                                        |
 | 2011 | 1.17                                                                        |
